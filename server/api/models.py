@@ -17,6 +17,13 @@ class Vendor(db.Model):
     email = db.Column(db.String)
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Vendor_unique_constraint"),)
 
+    products = db.relationship('Product', backref ='vendor')
+
+
+
+    def __repr__(self):
+        return f'(id: {self.id}, name: {self.name}, company: {self.company}, phone_number: {self.phone_number}, email: {self.email} )'
+
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -24,6 +31,13 @@ class Customer(db.Model):
     email = db.Column(db.String)
     joined = db.Column(db.DateTime, server_default=db.func.now())
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Customer_unique_constraint"),)
+
+
+
+    def __repr__(self):
+        return f'(id: {self.id}, name: {self.name}, phone_number: {self.phone_number}, email: {self.email} , joined: {self.joined})'
+
+
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,3 +47,8 @@ class Product(db.Model):
     price = db.Column(db.Integer)
     quantity = db.Column(db.Integer)
     category = db.Column(db.String)
+    vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'))
+
+
+    def __repr__(self):
+        return f'(id: {self.id}, prod_name: {self.prod_name}, price: {self.price}, category: {self.category}, quantity: {self.quantity} ,vendor_id: {self.vendor_id})'

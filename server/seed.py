@@ -53,7 +53,7 @@ with app.app_context():
 
 
 
-
+    Product.query.delete()
     products = [
     {
         "prod_name": "Men's Running Shoes",
@@ -162,17 +162,25 @@ with app.app_context():
     ]
     product_list=[]
     for product in products:
-        prod = Product(
-            prod_name = product['prod_name'],
-            prod_description= product['prod_description'],
-            image=product['image'],
-            price=product['price'],
-            quantity=product['quantity'],
-            category=product['category'],
+        limit = random.randint(1,4)
+        for i in range(limit):
+            prod = Product(
+                prod_name = product['prod_name'],
+                prod_description= product['prod_description'],
+                image=product['image'],
+                price=product['price'],
+                quantity=product['quantity'],
+                category=product['category'],
+                vendor_id =rc([v.id for v in vendor_list])
 
-        )
-        product_list.append(prod)
+            )
+            product_list.append(prod)
 
     db.session.add_all(product_list)
     db.session.commit()
 
+
+
+
+    vendor1 = Vendor.query.all()[0]
+    print(vendor1.products)
