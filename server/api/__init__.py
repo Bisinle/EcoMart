@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_restful import Resource, Api
-from flask_marshmallow import Marshmallow
+# from flask_marshmallow import Marshmallow
 
 # from flask_restx import Api, Resource, fields
 
@@ -22,7 +22,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///online_market.db"
 # initialize the app with the extension
 
 from  api import routes
-from api.models import db
+from api.models import db,Vendor,Customer,Product
 
 migrate = Migrate(app, db)
 db.init_app(app)
