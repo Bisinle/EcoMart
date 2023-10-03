@@ -1,5 +1,5 @@
 from api import  make_response,jsonify,Product,Vendor,Customer,User,app,db,request
-from api.serialization import api,vendor_schema,vendors_schema, customer_schema, customers_schema, product_schema,user_schema,ns,Resource,user_model_input,user_schema,login_input_model
+from api.serialization import api,vendor_schema,vendors_schema, customer_schema, customers_schema, product_schema,user_schema,ns,Resource,user_model_input,users_schema,login_input_model
 import uuid
 import jwt
 import datetime
@@ -62,11 +62,11 @@ class Products(Resource):
 
 
 
-@ns.route('/users')
-class Users(Resource):
-    def get(self):
-        all_users = User.query.all()
-        return make_response(user_schema.dump(all_users),200)
+# @ns.route('/users')
+# class Users(Resource):
+#     def get(self):
+#         all_users = User.query.all()
+#         return make_response(users_schema.dump(all_users),200)
 
 
 

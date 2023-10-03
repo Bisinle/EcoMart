@@ -23,10 +23,16 @@ class Vendor(db.Model):
     company = db.Column(db.String)  # Corrected column name
     phone_number = db.Column(db.String)
     email = db.Column(db.String)
-    user_id = db.Column(db.Integer)
+
+    # user relationship
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', backref='user',uselist=False)
+
+    #product relationship
+    products = db.relationship('Product', backref ='vendor')
+
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Vendor_unique_constraint"),)
 
-    products = db.relationship('Product', backref ='vendor')
 
 
     def __repr__(self):
@@ -39,7 +45,14 @@ class Customer(db.Model):
     phone_number = db.Column(db.String)
     email = db.Column(db.String)
     joined = db.Column(db.DateTime, server_default=db.func.now())
-    user_id = db.Column(db.Integer)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', backref='customer', uselist=False)
+
+    
+
+
+
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Customer_unique_constraint"),)
 
 
@@ -73,6 +86,8 @@ class User(db.Model):
     roles =  db.Column(db.String)
     profile_picture = db.Column(db.String)
     joined = db.Column(db.DateTime, server_default=db.func.now())
+
+
   
 
     __table_args__ = (UniqueConstraint("public_id","user_name", name="User_unique_constraint"),)

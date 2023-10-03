@@ -67,11 +67,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         exclude = ('_password',)
     
 
-    # id=ma.auto_field()
-    # name=ma.auto_field()
-    # email=ma.auto_field()
-    # profile_picture=ma.auto_field()
-    # joined=ma.auto_field()
+ 
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
