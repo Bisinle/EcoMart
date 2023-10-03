@@ -18,10 +18,12 @@ db = SQLAlchemy(metadata=metadata)
 
 class Vendor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
     company = db.Column(db.String)  # Corrected column name
     phone_number = db.Column(db.String)
     email = db.Column(db.String)
+    user_id = db.Column(db.Integer)
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Vendor_unique_constraint"),)
 
     products = db.relationship('Product', backref ='vendor')
@@ -32,10 +34,12 @@ class Vendor(db.Model):
 
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
     phone_number = db.Column(db.String)
     email = db.Column(db.String)
     joined = db.Column(db.DateTime, server_default=db.func.now())
+    user_id = db.Column(db.Integer)
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Customer_unique_constraint"),)
 
 
@@ -63,15 +67,16 @@ class User(db.Model):
     __tablename__ ='users'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    user_name = db.Column(db.String)
     public_id = db.Column(db.String(50))
     _password = db.Column(db.String)
     email = db.Column(db.String)
+    roles =  db.Column(db.String)
     profile_picture = db.Column(db.String)
     joined = db.Column(db.DateTime, server_default=db.func.now())
   
 
-    __table_args__ = (UniqueConstraint("public_id", name="User_unique_constraint"),)
+    __table_args__ = (UniqueConstraint("public_id","user_name", name="User_unique_constraint"),)
 
     @hybrid_property
     def password_hash(self):

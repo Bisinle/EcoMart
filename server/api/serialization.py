@@ -16,7 +16,7 @@ class VendorSchema(ma.SQLAlchemyAutoSchema):
         ordered = True
 
     id=ma.auto_field()
-    name=ma.auto_field()
+    # name=ma.auto_field()
     company=ma.auto_field()
     phone_number = ma.auto_field(data_key="phone_number")    
     email=ma.auto_field()
@@ -34,7 +34,7 @@ class CustomerSchema(ma.SQLAlchemyAutoSchema):
         ordered = True
 
     id=ma.auto_field()
-    name=ma.auto_field()
+    # name=ma.auto_field()
     phone_number = ma.auto_field(data_key="phone_number")    
     email=ma.auto_field()
     joined=ma.auto_field()
