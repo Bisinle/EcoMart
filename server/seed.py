@@ -9,7 +9,7 @@ with app.app_context():
     Vendor.query.delete()
 
 
-    code =['+254 ','+256 ','+252 ','+251 ']
+    code =['+254','+256','+252','+251']
     vendor_list = []
     for i in range(10):
         f_name = fake.unique.first_name()

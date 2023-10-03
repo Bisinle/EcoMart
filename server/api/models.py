@@ -13,7 +13,7 @@ class Vendor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     company = db.Column(db.String)  # Corrected column name
-    phone_number = db.Column(db.Integer)
+    phone_number = db.Column(db.String)
     email = db.Column(db.String)
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Vendor_unique_constraint"),)
 
@@ -27,7 +27,7 @@ class Vendor(db.Model):
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    phone_number = db.Column(db.Integer)
+    phone_number = db.Column(db.String)
     email = db.Column(db.String)
     joined = db.Column(db.DateTime, server_default=db.func.now())
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Customer_unique_constraint"),)
