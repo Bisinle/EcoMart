@@ -4,7 +4,7 @@ import SearchFilter from "./SearchFilter";
 function Header() {
   return (
     <>
-      <article className="pb-[2rem]">
+      <article className="pb-[3rem]">
         <div className="relative">
           <img
             src="https://cdn.thewirecutter.com/wp-content/media/2020/11/vr-headset-2048px-8993-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024&dpr=1.5"

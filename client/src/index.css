@@ -16,7 +16,7 @@
     @apply w-[17rem] rounded-md bg-gray-200 cursor-pointer transition ease-in-out delay-150 hover:scale-105;
   }
   .footer-li {
-    @apply cursor-pointer;
+    @apply cursor-pointer ;
   }
 }
 
