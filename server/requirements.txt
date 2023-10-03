@@ -28,5 +28,5 @@ referencing==0.8.9
 six==1.16.0
 SQLAlchemy==2.0.21
 typing_extensions==4.7.1
-Werkzeug==3.0.0
+Werkzeug==2.2.3
 #
