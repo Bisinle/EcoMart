@@ -20,7 +20,7 @@ with app.app_context():
 
         user = User(
             user_name=user_name,
-            email=user_name.split(' ')[0]+"@"+company[:5]+".com",
+            # email=user_name.split(' ')[0]+"@"+company[:5]+".com",
             profile_picture='https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
             password_hash = str(random.randint(2,54324423)),
             public_id = str(uuid.uuid4()),
@@ -30,75 +30,73 @@ with app.app_context():
         )
         user_list.append(user)
     db.session.add_all(user_list)
+    db.session.commit()
 
 
 
 
 
 
-    # Vendor.query.delete()
+    Vendor.query.delete()
 
-    # profile_image =[]
-    # code =['+254','+256','+252','+251']
-    # vendor_user_list = []
-    # for i in range(10):
-    #     f_name = fake.first_name()
-    #     l_name = fake.last_name()
-    #     company = fake.company()
+    profile_image =[]
+    code =['+254','+256','+252','+251']
+    vendor_list = []
+    vendors = [ user for user in user_list if user.roles=='Vendor']
+    for i in range(len(vendors)):
+        user_obj=rc(vendors)
+        l_name = fake.last_name()
+        company = fake.company()
+  
+    
+        vendor = Vendor(            
+        first_name=user_obj.user_name,
+        last_name = fake.last_name(),
+        company=company,
+        phone_number=str(rc(code)) +'7'+ str(random.randint(111111111,9999999999)),
+        email=user_obj.user_name+'@' + company[:4]+'.com',
+        user_id = user_obj.id
 
-
-    #     vendor = Vendor(            
-    #     name=f_name +' '+ l_name,
-    #     company=company,
-    #     phone_number=str(rc(code)) +'7'+ str(random.randint(111111111,9999999999)),
-    #     email=f_name+'@' + company[:4]+'.com',
-
-    #     )
-    #     db.session.add(vendor)
-    #     db.session.commit()
-    #     user= User(
-    #         name=vendor.name,
-    #         email=vendor.email,
-    #         profile_picture='https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-    #       password_hash = random.randint(1,345643),
-    #       public_id = str(uuid.uuid4())
-
-    #     )
+        )
 
 
-    #     vendor_user_list.append(user)
-    # db.session.add_all(vendor_user_list)
+       
+        if user_obj.user_name not  in [vendor.first_name for vendor  in vendor_list]:
+            vendor_list.append(vendor)
+
+
+    db.session.add_all(vendor_list)
+    db.session.commit()
 
 
 
 
-    # Customer.query.delete()
+    Customer.query.delete()
 
 
-    # code =['+254 ','+256 ','+252 ','+251 ']
-    # customer_list = []
-    # for i in range(10):
-    #     f_name = fake.unique.first_name()
-    #     l_name = fake.unique.last_name()
-    #     company = fake.company()
-    #     customer = Customer(
+    code =['+254 ','+256 ','+252 ','+251 ']
+    customer_list = []
+    customers=[ user for user in user_list if user.roles=='Customer']
+    print(len(customers))
+    for i in range(len(customers)):
+
+        
+        cutomer_form_user_table=rc(customers)
+        l_name = fake.last_name()
+        customer = Customer(
             
-    #     name=f_name +' '+ l_name,
-    #     phone_number=str(rc(code)) +'7'+ str(random.randint(111111111,9999999999)),
-    #     email=f_name+'@gmail.com',
+        first_name=cutomer_form_user_table.user_name,
+        last_name=fake.last_name(),
+        phone_number=str(rc(code)) +'7'+ str(random.randint(111111111,9999999999)),
+        email=cutomer_form_user_table.user_name+'@gmail.com',
+        user_id = cutomer_form_user_table.id
 
-    #     )
-
-    #     user= User(
-    #         name=customer.name,
-    #         email=customer.email,
-    #         profile_picture='https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-    #        password_hash = random.randint(1,345643) ,
-    #        public_id = str(uuid.uuid4())
-
-    #     )
-    #     customer_list.append(user)
-    # db.session.add_all(customer_list)
+        )
+          
+        if cutomer_form_user_table.id not  in [customer.user_id for customer  in customer_list ]:
+            customer_list.append(customer)
+    db.session.add_all(customer_list)
+    db.session.commit()
 
 
 

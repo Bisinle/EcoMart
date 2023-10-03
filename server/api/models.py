@@ -70,7 +70,6 @@ class User(db.Model):
     user_name = db.Column(db.String)
     public_id = db.Column(db.String(50))
     _password = db.Column(db.String)
-    email = db.Column(db.String)
     roles =  db.Column(db.String)
     profile_picture = db.Column(db.String)
     joined = db.Column(db.DateTime, server_default=db.func.now())
@@ -92,7 +91,7 @@ class User(db.Model):
 
 
     def __repr__(self):
-        return f'(id: {self.id}, prod_name: {self.name}, email: {self.email}, user_type: {self.user_type}, admin: {self.admin}, joined: {self.joined} ,last_login: {self.last_login})'
+        return f'(id: {self.id}, user_name: {self.user_name}, roles: {self.roles},  joined: {self.joined} )'
 
 
 
