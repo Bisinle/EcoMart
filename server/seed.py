@@ -2,6 +2,8 @@ from api import app,db,Vendor,Product,Customer,User
 from faker import Faker
 import random 
 from random import randint, choice as rc
+import uuid
+
 
 fake = Faker()
 
@@ -20,9 +22,9 @@ with app.app_context():
             name=f_name +' '+ l_name,
             email=f_name+'@' + company[:4]+'.com',
             profile_picture='https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-            user_type='Admin',
-            is_active=False,
-            admin=True
+            password_hash = random.randint(2,54324423),
+            public_id = str(uuid.uuid4())
+         
         )
         user_list.append(user)
     db.session.add_all(user_list)
@@ -56,9 +58,8 @@ with app.app_context():
             name=vendor.name,
             email=vendor.email,
             profile_picture='https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-            user_type='vendor',
-            is_active=False,
-            admin=False
+          password_hash = random.randint(1,345643),
+          public_id = str(uuid.uuid4())
 
         )
 
@@ -90,9 +91,8 @@ with app.app_context():
             name=customer.name,
             email=customer.email,
             profile_picture='https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-            user_type='customer',
-            is_active=False,
-            admin=False
+           password_hash = random.randint(1,345643) ,
+           public_id = str(uuid.uuid4())
 
         )
         customer_list.append(user)

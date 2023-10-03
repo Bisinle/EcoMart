@@ -1,63 +1,6 @@
-from api import  make_response,jsonify,Product,Vendor,Customer,app,ma
-from flask_restx import Api,Resource,Namespace,fields
-
-api = Api()
-api.init_app(app)
-ns=Namespace('/')
-api.add_namespace(ns)
-
-
-    
-
-
-class VendorSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Vendor
-        ordered = True
-
-    id=ma.auto_field()
-    name=ma.auto_field()
-    company=ma.auto_field()
-    phone_number = ma.auto_field(data_key="phone_number")    
-    email=ma.auto_field()
-    products = ma.List(ma.Nested('ProductSchema',
-                                 only=('prod_name','prod_description','image','price','quantity','category',)))
-
-vendor_schema = VendorSchema()
-vendors_schema = VendorSchema(many=True)
-
-
-
-class CustomerSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Customer
-        ordered = True
-
-    id=ma.auto_field()
-    name=ma.auto_field()
-    phone_number = ma.auto_field(data_key="phone_number")    
-    email=ma.auto_field()
-    joined=ma.auto_field()
-
-customer_schema = CustomerSchema()
-customers_schema = CustomerSchema(many=True)
-
-
-class ProductSchema(ma.SQLAlchemyAutoSchema):
-    class Meta:
-        model = Product
-        ordered = False
-    id=ma.auto_field()
-    prod_name=ma.auto_field()
-    prod_description=ma.auto_field()
-    image=ma.auto_field()
-    price=ma.auto_field()
-    quantity=ma.auto_field()
-    category=ma.auto_field()
-
-product_schema = ProductSchema(many=True)
-
-
+from api import  make_response,jsonify,Product,Vendor,Customer,User,app,db,request
+from api.serialization import api,vendor_schema,vendors_schema, customer_schema, customers_schema, product_schema,user_schema,ns,Resource,user_model_input,user_schema,login_input_model
+import uuid
 
 
 
@@ -94,3 +37,65 @@ class Products(Resource):
         return make_response(product_schema.dump(all_products),200)
 
 
+
+@ns.route('/users')
+class Users(Resource):
+    def get(self):
+        all_users = User.query.all()
+        return make_response(user_schema.dump(all_users),200)
+
+
+
+
+
+'''-------- S I G N -------- U P ----------------------------'''
+
+@ns.route('/signup')
+class Signup (Resource):
+
+    @ns.expect(user_model_input)
+    def post(self):
+        
+
+        new_user = User(
+            name=ns.payload['name'],
+            email=ns.payload['email'],
+            profile_picture=ns.payload['profile_picture'],    
+            password_hash = ns.payload['password'],
+            public_id = str(uuid.uuid4())
+        )
+
+       
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        return jsonify({"mesage":"successfully added user"})
+
+        
+'''-----------------L O G I N -----------------------------'''
+@ns.route('/login')
+class Login(Resource):
+    
+    @ns.expect(login_input_model)
+    def post(self):
+        auth = request.authorization
+        print(auth.name)
+        print(auth.password)
+       
+
+        if not auth or not auth.password or not auth.username:
+            return jsonify({"message":"could not verify"})
+        
+        user = User.query.filter_by(name = auth.username).first()
+        if not user: 
+             return jsonify({"message":"user not found"})
+        
+        if not user.authenticat(auth.password):
+             return jsonify({"message":"wrong password"})
+        
+        return make_response(user_schema.dump(user))
+
+
+
+# api.add_resource

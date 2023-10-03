@@ -3,6 +3,10 @@ from sqlalchemy import MetaData,UniqueConstraint
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
+from werkzeug.security import generate_password_hash,check_password_hash
+
+
+
 
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
@@ -58,16 +62,32 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    public_id = db.Column(db.String(50))
     _password = db.Column(db.String)
     email = db.Column(db.String)
     profile_picture = db.Column(db.String)
-    admin = db.Column(db.Integer)
     joined = db.Column(db.DateTime, server_default=db.func.now())
-    last_login = db.Column(db.DateTime, server_default=db.func.now())
-    user_type = db.Column(db.String)
-    is_active = db.Column(db.String)
+  
 
+    __table_args__ = (UniqueConstraint("public_id", name="User_unique_constraint"),)
 
+    @hybrid_property
+    def password_hash(self):
+        return Exception('password cannot be viewed')
     
+    @password_hash.setter
+    def password_hash(self, password):
+        self._password = generate_password_hash(password,method='pbkdf2:sha256')
+
+    def authenticat(self,password):
+        return True if check_password_hash(self._password, password) else False
+
+
+
+    def __repr__(self):
+        return f'(id: {self.id}, prod_name: {self.name}, email: {self.email}, user_type: {self.user_type}, admin: {self.admin}, joined: {self.joined} ,last_login: {self.last_login})'
+
+
+
 
 
