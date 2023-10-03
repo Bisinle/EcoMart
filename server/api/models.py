@@ -20,7 +20,6 @@ class Vendor(db.Model):
     products = db.relationship('Product', backref ='vendor')
 
 
-
     def __repr__(self):
         return f'(id: {self.id}, name: {self.name}, company: {self.company}, phone_number: {self.phone_number}, email: {self.email} )'
 
@@ -31,7 +30,6 @@ class Customer(db.Model):
     email = db.Column(db.String)
     joined = db.Column(db.DateTime, server_default=db.func.now())
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Customer_unique_constraint"),)
-
 
 
     def __repr__(self):
