@@ -1,7 +1,31 @@
 from api import  make_response,jsonify,Product,Vendor,Customer,User,app,db,request
 from api.serialization import api,vendor_schema,vendors_schema, customer_schema, customers_schema, product_schema,user_schema,ns,Resource,user_model_input,user_schema,login_input_model
 import uuid
+import jwt
+import datetime
+from functools import wraps
 
+
+
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token =None
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+
+        if not token:
+            return jsonify({"message" : "Token is missing"})
+
+        try:
+            data= jwt.decode(token,app.config['SECRET_KEY'])
+
+            current_user = User.query.filter_by(public_id= data['public_id']).first()
+        except:
+                return jsonify({"message" : "Token is invalid"},401)
+        return f(current_user,*args, **kwargs)
+    return decorated
 
 
 @ns.route('/vendors')
@@ -91,10 +115,17 @@ class Login(Resource):
         if not user: 
              return jsonify({"message":"user not found"})
         
-        if not user.authenticat(auth.password):
-             return jsonify({"message":"wrong password"})
+        if  user.authenticat(auth.password):
+            token = jwt.encode(
+            {'public_id':user.public_id, 
+             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=59)},
+             app.config['SECRET_KEY']
+             
+              
+               )
+             
         
-        return make_response(user_schema.dump(user))
+        return jsonify({"token":token})
 
 
 
