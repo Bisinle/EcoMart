@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData,UniqueConstraint
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
+from sqlalchemy.ext.hybrid import hybrid_property
 
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
@@ -50,3 +51,23 @@ class Product(db.Model):
 
     def __repr__(self):
         return f'(id: {self.id}, prod_name: {self.prod_name}, price: {self.price}, category: {self.category}, quantity: {self.quantity} ,vendor_id: {self.vendor_id})'
+
+
+class User(db.Model):
+    __tablename__ ='users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    _password = db.Column(db.String)
+    email = db.Column(db.String)
+    profile_picture = db.Column(db.String)
+    admin = db.Column(db.Integer)
+    joined = db.Column(db.DateTime, server_default=db.func.now())
+    last_login = db.Column(db.DateTime, server_default=db.func.now())
+    user_type = db.Column(db.String)
+    is_active = db.Column(db.String)
+
+
+    
+
+

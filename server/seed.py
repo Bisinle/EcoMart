@@ -1,4 +1,4 @@
-from api import app,db,Vendor,Product,Customer
+from api import app,db,Vendor,Product,Customer,User
 from faker import Faker
 import random 
 from random import randint, choice as rc
@@ -6,26 +6,65 @@ from random import randint, choice as rc
 fake = Faker()
 
 with app.app_context():
+    # '''-------------- USER AUTHENTICATION TABLE-----------------------'''
+    User.query.delete()
+
+    user_list = []
+    for user in range(5):      
+
+        f_name = fake.unique.first_name()
+        l_name = fake.unique.last_name()
+        company = fake.company()
+
+        user = User(
+            name=f_name +' '+ l_name,
+            email=f_name+'@' + company[:4]+'.com',
+            profile_picture='https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            user_type='Admin',
+            is_active=False,
+            admin=True
+        )
+        user_list.append(user)
+    db.session.add_all(user_list)
+
+
+
+
+
+
     Vendor.query.delete()
 
-
+    profile_image =[]
     code =['+254','+256','+252','+251']
-    vendor_list = []
+    vendor_user_list = []
     for i in range(10):
         f_name = fake.unique.first_name()
         l_name = fake.unique.last_name()
         company = fake.company()
-        vendor = Vendor(
-            
+
+
+        vendor = Vendor(            
         name=f_name +' '+ l_name,
         company=company,
         phone_number=str(rc(code)) +'7'+ str(random.randint(111111111,9999999999)),
         email=f_name+'@' + company[:4]+'.com',
 
         )
+        db.session.add(vendor)
+        db.session.commit()
+        user= User(
+            name=vendor.name,
+            email=vendor.email,
+            profile_picture='https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            user_type='vendor',
+            is_active=False,
+            admin=False
 
-        vendor_list.append(vendor)
-    db.session.add_all(vendor_list)
+        )
+
+
+        vendor_user_list.append(user)
+    db.session.add_all(vendor_user_list)
 
 
 
@@ -47,7 +86,16 @@ with app.app_context():
 
         )
 
-        customer_list.append(customer)
+        user= User(
+            name=customer.name,
+            email=customer.email,
+            profile_picture='https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            user_type='customer',
+            is_active=False,
+            admin=False
+
+        )
+        customer_list.append(user)
     db.session.add_all(customer_list)
 
 
@@ -171,16 +219,24 @@ with app.app_context():
                 price=product['price'],
                 quantity=product['quantity'],
                 category=product['category'],
-                vendor_id =rc([v.id for v in vendor_list])
+                vendor_id =rc([v.id for v in Vendor.query.all()])
 
             )
             product_list.append(prod)
 
     db.session.add_all(product_list)
+
+
+
+
+
+
+
+
     db.session.commit()
 
 
 
 
-    vendor1 = Vendor.query.all()[0]
-    print(vendor1.products)
+    # vendor1 = Vendor.query.all()[0]
+    # print(vendor1.products)
