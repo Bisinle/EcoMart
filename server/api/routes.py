@@ -1,5 +1,5 @@
 from api import  make_response,jsonify,Product,Vendor,Customer,app,ma
-from flask_restx import Api,Resource,Namespace,fields
+from flask_restful import Api,Resource,Namespace,fields
 
 api = Api()
 api.init_app(app)
