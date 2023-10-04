@@ -54,7 +54,7 @@ function Cart({ showCart, setShowCart }) {
               <p>{quantity[index]}</p>
               <button onClick={() => handleIncrease(index)}>+</button>
             </div>
-            <p className="price">{product.price}</p>
+            <p className="price">{parseFloat(product.price) * quantity[index]}</p>
             <button
               className="remove-button clickable-element"
               onClick={() => handleRemove(index)}
