@@ -1,31 +1,72 @@
-from api import app,db,Vendor,Product,Customer
+from api import app,db,Vendor,Product,Customer,User
 from faker import Faker
 import random 
 from random import randint, choice as rc
+import uuid
+
 
 fake = Faker()
 
 with app.app_context():
+    '''-------------- USER AUTHENTICATION TABLE-----------------------'''
+    User.query.delete()
+
+    user_list = []
+    for user in range(50):      
+
+        
+        user_name = fake.unique.user_name()
+        company = fake.company()
+
+        user = User(
+            user_name=user_name,
+            # email=user_name.split(' ')[0]+"@"+company[:5]+".com",
+            profile_picture='https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            password_hash = str(random.randint(2,54324423)),
+            public_id = str(uuid.uuid4()),
+            roles=rc(['Admin','Vendor','Customer'])
+
+         
+        )
+        user_list.append(user)
+    db.session.add_all(user_list)
+    db.session.commit()
+
+
+
+
+
+
     Vendor.query.delete()
 
-
-    code =['+254 ','+256 ','+252 ','+251 ']
+    profile_image =[]
+    code =['+254','+256','+252','+251']
     vendor_list = []
-    for i in range(10):
-        f_name = fake.unique.first_name()
-        l_name = fake.unique.last_name()
+    vendors = [ user for user in user_list if user.roles=='Vendor']
+    for i in range(len(vendors)):
+        user_obj=rc(vendors)
+        l_name = fake.last_name()
         company = fake.company()
-        vendor = Vendor(
-            
-        name=f_name +' '+ l_name,
+  
+    
+        vendor = Vendor(            
+        first_name=user_obj.user_name,
+        last_name = fake.last_name(),
         company=company,
         phone_number=str(rc(code)) +'7'+ str(random.randint(111111111,9999999999)),
-        email=f_name+'@' + company[:4]+'.com',
+        email=user_obj.user_name+'@' + company[:4]+'.com',
+        user_id = user_obj.id
 
         )
 
-        vendor_list.append(vendor)
+
+       
+        if user_obj.user_name not  in [vendor.first_name for vendor  in vendor_list]:
+            vendor_list.append(vendor)
+
+
     db.session.add_all(vendor_list)
+    db.session.commit()
 
 
 
@@ -35,20 +76,27 @@ with app.app_context():
 
     code =['+254 ','+256 ','+252 ','+251 ']
     customer_list = []
-    for i in range(10):
-        f_name = fake.unique.first_name()
-        l_name = fake.unique.last_name()
-        company = fake.company()
+    customers=[ user for user in user_list if user.roles=='Customer']
+    print(len(customers))
+    for i in range(len(customers)):
+
+        
+        cutomer_form_user_table=rc(customers)
+        l_name = fake.last_name()
         customer = Customer(
             
-        name=f_name +' '+ l_name,
+        first_name=cutomer_form_user_table.user_name,
+        last_name=fake.last_name(),
         phone_number=str(rc(code)) +'7'+ str(random.randint(111111111,9999999999)),
-        email=f_name+'@gmail.com',
+        email=cutomer_form_user_table.user_name+'@gmail.com',
+        user_id = cutomer_form_user_table.id
 
         )
-
-        customer_list.append(customer)
+          
+        if cutomer_form_user_table.id not  in [customer.user_id for customer  in customer_list ]:
+            customer_list.append(customer)
     db.session.add_all(customer_list)
+    db.session.commit()
 
 
 
@@ -171,7 +219,7 @@ with app.app_context():
                 price=product['price'],
                 quantity=product['quantity'],
                 category=product['category'],
-                vendor_id =rc([v.id for v in vendor_list])
+                vendor_id =rc([v.id for v in Vendor.query.all()])
 
             )
             product_list.append(prod)
@@ -182,5 +230,8 @@ with app.app_context():
 
 
 
-    vendor1 = Vendor.query.all()[0]
-    print(vendor1.products)
+    # # vendor1 = Vendor.query.all()[0]
+    # # print(vendor1.products)
+
+    # ven1  = Vendor.query.all()[0]
+    # print(ven1.user)

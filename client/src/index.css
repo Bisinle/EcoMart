@@ -2,7 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-
+@layer components {
+  .nav-blocks {
+    @apply flex items-center gap-2 cursor-pointer;
+  }
+  .nav-icons {
+    @apply w-6 h-6;
+  }
+  .card-details {
+    @apply flex justify-between py-2 px-3;
+  }
+  .product-card {
+    @apply w-[17rem] rounded-md bg-gray-200 cursor-pointer transition ease-in-out delay-150 hover:scale-105;
+  }
+  .footer-li {
+    @apply cursor-pointer ;
+  }
 }
 
+body {
+  max-width: 1650px;
+  padding: 1rem 3rem;
+  margin: auto;
+  min-height: 100vh;
+}
