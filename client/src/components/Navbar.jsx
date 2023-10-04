@@ -1,11 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { BsPerson, BsCart3, BsFillBookmarkHeartFill } from "react-icons/bs";
 import App from "../App";
+
 import { useAppContext } from "../MyContext";
 
 function Navbar() {
   const { cartCount, wishlistCount } = useAppContext();
+
+import Cart from "./Cart";
+
+function Navbar() {
+
+  const [showCart, setShowCart] = useState(false);
+
 
   return (
     <nav className="flex items-center gap-2 justify-between py-3 mb-[3rem] px-4 shadow-lg rounded-md">
@@ -24,12 +32,19 @@ function Navbar() {
           <p>Account</p>
         </li>
 
+
         <li className="nav-blocks relative">
           {cartCount.length > 0 && (
             <span className="navbar-badge">{cartCount.length}</span>
           )}
           <BsCart3 className="nav-icons" />
+
+        <li className="nav-blocks">
+          <button onClick={() => setShowCart(true)}>
+          <BsCart3 className="nav-icons" /> </button>
+
           <p>Cart</p>
+          <Cart showCart={showCart} setShowCart={setShowCart} /> 
         </li>
       </ul>
 
@@ -43,6 +58,9 @@ function Navbar() {
         <Route path="/cart" />
       </Routes> */}
     </nav>
+
+    
+
   );
 }
 
