@@ -1,4 +1,4 @@
-from api import  make_response,jsonify,Product,Vendor,Customer,User,app,ma
+from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,app,ma
 from flask_restx import Api,Resource,Namespace,fields
 
 api = Api()
@@ -95,6 +95,33 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
+
+class OrderSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Order
+        ordered = False
+      
+    # id=ma.auto_field()
+    # prod_name=ma.auto_field()
+    # prod_description=ma.auto_field()
+    # image=ma.auto_field()
+    # price=ma.auto_field()
+    # quantity=ma.auto_field()
+    # category=ma.auto_field()
+    # discount=ma.auto_field()
+
+order_schema = OrderSchema()
+orders_schema = OrderSchema(many=True)
+
+order_model_input =api.model('post_order',{
+    
+    'item_price':fields.Integer,
+    'item_quantity':fields.Integer,
+    'amount':fields.Integer,
+    'address':fields.String
+  
+
+})
 
 
 

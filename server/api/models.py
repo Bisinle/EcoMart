@@ -46,6 +46,7 @@ class Customer(db.Model):
     email = db.Column(db.String)
     joined = db.Column(db.DateTime, server_default=db.func.now())
 
+
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', backref='customer', uselist=False)
 
@@ -126,8 +127,29 @@ class User(db.Model):
 
 
 
-# class Order(db.Model):
-#     __tablename__='orders'
+class Order(db.Model):
+    __tablename__='orders'
+
+
+    id = db.Column(db.Integer, primary_key=True)
+    item_price = db.Column(db.Integer)
+    item_quantity = db.Column(db.Integer)
+    amount = db.Column(db.Integer)
+    address = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+
+    # customer_id = db.Column(db.Integer, db.ForeignKey('cusomter.id'))
+    # product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+
+
+
+
+
+    def __repr__(self):
+        return f'(id: {self.id}, item_price: {self.item_price}, item_quantity: {self.item_quantity},  amount: {self.amount} )'
+
+
 
 
 

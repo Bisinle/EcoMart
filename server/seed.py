@@ -1,4 +1,4 @@
-from api import app,db,Vendor,Product,Customer,User
+from api import app,db,Vendor,Product,Customer,User,Order
 from faker import Faker
 import random 
 from random import randint, choice as rc
@@ -227,6 +227,25 @@ with app.app_context():
 
     db.session.add_all(product_list)
     db.session.commit()
+
+
+
+
+    ''' S E E D I N G__________________O R D E R S________________T A B L E '''
+
+    Order.query.delete()
+    # order_list = []
+    # for i in range(10):
+    #     product_obj = rc(product_list)
+    #     order = Order(
+    #         item_price = product_obj.price,
+    #         item_quantity = random.randint(1,5),
+    #         address= fake.address()
+    #     )
+    #     order_list.append(order)
+    # db.session.add_all(order_list)
+    db.session.commit()
+
 
 
 

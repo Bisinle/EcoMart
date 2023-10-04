@@ -1,5 +1,7 @@
-from api import  make_response,jsonify,Product,Vendor,Customer,User,app,db,request
-from api.serialization import api,vendor_schema,vendors_schema, customer_schema, customers_schema, product_schema,user_schema,ns,Resource,user_model_input,users_schema,login_input_model
+from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,app,db,request
+from api.serialization import api,vendor_schema,vendors_schema, customer_schema,users_schema,order_model_input
+from api.serialization import order_schema,orders_schema, customers_schema, product_schema
+from api.serialization import user_schema,ns,Resource,user_model_input,login_input_model
 import uuid
 import jwt
 import datetime
@@ -144,13 +146,55 @@ class product_by_id(Resource):
     def delete(selft,id):
         product = Product.query.filter_by(id=id).first()
 
-        if not customer:
+        if not product:
             return jsonify({"message":"product not found"})
         
         db.session.delete(product)
         db.session.commit()
         return jsonify({"Deleted":True,
                         "message":"product deleted successfully"})
+
+
+
+
+
+
+
+@ns.route('/orders')
+class Orders(Resource):
+    @ns.expect(order_model_input)
+    def post(self):
+        data = request.get_json()
+        # if not data:
+        #     return jsonify({"message":"you have not submitted an order"})
+
+        order_list =[]
+        if type(data) is list:
+            for order in data:
+                order = Order(
+                item_price=order['item_price'],
+                item_quantity=order['item_quantity'],
+                address=order['address'],
+                amount = int(order['item_price']) * int(order['item_quantity'])
+            )
+                order_list.append(order)
+        db.session.add_all(order_list)
+        db.session.commit()
+        if type(data) is dict:
+                 order = Order(
+                item_price=data['item_price'],
+                item_quantity=data['item_quantity'],
+                address=data['address'],
+                amount = int(data['item_price']) * int(data['item_quantity'])
+            )
+        db.session.add(order)
+        db.session.commit()
+
+        return jsonify({"message":"Order has been placed successfully "})
+        
+
+
+
 
 
 
