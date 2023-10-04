@@ -1,4 +1,4 @@
-from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,app,db,request
+from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,Category,app,db,request
 from api.serialization import api,vendor_schema,vendors_schema, customer_schema,users_schema,order_model_input
 from api.serialization import order_schema,orders_schema, customers_schema, product_schema
 from api.serialization import user_schema,ns,Resource,user_model_input,login_input_model

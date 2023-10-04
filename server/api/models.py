@@ -158,15 +158,23 @@ class Order(db.Model):
     product = db.relationship('Product', back_populates='orders')
 
 
-
-
-
-
-
-
-
     def __repr__(self):
         return f'(id: {self.id}, item_price: {self.item_price}, item_quantity: {self.item_quantity},  amount: {self.amount} )'
+
+
+
+class Category(db.Model):
+    __tablename__ ='categories'
+
+    id = db.Column(db.Integer, primary_key=True)
+    category_name = db.Column(db.String)
+
+
+
+
+
+
+
 
 
 
