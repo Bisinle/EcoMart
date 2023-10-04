@@ -10,6 +10,7 @@ from flask_marshmallow import Marshmallow
 
 
 
+
 # from flask_restx import Api, Resource, fields
 
 # create both app and api instances
@@ -25,7 +26,7 @@ ma = Marshmallow(app)
 app.config['SECRET_KEY'] = 'a16e4b678a12af3ac6df0b0d9b40db31'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///online_market.db"
 
-from api.models import db,Vendor,Customer,Product
+from api.models import db,Vendor,Customer,Product,User
 
 migrate = Migrate(app, db)
 db.init_app(app)

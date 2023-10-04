@@ -2,6 +2,11 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData,UniqueConstraint
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
+from sqlalchemy.ext.hybrid import hybrid_property
+from werkzeug.security import generate_password_hash,check_password_hash
+
+
+
 
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
@@ -9,15 +14,25 @@ metadata = MetaData(naming_convention={
 
 db = SQLAlchemy(metadata=metadata)
 
+
+
 class Vendor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
     company = db.Column(db.String)  # Corrected column name
     phone_number = db.Column(db.String)
     email = db.Column(db.String)
+
+    # user relationship
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', backref='user',uselist=False)
+
+    #product relationship
+    products = db.relationship('Product', backref ='vendor')
+
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Vendor_unique_constraint"),)
 
-    products = db.relationship('Product', backref ='vendor')
 
 
     def __repr__(self):
@@ -25,10 +40,19 @@ class Vendor(db.Model):
 
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
     phone_number = db.Column(db.String)
     email = db.Column(db.String)
     joined = db.Column(db.DateTime, server_default=db.func.now())
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', backref='customer', uselist=False)
+
+    
+
+
+
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Customer_unique_constraint"),)
 
 
@@ -50,3 +74,41 @@ class Product(db.Model):
 
     def __repr__(self):
         return f'(id: {self.id}, prod_name: {self.prod_name}, price: {self.price}, category: {self.category}, quantity: {self.quantity} ,vendor_id: {self.vendor_id})'
+
+
+class User(db.Model):
+    __tablename__ ='users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_name = db.Column(db.String)
+    public_id = db.Column(db.String(50))
+    _password = db.Column(db.String)
+    roles =  db.Column(db.String)
+    profile_picture = db.Column(db.String)
+    joined = db.Column(db.DateTime, server_default=db.func.now())
+
+
+  
+
+    __table_args__ = (UniqueConstraint("public_id","user_name", name="User_unique_constraint"),)
+
+    @hybrid_property
+    def password_hash(self):
+        return Exception('password cannot be viewed')
+    
+    @password_hash.setter
+    def password_hash(self, password):
+        self._password = generate_password_hash(password,method='pbkdf2:sha256')
+
+    def authenticate(self,password):
+        return True if check_password_hash(self._password, password) else False
+
+
+
+    def __repr__(self):
+        return f'(id: {self.id}, user_name: {self.user_name}, roles: {self.roles},  joined: {self.joined} )'
+
+
+
+
+
