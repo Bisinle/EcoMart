@@ -3,12 +3,21 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { useAppContext } from "../MyContext";
 
 function ProductCard({ id, image, price, name }) {
-  const { setCartCount, setWishlistCount, cartCount, wishlistCount } =
-    useAppContext();
+  const {
+    setCartCount,
+    setWishlistCount,
+    cartCount,
+    wishlistCount,
+    setProducts,
+  } = useAppContext();
 
   const addToCart = (prodid) => {
     const updatedCart = [...cartCount, prodid];
     setCartCount(updatedCart);
+
+    const product = { id, image, price, name };
+    setProducts((prevProducts) => [...prevProducts, product]);
+
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 

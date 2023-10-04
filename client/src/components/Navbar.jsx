@@ -2,15 +2,11 @@ import React, { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { BsPerson, BsCart3, BsFillBookmarkHeartFill } from "react-icons/bs";
 import App from "../App";
-
-import { useAppContext } from "../MyContext";
 import Cart from "./Cart";
+import { useAppContext } from "../MyContext";
 
 function Navbar() {
   const { cartCount, wishlistCount } = useAppContext();
-
-  // function Navbar() {
-
   const [showCart, setShowCart] = useState(false);
 
   return (
@@ -34,13 +30,9 @@ function Navbar() {
           {cartCount.length > 0 && (
             <span className="navbar-badge">{cartCount.length}</span>
           )}
-        </li>
-
-        <li className="nav-blocks">
           <button onClick={() => setShowCart(true)}>
-            <BsCart3 className="nav-icons" />{" "}
+            <BsCart3 className="nav-icons" />
           </button>
-
           <p>Cart</p>
           <Cart showCart={showCart} setShowCart={setShowCart} />
         </li>

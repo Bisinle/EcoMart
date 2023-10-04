@@ -5,6 +5,7 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState([]);
   const [wishlistCount, setWishlistCount] = useState([]);
+  const [products, setProducts] = useState([]);
 
   return (
     <AppContext.Provider
@@ -13,6 +14,8 @@ export const AppProvider = ({ children }) => {
         setCartCount,
         wishlistCount,
         setWishlistCount,
+        products,
+        setProducts,
       }}
     >
       {children}

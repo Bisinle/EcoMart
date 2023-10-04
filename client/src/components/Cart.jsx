@@ -1,9 +1,13 @@
 import React from "react";
 import "./Cart.css";
 import { BsTrash } from "react-icons/bs";
+import { useAppContext } from "../MyContext"; 
 
 function Cart({ showCart, setShowCart }) {
-  const [quantity, setQuantity] = React.useState([1, 1, 1]);
+  const { cartCount, setCartCount, products } = useAppContext();
+  const [quantity, setQuantity] = React.useState(
+    Array(cartCount.length).fill(1)
+  ); 
 
   const handleIncrease = (index) => {
     const newQuantity = [...quantity];
@@ -23,28 +27,11 @@ function Cart({ showCart, setShowCart }) {
     const newQuantity = [...quantity];
     newQuantity.splice(index, 1);
     setQuantity(newQuantity);
-  };
 
-  const products = [
-    {
-      name: "Nike Superstar",
-      size: "8.5",
-      price: "$239.55",
-      img: "https://images.journeys.com/images/products/1_595960_MD_THERO.JPG",
-    },
-    {
-      name: "H&M T-Shirt",
-      size: "S",
-      price: "$14.99",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhbqcpGv1PxClKLk2qhWip26Ynz2D1xMkYNChZp00&s",
-    },
-    {
-      name: "Gucci CG Marmont",
-      size: "N/A",
-      price: "$1850.00",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLUOP1fFZOblQ1mU8RLmioZQm8HBVZg3zmyDLmr1kuAg&s",
-    },
-  ];
+    const newCartCount = [...cartCount];
+    newCartCount.splice(index, 1);
+    setCartCount(newCartCount);
+  };
 
   if (!showCart) return null;
 
@@ -60,7 +47,6 @@ function Cart({ showCart, setShowCart }) {
             <img className="img" alt={product.name} src={product.img} />
             <div className="group-3">
               <h2>{product.name}</h2>
-              <p>Size: {product.size}</p>
             </div>
             <div className="group-4">
               <button onClick={() => handleDecrease(index)}>-</button>
@@ -81,8 +67,10 @@ function Cart({ showCart, setShowCart }) {
         <p>Total items: {quantity.reduce((a, b) => a + b, 0)}</p>
         <p>
           Subtotal: $
-          {["239.55", "14.99", "1850.00"]
-            .map((price, index) => parseFloat(price) * quantity[index])
+          {cartCount
+            .map(
+              (product, index) => parseFloat(product.price) * quantity[index]
+            )
             .reduce((a, b) => a + b, 0)
             .toFixed(2)}
         </p>
@@ -91,4 +79,5 @@ function Cart({ showCart, setShowCart }) {
     </div>
   );
 }
+
 export default Cart;
