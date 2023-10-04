@@ -36,7 +36,7 @@ class Vendor(db.Model):
 
 
     def __repr__(self):
-        return f'(id: {self.id}, name: {self.name}, company: {self.company}, phone_number: {self.phone_number}, email: {self.email} )'
+        return f'(id: {self.id}, first_name: {self.first_name},last_name: {self.last_name}, company: {self.company}, phone_number: {self.phone_number}, email: {self.email} )'
 
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -50,6 +50,11 @@ class Customer(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', backref='customer', uselist=False)
 
+
+    orders = db.relationship('Order', back_populates='customer',cascade='all, delete-orphan')
+    products = association_proxy('orders','product')
+
+
     
 
 
@@ -58,7 +63,7 @@ class Customer(db.Model):
 
 
     def __repr__(self):
-        return f'(id: {self.id}, name: {self.name}, phone_number: {self.phone_number}, email: {self.email} , joined: {self.joined})'
+        return f'(id: {self.id},first_name: {self.first_name},last_name: {self.last_name}, ,phone_number: {self.phone_number}, email: {self.email} , joined: {self.joined})'
 
 
 
@@ -72,6 +77,12 @@ class Product(db.Model):
     category = db.Column(db.String)
     discount = db.Column(db.Integer)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'))
+
+    orders = db.relationship('Order', back_populates='product')
+    customers = association_proxy('orders','customer')
+
+
+    
 
 
     @hybrid_property
@@ -139,8 +150,16 @@ class Order(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
 
-    # customer_id = db.Column(db.Integer, db.ForeignKey('cusomter.id'))
-    # product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    customer_id = db.Column("customer_id",db.Integer, db.ForeignKey('customer.id'))
+    product_id = db.Column("product_id",db.Integer, db.ForeignKey('product.id'))
+
+
+    customer = db.relationship('Customer', back_populates='orders')
+    product = db.relationship('Product', back_populates='orders')
+
+
+
+
 
 
 
