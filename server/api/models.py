@@ -74,12 +74,18 @@ class Product(db.Model):
     image = db.Column(db.String)
     price = db.Column(db.Integer)
     quantity = db.Column(db.Integer)
-    category = db.Column(db.String)
+    # category = db.Column(db.String)
     discount = db.Column(db.Integer)
+
+
+
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
     orders = db.relationship('Order', back_populates='product')
     customers = association_proxy('orders','customer')
+
+    
 
 
     
@@ -169,7 +175,10 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String)
 
+    products = db.relationship('Product', backref ='category')
 
+    def __repr__(self):
+        return f'(id: {self.id}, category_name: {self.category_name} )'
 
 
 

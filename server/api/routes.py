@@ -1,6 +1,6 @@
 from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,Category,app,db,request
 from api.serialization import api,vendor_schema,vendors_schema, customer_schema,users_schema,order_model_input
-from api.serialization import order_schema,orders_schema, customers_schema, product_schema
+from api.serialization import order_schema,orders_schema, customers_schema, product_schema,category_schema
 from api.serialization import user_schema,ns,Resource,user_model_input,login_input_model
 import uuid
 import jwt
@@ -45,7 +45,9 @@ class Vendors(Resource):
     #     data = request.get_json()
     #     print(data)
         # return jsonify(data)
-    
+
+''' ___________________T O K E N _____________D E C O R A T O R         '''
+
 @ns.route('/vendors/<id>')
 class Vendoer_by_id(Resource):
     def put(self,id):
@@ -76,11 +78,8 @@ class Vendoer_by_id(Resource):
                         "message":"vendor deleted successfully"})
 
 
-        
 
-
-
-
+''' ___________________C U S T O M E R S __________________________ R O U T E S        '''
 
 @ns.route('/customers')
 class CustomerS(Resource):
@@ -118,6 +117,58 @@ class customer_by_id(Resource):
                         "message":"customer deleted successfully"})
 
 
+
+
+''' ___________________O R D E R S__________________________ R O U T E S        '''
+
+@ns.route('/orders')
+class Orders(Resource):
+    def get(self):
+        orders = Order.query.all()
+
+        if not orders:
+            return jsonify({"message":"NO in the database"})
+        
+        return make_response(orders_schema.dump(orders))
+
+    @ns.expect(order_model_input)
+    def post(self):
+        data = request.get_json()
+        # if not data:
+        #     return jsonify({"message":"you have not submitted an order"})
+
+        order_list =[]
+        if type(data) is list:
+            for order in data:
+                order = Order(
+                item_price=order['item_price'],
+                item_quantity=order['item_quantity'],
+                address=order['address'],
+                amount = int(order['item_price']) * int(order['item_quantity'])
+            )
+                order_list.append(order)
+        db.session.add_all(order_list)
+        db.session.commit()
+        if type(data) is dict:
+                 order = Order(
+                item_price=data['item_price'],
+                item_quantity=data['item_quantity'],
+                address=data['address'],
+                amount = int(data['item_price']) * int(data['item_quantity'])
+            )
+        db.session.add(order)
+        db.session.commit()
+
+        return jsonify({"message":"Order has been placed successfully "})
+        
+
+
+ 
+
+
+
+
+''' ___________________P R O D U C T S___________________________ R O U T E S        '''
 
 @ns.route('/products')
 class Products(Resource):
@@ -157,53 +208,26 @@ class product_by_id(Resource):
 
 
 
+'''-----------------------------C A T E G O R I E S ---------------------'''
+@ns.route('/categories')
+class Categories(Resource):
+    def get(self):
+        categories = Category.query.all()
 
-
-
-@ns.route('/orders')
-class Orders(Resource):
-    @ns.expect(order_model_input)
-    def post(self):
-        data = request.get_json()
-        # if not data:
-        #     return jsonify({"message":"you have not submitted an order"})
-
-        order_list =[]
-        if type(data) is list:
-            for order in data:
-                order = Order(
-                item_price=order['item_price'],
-                item_quantity=order['item_quantity'],
-                address=order['address'],
-                amount = int(order['item_price']) * int(order['item_quantity'])
-            )
-                order_list.append(order)
-        db.session.add_all(order_list)
-        db.session.commit()
-        if type(data) is dict:
-                 order = Order(
-                item_price=data['item_price'],
-                item_quantity=data['item_quantity'],
-                address=data['address'],
-                amount = int(data['item_price']) * int(data['item_quantity'])
-            )
-        db.session.add(order)
-        db.session.commit()
-
-        return jsonify({"message":"Order has been placed successfully "})
+        if not categories:
+            return jsonify({"message":"NO in the database"})
         
+        return make_response((category_schema.dump(categories)))
 
 
 
 
 
-
-
-# @ns.route('/users')
-# class Users(Resource):
-#     def get(self):
-#         all_users = User.query.all()
-#         return make_response(users_schema.dump(all_users),200)
+@ns.route('/users')
+class Users(Resource):
+    def get(self):
+        all_users = User.query.all()
+        return make_response(users_schema.dump(all_users),200)
 
 
 

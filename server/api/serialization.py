@@ -1,4 +1,4 @@
-from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,app,ma
+from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,Category,app,ma
 from flask_restx import Api,Resource,Namespace,fields
 
 api = Api()
@@ -7,7 +7,7 @@ ns=Namespace('/')
 api.add_namespace(ns)
 
 
-    
+
 
 
 class VendorSchema(ma.SQLAlchemyAutoSchema):
@@ -60,9 +60,14 @@ class CustomerSchema(ma.SQLAlchemyAutoSchema):
     phone_number = ma.auto_field(data_key="phone_number")    
     email=ma.auto_field()
     joined=ma.auto_field()
+    # orders = ma.List(ma.Nested('OrderCustomerSchema'))
+    
 
 customer_schema = CustomerSchema()
 customers_schema = CustomerSchema(many=True)
+
+
+
 
 
 class ProductSchema(ma.SQLAlchemyAutoSchema):
@@ -77,8 +82,9 @@ class ProductSchema(ma.SQLAlchemyAutoSchema):
     quantity=ma.auto_field()
     category=ma.auto_field()
     discount=ma.auto_field()
+    vendor_id = ma.auto_field()
 
-product_schema = ProductSchema()
+product_schema = ProductSchema(many=True)
 
 
 
@@ -99,16 +105,16 @@ users_schema = UserSchema(many=True)
 class OrderSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Order
-        ordered = False
+        ordered =   True
       
-    # id=ma.auto_field()
-    # prod_name=ma.auto_field()
-    # prod_description=ma.auto_field()
-    # image=ma.auto_field()
-    # price=ma.auto_field()
-    # quantity=ma.auto_field()
-    # category=ma.auto_field()
-    # discount=ma.auto_field()
+    id=ma.auto_field()
+    item_price=ma.auto_field()
+    item_quantity=ma.auto_field()
+    amount=ma.auto_field()
+    address=ma.auto_field()
+    created_at=ma.auto_field()
+    customer=ma.Nested('CustomerSchema')
+    product=ma.Nested('ProductSchema')
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many=True)
@@ -123,6 +129,18 @@ order_model_input =api.model('post_order',{
 
 })
 
+
+
+'''-----------------------------C A T E G O R I E S ---------------------'''
+class CategorySchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model=Category
+        ordered= True
+    id =ma.auto_field()
+    category_name = ma.auto_field()
+    products = ma.List(ma.Nested('ProductSchema'))
+
+category_schema = CategorySchema(many=True)
 
 
 '''--------------M O D E L -------------------------'''
