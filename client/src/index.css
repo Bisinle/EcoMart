@@ -16,13 +16,30 @@
     @apply w-[17rem] rounded-md bg-gray-200 cursor-pointer transition ease-in-out delay-150 hover:scale-105;
   }
   .footer-li {
-    @apply cursor-pointer ;
+    @apply cursor-pointer;
+  }
+  .navbar-badge {
+    @apply absolute bottom-5 left-4 inline-flex items-center rounded-lg bg-purple-500 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-gray-500/10;
   }
 }
 
+svg,
+img {
+  display: block;
+  max-width: 100%;
+}
 body {
   max-width: 1650px;
   padding: 1rem 3rem;
   margin: auto;
   min-height: 100vh;
+}
+
+.product-image {
+  height: 18rem;
+}
+.prod-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
