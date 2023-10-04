@@ -37,9 +37,44 @@ class Vendors(Resource):
         if not all_vendors:
             return make_response(jsonify({"message":"no vendors found"}))
         
-        
         return make_response(vendors_schema.dump(all_vendors),200)
+    # # @ns.expect(vendor_model_input)
+    # def post(self):
+    #     data = request.get_json()
+    #     print(data)
+        # return jsonify(data)
     
+@ns.route('/vendors/<id>')
+class Vendoer_by_id(Resource):
+    def put(self,id):
+        # get the vendor
+        vendor = Vendor.query.filter_by(id=id).first()
+        if not vendor:
+            return jsonify({"message":"vendor not found"})
+
+        data = request.get_json()
+        data['email'] = vendor.first_name+'@'+data['company'][:5]+'.com'
+        for  attr in data:
+            setattr(vendor, attr, data[attr])
+        db.session.commit()
+
+        # return jsonify(vendor_schema.dump(vendor),200)
+        return jsonify({"message":" vendor updated successfully "},200)
+
+
+    def delete(selft,id):
+        vendor = Vendor.query.filter_by(id=id).first()
+
+        if not vendor:
+            return jsonify({"message":"vendor not found"})
+        
+        db.session.delete(vendor)
+        db.session.commit()
+        return jsonify({"Deleted":True,
+                        "message":"vendor deleted successfully"})
+
+
+        
 
 
 
@@ -51,6 +86,34 @@ class CustomerS(Resource):
         all_customers = Customer.query.all()
         return make_response(customers_schema.dump(all_customers),200)
 
+@ns.route('/customer/<id>')
+class customer_by_id(Resource):
+    def put(self,id):
+        # get the vendor
+        customer = Customer.query.filter_by(id=id).first()
+        if not customer:
+            return jsonify({"message":"customer not found"})
+
+        data = request.get_json()
+        # data['email'] = customer.first_name+'@gmail.com'
+        for  attr in data:
+            setattr(customer, attr, data[attr])
+        db.session.commit()
+
+        return jsonify(customer_schema.dump(customer),200)
+        # return jsonify({"message":" customer updated successfully "},200)
+
+
+    def delete(selft,id):
+        customer = Customer.query.filter_by(id=id).first()
+
+        if not customer:
+            return jsonify({"message":"customer not found"})
+        
+        db.session.delete(customer)
+        db.session.commit()
+        return jsonify({"Deleted":True,
+                        "message":"customer deleted successfully"})
 
 
 
@@ -59,6 +122,36 @@ class Products(Resource):
     def get(self):
         all_products = Product.query.all()
         return make_response(product_schema.dump(all_products),200)
+
+@ns.route('/product/<id>')
+class product_by_id(Resource):
+    def put(self,id):
+        # get the vendor
+        product = Product.query.filter_by(id=id).first()
+        if not product:
+            return jsonify({"message":"product not found"})
+
+        data = request.get_json()
+        # data['email'] = product.first_name+'@gmail.com'
+        for  attr in data:
+            setattr(product, attr, data[attr])
+        db.session.commit()
+
+        return jsonify(product_schema.dump(product),200)
+        # return jsonify({"message":" product updated successfully "},200)
+
+
+    def delete(selft,id):
+        product = Product.query.filter_by(id=id).first()
+
+        if not customer:
+            return jsonify({"message":"product not found"})
+        
+        db.session.delete(product)
+        db.session.commit()
+        return jsonify({"Deleted":True,
+                        "message":"product deleted successfully"})
+
 
 
 
@@ -137,5 +230,3 @@ class Login(Resource):
         return jsonify({"message": "Authentication failed"}), 401
 
 
-
-# api.add_resource

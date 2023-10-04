@@ -69,7 +69,22 @@ class Product(db.Model):
     price = db.Column(db.Integer)
     quantity = db.Column(db.Integer)
     category = db.Column(db.String)
+    discount = db.Column(db.Integer)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendor.id'))
+
+
+    @hybrid_property
+    def discounted_price(self):
+        # Calculate the discounted price
+        return self.price 
+
+    @discounted_price.setter
+    def discounted_price(self, value):
+        # Set the discount based on the desired discounted price
+        if self.price > 0 and self.quantity>0:
+            self.discount = (self.price *value) /100
+        else:
+            self.discount = 0
 
 
     def __repr__(self):

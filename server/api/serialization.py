@@ -16,7 +16,8 @@ class VendorSchema(ma.SQLAlchemyAutoSchema):
         ordered = True
 
     id=ma.auto_field()
-    # name=ma.auto_field()
+    first_name=ma.auto_field()
+    last_name=ma.auto_field()
     company=ma.auto_field()
     phone_number = ma.auto_field(data_key="phone_number")    
     email=ma.auto_field()
@@ -25,6 +26,27 @@ class VendorSchema(ma.SQLAlchemyAutoSchema):
 
 vendor_schema = VendorSchema()
 vendors_schema = VendorSchema(many=True)
+
+# vendor_model_input =api.model('add-vendor',{
+    
+#     'fist_name':fields.String,
+#     'last_name':fields.String,
+#     'company':fields.String,
+#     'email':fields.String,
+#     'phone_number':fields.String
+  
+
+# })
+
+vendor_model_update =api.model('update-vendor',{
+    
+    
+    'company':fields.String,
+    'phone_number':fields.String
+  
+
+})
+
 
 
 
@@ -54,8 +76,9 @@ class ProductSchema(ma.SQLAlchemyAutoSchema):
     price=ma.auto_field()
     quantity=ma.auto_field()
     category=ma.auto_field()
+    discount=ma.auto_field()
 
-product_schema = ProductSchema(many=True)
+product_schema = ProductSchema()
 
 
 
@@ -94,3 +117,8 @@ login_input_model =api.model('login',{
   
 
 })
+
+
+
+
+

@@ -219,6 +219,7 @@ with app.app_context():
                 price=product['price'],
                 quantity=product['quantity'],
                 category=product['category'],
+                discount=product['price'],
                 vendor_id =rc([v.id for v in Vendor.query.all()])
 
             )
