@@ -24,7 +24,7 @@ function Navbar() {
 
         <li className="nav-blocks">
           <button onClick={() => setShowCart(true)}>
-          <BsCart3 className="nav-icons" /></button>
+          <BsCart3 className="nav-icons" /> </button>
           <p>Cart</p>
           <Cart showCart={showCart} setShowCart={setShowCart} /> 
         </li>
