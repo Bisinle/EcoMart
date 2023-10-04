@@ -24,10 +24,9 @@ const Login = () => {
 
       // Redirect or update the UI as needed after successful login
       // For example: history.push("/dashboard"); if using react-router
-
     } catch (error) {
       console.error("Login failed:", error);
-      setError("Invalid email or password");  // Display a generic error message
+      setError("Invalid email or password"); // Display a generic error message
     }
   };
 
