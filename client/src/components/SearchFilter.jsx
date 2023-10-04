@@ -1,16 +1,29 @@
 import React from "react";
 import { useState } from "react";
+import { useAppContext } from "../MyContext";
 
-function SearchFilter() {
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All");
+function SearchFilter({ onSearch, onCategoryChange, query, category }) {
+  const options = [
+    "Footwear",
+    "Fitness Accessories",
+    "Cycling Accessories",
+    "Electronics",
+    "Audio",
+    "Accessories",
+    "Outdoor Gear",
+    "Food & Beverage",
+    "Apparel",
+    "Wearable Tech",
+    "Gaming Accessories",
+    "Kitchenware",
+  ];
 
   return (
     <div className="flex items-center justify-center py-7">
       <input
         type="text"
         placeholder="Search"
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={onSearch}
         value={query}
         className=" rounded-lg w-[35rem] border-2 p-3 pl-10 outline-blue-600 relative"
       />
@@ -18,15 +31,17 @@ function SearchFilter() {
         name="category"
         id="dropdown"
         className="rounded-md p-4 outline-none"
-        onChange={(e) => setCategory(e.target.value)}
+        onChange={onCategoryChange}
         value={category}
       >
-        <option value="all" selected>
+        <option value="all" defaultValue={"all"}>
           All
         </option>
-        <option value="electronics">Electronics</option>
-        <option value="fashion">Fashion</option>
-        <option value="electronics">Electronics</option>
+        {options.map((item) => (
+          <option key={item} value={item}>
+            {item}
+          </option>
+        ))}
       </select>
     </div>
   );

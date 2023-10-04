@@ -16,7 +16,6 @@ function Header() {
           </h3>
         </div>
       </article>
-      <SearchFilter />
     </>
   );
 }
