@@ -1,10 +1,21 @@
 from api import  make_response,jsonify,Product,Vendor,Customer,User,app,ma
 from flask_restx import Api,Resource,Namespace,fields
+from flask_jwt_extended import  JWTManager
 
 api = Api()
 api.init_app(app)
-ns=Namespace('/')
+authorizations = {
+    'jsonwebToken':{
+        "type":"apiKey",
+        "in":"header",
+        "name":'Authorization'
+    }
+}
+ns=Namespace('/',authorizations=authorizations)
 api.add_namespace(ns)
+
+jwt = JWTManager()
+jwt.init_app(app)
 
 
     
