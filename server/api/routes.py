@@ -32,8 +32,8 @@ def token_required(f):
 
 @ns.route('/vendors')
 class Vendors(Resource):
-
-    def get(self):
+    @token_required
+    def get(self,current_user):
         all_vendors = Vendor.query.all()
 
         if not all_vendors:
@@ -241,13 +241,14 @@ class Signup (Resource):
     @ns.expect(user_model_input)
     def post(self):
         
-
+        data =request.get_json()
+        
         new_user = User(
-            user_name=ns.payload['user_name'],
-            profile_picture=ns.payload['profile_picture'],    
-            password_hash = ns.payload['password'],
+            user_name=data['user_name'],
+            profile_picture=data['profile_picture'],    
+            password_hash = data['password'],
             public_id = str(uuid.uuid4()),
-            roles=ns.payload['roles']
+            roles=data['roles']
 
         )
 
