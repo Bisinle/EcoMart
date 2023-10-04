@@ -1,13 +1,10 @@
 import React from "react";
 import "./Cart.css";
 import { BsTrash } from "react-icons/bs";
-import { useAppContext } from "../MyContext"; 
+import { useAppContext } from "../MyContext";
 
 function Cart({ showCart, setShowCart }) {
-  const { cartCount, setCartCount, products } = useAppContext();
-  const [quantity, setQuantity] = React.useState(
-    Array(cartCount.length).fill(1)
-  ); 
+  const { cartCount, setCartCount, products, setProducts, setQuantity, quantity } = useAppContext();
 
   const handleIncrease = (index) => {
     const newQuantity = [...quantity];
@@ -31,6 +28,10 @@ function Cart({ showCart, setShowCart }) {
     const newCartCount = [...cartCount];
     newCartCount.splice(index, 1);
     setCartCount(newCartCount);
+
+    const newProducts = [...products];
+    newProducts.splice(index, 1);
+    setProducts(newProducts);
   };
 
   if (!showCart) return null;
@@ -44,7 +45,7 @@ function Cart({ showCart, setShowCart }) {
       <div className="group">
         {products.map((product, index) => (
           <div key={index} className="group-2">
-            <img className="img" alt={product.name} src={product.img} />
+            <img className="img" alt={product.name} src={product.image} />
             <div className="group-3">
               <h2>{product.name}</h2>
             </div>
@@ -67,7 +68,7 @@ function Cart({ showCart, setShowCart }) {
         <p>Total items: {quantity.reduce((a, b) => a + b, 0)}</p>
         <p>
           Subtotal: $
-          {cartCount
+          {products
             .map(
               (product, index) => parseFloat(product.price) * quantity[index]
             )

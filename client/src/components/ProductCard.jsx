@@ -9,6 +9,7 @@ function ProductCard({ id, image, price, name }) {
     cartCount,
     wishlistCount,
     setProducts,
+    setQuantity,
   } = useAppContext();
 
   const addToCart = (prodid) => {
@@ -17,6 +18,8 @@ function ProductCard({ id, image, price, name }) {
 
     const product = { id, image, price, name };
     setProducts((prevProducts) => [...prevProducts, product]);
+
+    setQuantity((prevQuantity) => [...prevQuantity, 1]);
 
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };

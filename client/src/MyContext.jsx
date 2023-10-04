@@ -1,11 +1,11 @@
 import { createContext, useContext, useState } from "react";
-
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState([]);
   const [wishlistCount, setWishlistCount] = useState([]);
   const [products, setProducts] = useState([]);
+  const [quantity, setQuantity] = useState([]);
 
   return (
     <AppContext.Provider
@@ -16,6 +16,8 @@ export const AppProvider = ({ children }) => {
         setWishlistCount,
         products,
         setProducts,
+        quantity,
+        setQuantity,
       }}
     >
       {children}
