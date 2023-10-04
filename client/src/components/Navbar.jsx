@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { BsPerson, BsCart3, BsFillBookmarkHeartFill } from "react-icons/bs";
 import App from "../App";
+import Cart from "./Cart";
 
 function Navbar() {
+
+  const [showCart, setShowCart] = useState(false);
+
   return (
     <nav className="flex items-center gap-2 justify-between py-3 mb-[3rem] px-4 shadow-lg rounded-md">
       <h1 className="text-3xl font-bold">TRADE</h1>
@@ -19,8 +23,10 @@ function Navbar() {
         </li>
 
         <li className="nav-blocks">
-          <BsCart3 className="nav-icons" />
+          <button onClick={() => setShowCart(true)}>
+          <BsCart3 className="nav-icons" /></button>
           <p>Cart</p>
+          <Cart showCart={showCart} setShowCart={setShowCart} /> 
         </li>
       </ul>
 
@@ -34,6 +40,9 @@ function Navbar() {
         <Route path="/cart" />
       </Routes> */}
     </nav>
+
+    
+
   );
 }
 
