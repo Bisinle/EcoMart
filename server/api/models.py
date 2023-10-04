@@ -100,7 +100,7 @@ class User(db.Model):
     def password_hash(self, password):
         self._password = generate_password_hash(password,method='pbkdf2:sha256')
 
-    def authenticat(self,password):
+    def authenticate(self,password):
         return True if check_password_hash(self._password, password) else False
 
 

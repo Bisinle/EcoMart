@@ -82,11 +82,12 @@ class Signup (Resource):
         
 
         new_user = User(
-            name=ns.payload['name'],
-            email=ns.payload['email'],
+            user_name=ns.payload['user_name'],
             profile_picture=ns.payload['profile_picture'],    
             password_hash = ns.payload['password'],
-            public_id = str(uuid.uuid4())
+            public_id = str(uuid.uuid4()),
+            roles=ns.payload['roles']
+
         )
 
        
@@ -103,29 +104,37 @@ class Login(Resource):
     
     @ns.expect(login_input_model)
     def post(self):
-        auth = request.authorization
-        print(auth.name)
-        print(auth.password)
-       
+        if request.authorization:
+            auth = request.authorization
+            username=auth.username
+            password=auth.password
+        elif ns.payload:
+            data = ns.payload  # Access JSON data from the request body
 
-        if not auth or not auth.password or not auth.username:
-            return jsonify({"message":"could not verify"})
+            username = data.get('username')
+            password = data.get('password')
+
+        if not username or not password:
+            return jsonify({"message": "Please provide both username and password"}), 400
+
+        user = User.query.filter_by(user_name=username).first()
+        if not user:
+             return jsonify({"message": "User not found"}), 404
         
-        user = User.query.filter_by(name = auth.username).first()
-        if not user: 
-             return jsonify({"message":"user not found"})
-        
-        if  user.authenticat(auth.password):
+        if user.authenticate(password):
+            # Import these modules at the top of your script:
+            # import jwt
+            # import datetime
+            
+            # Generate a JWT token
             token = jwt.encode(
-            {'public_id':user.public_id, 
-             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=59)},
-             app.config['SECRET_KEY']
-             
-              
-               )
-             
+                {'public_id': user.public_id, 
+                 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=59)},
+                 app.config['SECRET_KEY'])
+            
+            return make_response(jsonify({"token": token}), 200)
         
-        return jsonify({"token":token})
+        return jsonify({"message": "Authentication failed"}), 401
 
 
 

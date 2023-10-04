@@ -78,10 +78,10 @@ users_schema = UserSchema(many=True)
 '''--------------M O D E L -------------------------'''
 user_model_input =api.model('signup',{
     
-    'name':fields.String,
-    'email':fields.String,
+    'user_name':fields.String,
     'profile_picture':fields.String,
     'password':fields.String,
+    'roles':fields.String
   
 
 })
@@ -89,7 +89,7 @@ user_model_input =api.model('signup',{
 
 login_input_model =api.model('login',{
     
-    'name':fields.String,
+    'username':fields.String,
     'password':fields.String,
   
 
