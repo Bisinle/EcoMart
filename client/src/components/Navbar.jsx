@@ -53,8 +53,8 @@ function Navbar({ globalvariable }) {
             </li>
           </ul>
 
-          <NavLink to={"/logout"} onClick={logout}>
-            Logout
+          <NavLink to={"/login"} onClick={logout}>
+            login
           </NavLink>
         </div>
       </nav>

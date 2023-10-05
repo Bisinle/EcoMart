@@ -22,14 +22,13 @@ function App() {
     <div className="App">
       <Navbar token={globalvariable} />
 
-      <Routes element={globalvariable ? <Logout /> : <Login />}>
+      <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="About" element={<About />} />
+        {/* <Route path="About" element={<About />} /> */}
         <Route path="about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="login" element={<Login />} />
-        <Route path="logout" element={<Logout />} />
         <Route path="signup" element={<Signup />} />
       </Routes>
 

@@ -40,9 +40,9 @@ export const AppProvider = ({ children }) => {
       value={{
         cartCount,
         setCartCount,
-        globalvariable,
+
         wishlistCount,
-        setGlobalvariable,
+
         setWishlistCount,
         products,
         setProducts,
