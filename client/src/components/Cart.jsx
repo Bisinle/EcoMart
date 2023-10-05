@@ -2,6 +2,7 @@ import React from "react";
 import "./Cart.css";
 import { BsTrash } from "react-icons/bs";
 import { useAppContext } from "../MyContext";
+import axios from 'axios';
 
 function Cart({ showCart, setShowCart }) {
   const { cartCount, setCartCount, products, setProducts, setQuantity, quantity } = useAppContext();
@@ -32,6 +33,24 @@ function Cart({ showCart, setShowCart }) {
     const newProducts = [...products];
     newProducts.splice(index, 1);
     setProducts(newProducts);
+  };
+
+  const checkOutUrl = 'https://ecomart-x0ur.onrender.com/orders'
+
+  const handleCheckout = async () => {
+    try {
+      const orders = products.map((product, index) => ({
+        item_price: parseFloat(product.price),
+        item_quantity: quantity[index],
+        amount: product.amount,
+        address: "Ngong lane, Ngong Road, Nairobi"
+      }));
+
+      const response = await axios.post(checkOutUrl, orders);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   if (!showCart) return null;
@@ -75,7 +94,7 @@ function Cart({ showCart, setShowCart }) {
             .reduce((a, b) => a + b, 0)
             .toFixed(2)}
         </p>
-        <button>Checkout</button>
+        <button onClick={handleCheckout}>Checkout</button>
       </div>
     </div>
   );
