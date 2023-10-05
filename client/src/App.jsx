@@ -1,19 +1,45 @@
+import { Route, Router, Routes } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
-import ProductCard from "./components/ProductCard";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
-import SearchFilter from "./components/SearchFilter";
+import Home from "./components/Home";
+import About from "./components/About";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Contacts from "./components/Contacts";
 
 function App() {
   return (
-    <>
+    <div className="App">
       <Navbar />
-      <Header />
-
-      <ProductCard />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="About" element={<About />} />
+        <Route path="about" element={<About />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        {/* <Route
+          path="OrderSummary"
+          element={<OrderSummary UserObject={User} />}
+        />
+        <Route
+          path="OrderForm"
+          element={<OrderForm givMeObject={ObjectReceiver} />}
+        /> */}
+      </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 
 export default App;
+
+// return (
+//   // <>
+//   //   <Navbar />
+//   //
+//   //
+//   // </>
+
+// )

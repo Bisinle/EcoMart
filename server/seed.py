@@ -1,31 +1,72 @@
-from api import app,db,Vendor,Product,Customer
+from api import app,db,Vendor,Product,Customer,User,Order,Category
 from faker import Faker
 import random 
 from random import randint, choice as rc
+import uuid
+
 
 fake = Faker()
 
 with app.app_context():
+    '''-------------- USER AUTHENTICATION TABLE-----------------------'''
+    User.query.delete()
+
+    user_list = []
+    for user in range(50):      
+
+        
+        user_name = fake.unique.user_name()
+        company = fake.company()
+
+        user = User(
+            user_name=user_name,
+            # email=user_name.split(' ')[0]+"@"+company[:5]+".com",
+            profile_picture='https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            password_hash = str(random.randint(2,54324423)),
+            public_id = str(uuid.uuid4()),
+            roles=rc(['Admin','Vendor','Customer'])
+
+         
+        )
+        user_list.append(user)
+    db.session.add_all(user_list)
+    db.session.commit()
+
+
+
+
+
+
     Vendor.query.delete()
 
-
-    code =['+254 ','+256 ','+252 ','+251 ']
+    profile_image =[]
+    code =['+254','+256','+252','+251']
     vendor_list = []
-    for i in range(10):
-        f_name = fake.unique.first_name()
-        l_name = fake.unique.last_name()
+    vendors = [ user for user in user_list if user.roles=='Vendor']
+    for i in range(len(vendors)):
+        user_obj=rc(vendors)
+        l_name = fake.last_name()
         company = fake.company()
-        vendor = Vendor(
-            
-        name=f_name +' '+ l_name,
+  
+    
+        vendor = Vendor(            
+        first_name=user_obj.user_name,
+        last_name = fake.last_name(),
         company=company,
         phone_number=str(rc(code)) +'7'+ str(random.randint(111111111,9999999999)),
-        email=f_name+'@' + company[:4]+'.com',
+        email=user_obj.user_name+'@' + company[:4]+'.com',
+        user_id = user_obj.id
 
         )
 
-        vendor_list.append(vendor)
+
+       
+        if user_obj.user_name not  in [vendor.first_name for vendor  in vendor_list]:
+            vendor_list.append(vendor)
+
+
     db.session.add_all(vendor_list)
+    db.session.commit()
 
 
 
@@ -35,21 +76,40 @@ with app.app_context():
 
     code =['+254 ','+256 ','+252 ','+251 ']
     customer_list = []
-    for i in range(10):
-        f_name = fake.unique.first_name()
-        l_name = fake.unique.last_name()
-        company = fake.company()
+    customers=[ user for user in user_list if user.roles=='Customer']
+    print(len(customers))
+    for i in range(len(customers)):
+
+        
+        cutomer_form_user_table=rc(customers)
+        l_name = fake.last_name()
         customer = Customer(
             
-        name=f_name +' '+ l_name,
+        first_name=cutomer_form_user_table.user_name,
+        last_name=fake.last_name(),
         phone_number=str(rc(code)) +'7'+ str(random.randint(111111111,9999999999)),
-        email=f_name+'@gmail.com',
+        email=cutomer_form_user_table.user_name+'@gmail.com',
+        user_id = cutomer_form_user_table.id
 
         )
-
-        customer_list.append(customer)
+          
+        if cutomer_form_user_table.id not  in [customer.user_id for customer  in customer_list ]:
+            customer_list.append(customer)
     db.session.add_all(customer_list)
+    db.session.commit()
 
+
+
+    '''________________________CATEGORIES TABLE POPULATION___________________________'''
+    Category.query.delete()
+    categories_list =['Electronics','Games', 'Fashion','Sports','Food and Groceries','Fitness','Home and Furniture','Health ','Beauty','Books','Media']
+
+    for i in range(len(categories_list)):
+        category = Category(
+            category_name =categories_list[i]
+        )
+        db.session.add(category)
+        db.session.commit()
 
 
 
@@ -170,8 +230,9 @@ with app.app_context():
                 image=product['image'],
                 price=product['price'],
                 quantity=product['quantity'],
-                category=product['category'],
-                vendor_id =rc([v.id for v in vendor_list])
+                discount=product['price'],
+                vendor_id =rc([v.id for v in Vendor.query.all()]),
+                category_id = rc([category.id for category in     Category.query.all()])
 
             )
             product_list.append(prod)
@@ -182,5 +243,46 @@ with app.app_context():
 
 
 
-    vendor1 = Vendor.query.all()[0]
-    print(vendor1.products)
+    # ''' S E E D I N G__________________O R D E R S________________T A B L E '''
+
+    # Order.query.delete()
+    # order_list = []
+    # for i in range(10):
+    #     product_obj = rc(product_list)
+    #     order = Order(
+    #         item_price = product_obj.price,
+    #         item_quantity = random.randint(1,5),
+    #         address= fake.address(),
+    #         product_id= rc([prod.id for prod in product_list]),
+    #         customer_id=rc([cust.id for cust in customer_list])
+    #     )
+    #     order_list.append(order)
+    # db.session.add_all(order_list)
+    # db.session.commit()
+
+
+
+
+
+
+
+
+    '''R E L A T I O N ---S H I P _________________ T E S T I N G'''
+    # # vendor1 = Vendor.query.all()[0]
+    # # print(vendor1.products)
+
+    # ven1  = Vendor.query.all()[0]
+    # print(ven1.user)
+
+    # customer1  = Customer.query.all()[2]
+    # prod1  = Product.query.all()[3]
+    # print(customer1.products)
+    # print(customer1.orders)
+    # print(prod1.orders)
+
+
+
+    category1 = Category.query.all()[0]
+    print(category1.products)
+
+
