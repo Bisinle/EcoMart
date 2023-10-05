@@ -1,34 +1,45 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, json } from "react-router-dom";
 import axios from "axios";
+// import { useAppContext } from "../MyContext";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  // const { setGlobalvariable } = useContext(useAppContext);
+  // console.log(globalvariable);
 
-  const handleLogin = async (e) => {
+  function handleLogin(e) {
     e.preventDefault();
-
-    try {
-      const response = await axios.post("/login", {
-        email,
-        password,
+    const data = {
+      username: username,
+      password: password,
+    };
+    const base_url = "http://127.0.0.1:5555/login";
+    fetch(base_url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((response) => {
+        // console.log(response); // Handle the successful response here
+        const token = response.token;
+        // console.log(token);
+        localStorage.setItem("token", token);
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
       });
-
-      // Assuming your server responds with a JWT token
-      const { token } = response.data;
-
-      // Store the token in local storage
-      localStorage.setItem("token", token);
-
-      // Redirect or update the UI as needed after successful login
-      // For example: history.push("/dashboard"); if using react-router
-    } catch (error) {
-      console.error("Login failed:", error);
-      setError("Invalid email or password"); // Display a generic error message
-    }
-  };
+  }
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
@@ -36,11 +47,11 @@ const Login = () => {
         <h2 className="text-2xl mb-4">Login</h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block mb-2">Email:</label>
+            <label className="block mb-2">username:</label>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full p-2 border rounded"
               required
             />
