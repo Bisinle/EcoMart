@@ -37,6 +37,7 @@ const SignUp = () => {
     //     .then((data) => {
     //       console.log(data);
     //     });
+    //
   }
 
   return (
