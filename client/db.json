@@ -1,0 +1,294 @@
+{
+    "data": [
+      {
+        "company": "Johnson Inc",
+        "email": "jasonclayton@John.com",
+        "first_name": "jasonclayton",
+        "id": 1,
+        "last_name": "Davis",
+        "phone_number": "+25173887542146",
+        "products": [
+          {
+            "category": 11,
+            "image": "https://media.istockphoto.com/id/920681320/photo/plastic-drink-water-bottle.jpg?s=612x612&w=0&k=20&c=_TJzF3E2pWD72C-BAyq5Psz0iwf05UWAzabGpB0fd7k=",
+            "price": 24,
+            "prod_description": "Insulated water bottle with a sleek design, keeps beverages cold for hours.",
+            "prod_name": "Stainless Steel Water Bottle",
+            "quantity": 70
+          },
+          {
+            "category": 11,
+            "image": "https://media.istockphoto.com/id/920681320/photo/plastic-drink-water-bottle.jpg?s=612x612&w=0&k=20&c=_TJzF3E2pWD72C-BAyq5Psz0iwf05UWAzabGpB0fd7k=",
+            "price": 24,
+            "prod_description": "Insulated water bottle with a sleek design, keeps beverages cold for hours.",
+            "prod_name": "Stainless Steel Water Bottle",
+            "quantity": 70
+          },
+          {
+            "category": 9,
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwiEcP3es9PJ8-ChugIt__RGLe9-9GmS54Fw&usqp=CAU",
+            "price": 59,
+            "prod_description": "Classic men's dress shirt made from high-quality cotton, suitable for formal occasions.",
+            "prod_name": "Men's Dress Shirt",
+            "quantity": 45
+          }
+        ]
+      },
+      {
+        "company": "King Inc",
+        "email": "sarah37@King.com",
+        "first_name": "sarah37",
+        "id": 2,
+        "last_name": "Davis",
+        "phone_number": "+25674051820064",
+        "products": []
+      },
+      {
+        "company": "Vargas LLC",
+        "email": "williamsrebecca@Varg.com",
+        "first_name": "williamsrebecca",
+        "id": 3,
+        "last_name": "Rush",
+        "phone_number": "+25678410809532",
+        "products": [
+          {
+            "category": 3,
+            "image": "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/05/333176/1.jpg?1506",
+            "price": 99,
+            "prod_description": "High-performance running shoes for men, perfect for marathon training.",
+            "prod_name": "Men's Running Shoes",
+            "quantity": 50
+          },
+          {
+            "category": 1,
+            "image": "https://media.wired.com/photos/641cbccdc81d68060ce359bf/1:1/w_1473,h_1473,c_limit/Anker-Soundcore-Space-A40-Earbuds-and-Case-Best-Wireless-Earbuds--Gear.jpg",
+            "price": 79,
+            "prod_description": "True wireless earbuds with noise-canceling technology and long battery life.",
+            "prod_name": "Wireless Bluetooth Earbuds",
+            "quantity": 60
+          }
+        ]
+      },
+      {
+        "company": "Craig-Thompson",
+        "email": "loribrown@Crai.com",
+        "first_name": "loribrown",
+        "id": 4,
+        "last_name": "Myers",
+        "phone_number": "+25176473284150",
+        "products": [
+          {
+            "category": 4,
+            "image": "https://m.media-amazon.com/images/I/81a9mSKpkvL._AC_UF1000,1000_QL80_.jpg",
+            "price": 29,
+            "prod_description": "Premium non-slip yoga mat for women, ideal for yoga and Pilates workouts.",
+            "prod_name": "Women's Yoga Mat",
+            "quantity": 100
+          },
+          {
+            "category": 7,
+            "image": "https://hips.hearstapps.com/hmg-prod/images/fitness-trackers-6424a32a86f6e.jpg",
+            "price": 129,
+            "prod_description": "Smart fitness tracker watch with heart rate monitoring and GPS tracking.",
+            "prod_name": "Fitness Tracker Watch",
+            "quantity": 25
+          }
+        ]
+      },
+      {
+        "company": "Henderson-Stephens",
+        "email": "vkirby@Hend.com",
+        "first_name": "vkirby",
+        "id": 5,
+        "last_name": "Hodges",
+        "phone_number": "+25278858226754",
+        "products": [
+          {
+            "category": 7,
+            "image": "dslr_camera.jpg",
+            "price": 899,
+            "prod_description": "High-quality DSLR camera with advanced features for photography enthusiasts.",
+            "prod_name": "Professional DSLR Camera",
+            "quantity": 20
+          },
+          {
+            "category": 10,
+            "image": "https://media.wired.com/photos/641cbccdc81d68060ce359bf/1:1/w_1473,h_1473,c_limit/Anker-Soundcore-Space-A40-Earbuds-and-Case-Best-Wireless-Earbuds--Gear.jpg",
+            "price": 79,
+            "prod_description": "True wireless earbuds with noise-canceling technology and long battery life.",
+            "prod_name": "Wireless Bluetooth Earbuds",
+            "quantity": 60
+          },
+          {
+            "category": 1,
+            "image": "https://therealleathercompany.com/cdn/shop/collections/leather-wallets.jpg?v=1691140742",
+            "price": 49,
+            "prod_description": "Genuine leather wallet with multiple card slots and a coin pocket.",
+            "prod_name": "Leather Wallet",
+            "quantity": 30
+          },
+          {
+            "category": 10,
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRTQ--QoEChqrwO3ILNWTxzqkixKNcYJWIyw&usqp=CAU",
+            "price": 9,
+            "prod_description": "Premium organic green tea leaves, rich in antioxidants and flavor.",
+            "prod_name": "Organic Green Tea",
+            "quantity": 150
+          },
+          {
+            "category": 1,
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwiEcP3es9PJ8-ChugIt__RGLe9-9GmS54Fw&usqp=CAU",
+            "price": 59,
+            "prod_description": "Classic men's dress shirt made from high-quality cotton, suitable for formal occasions.",
+            "prod_name": "Men's Dress Shirt",
+            "quantity": 45
+          },
+          {
+            "category": 9,
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmSce72qbiyuWkjdprDvhNBNGVBpByYKrruQ&usqp=CAU",
+            "price": 12,
+            "prod_description": "Elegant ceramic coffee mug with a unique design, perfect for enjoying your morning coffee.",
+            "prod_name": "Ceramic Coffee Mug",
+            "quantity": 90
+          }
+        ]
+      },
+      {
+        "company": "Alvarado-Sanders",
+        "email": "james54@Alva.com",
+        "first_name": "james54",
+        "id": 6,
+        "last_name": "Smith",
+        "phone_number": "+2517855253937",
+        "products": [
+          {
+            "category": 6,
+            "image": "https://m.media-amazon.com/images/I/6104nsuFpWL._AC_UF894,1000_QL80_.jpg",
+            "price": 19,
+            "prod_description": "Adjustable smartphone mount for bicycles, compatible with most smartphones.",
+            "prod_name": "Smartphone Holder for Bikes",
+            "quantity": 75
+          },
+          {
+            "category": 7,
+            "image": "https://media.wired.com/photos/641cbccdc81d68060ce359bf/1:1/w_1473,h_1473,c_limit/Anker-Soundcore-Space-A40-Earbuds-and-Case-Best-Wireless-Earbuds--Gear.jpg",
+            "price": 79,
+            "prod_description": "True wireless earbuds with noise-canceling technology and long battery life.",
+            "prod_name": "Wireless Bluetooth Earbuds",
+            "quantity": 60
+          },
+          {
+            "category": 6,
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_GIEIg-2QSE1h8JOiBuGuiwnA0dsLWBBczQ&usqp=CAU",
+            "price": 599,
+            "prod_description": "High-definition LED TV with a large screen for an immersive viewing experience.",
+            "prod_name": "HD LED TV",
+            "quantity": 15
+          }
+        ]
+      },
+      {
+        "company": "Chang, Miller and Bennett",
+        "email": "angela17@Chan.com",
+        "first_name": "angela17",
+        "id": 7,
+        "last_name": "Davis",
+        "phone_number": "+25679290282356",
+        "products": [
+          {
+            "category": 4,
+            "image": "https://ke.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/05/333176/1.jpg?1506",
+            "price": 99,
+            "prod_description": "High-performance running shoes for men, perfect for marathon training.",
+            "prod_name": "Men's Running Shoes",
+            "quantity": 50
+          },
+          {
+            "category": 10,
+            "image": "https://media.istockphoto.com/id/920681320/photo/plastic-drink-water-bottle.jpg?s=612x612&w=0&k=20&c=_TJzF3E2pWD72C-BAyq5Psz0iwf05UWAzabGpB0fd7k=",
+            "price": 24,
+            "prod_description": "Insulated water bottle with a sleek design, keeps beverages cold for hours.",
+            "prod_name": "Stainless Steel Water Bottle",
+            "quantity": 70
+          },
+          {
+            "category": 2,
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_GIEIg-2QSE1h8JOiBuGuiwnA0dsLWBBczQ&usqp=CAU",
+            "price": 599,
+            "prod_description": "High-definition LED TV with a large screen for an immersive viewing experience.",
+            "prod_name": "HD LED TV",
+            "quantity": 15
+          },
+          {
+            "category": 4,
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_GIEIg-2QSE1h8JOiBuGuiwnA0dsLWBBczQ&usqp=CAU",
+            "price": 599,
+            "prod_description": "High-definition LED TV with a large screen for an immersive viewing experience.",
+            "prod_name": "HD LED TV",
+            "quantity": 15
+          }
+        ]
+      },
+      {
+        "company": "Gonzalez-Owens",
+        "email": "spenceramy@Gonz.com",
+        "first_name": "spenceramy",
+        "id": 8,
+        "last_name": "Wise",
+        "phone_number": "+25473601116667",
+        "products": [
+          {
+            "category": 4,
+            "image": "dslr_camera.jpg",
+            "price": 899,
+            "prod_description": "High-quality DSLR camera with advanced features for photography enthusiasts.",
+            "prod_name": "Professional DSLR Camera",
+            "quantity": 20
+          },
+          {
+            "category": 2,
+            "image": "https://media.istockphoto.com/id/920681320/photo/plastic-drink-water-bottle.jpg?s=612x612&w=0&k=20&c=_TJzF3E2pWD72C-BAyq5Psz0iwf05UWAzabGpB0fd7k=",
+            "price": 24,
+            "prod_description": "Insulated water bottle with a sleek design, keeps beverages cold for hours.",
+            "prod_name": "Stainless Steel Water Bottle",
+            "quantity": 70
+          }
+        ]
+      },
+      {
+        "company": "Reyes, May and Shaffer",
+        "email": "john56@Reye.com",
+        "first_name": "john56",
+        "id": 9,
+        "last_name": "Turner",
+        "phone_number": "+2517602859292",
+        "products": [
+          {
+            "category": 3,
+            "image": "https://m.media-amazon.com/images/I/81a9mSKpkvL._AC_UF1000,1000_QL80_.jpg",
+            "price": 29,
+            "prod_description": "Premium non-slip yoga mat for women, ideal for yoga and Pilates workouts.",
+            "prod_name": "Women's Yoga Mat",
+            "quantity": 100
+          },
+          {
+            "category": 6,
+            "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_GIEIg-2QSE1h8JOiBuGuiwnA0dsLWBBczQ&usqp=CAU",
+            "price": 599,
+            "prod_description": "High-definition LED TV with a large screen for an immersive viewing experience.",
+            "prod_name": "HD LED TV",
+            "quantity": 15
+          },
+          {
+            "category": 1,
+            "image": "https://therealleathercompany.com/cdn/shop/collections/leather-wallets.jpg?v=1691140742",
+            "price": 49,
+            "prod_description": "Genuine leather wallet with multiple card slots and a coin pocket.",
+            "prod_name": "Leather Wallet",
+            "quantity": 30
+          }
+        ]
+      }
+    ]
+  }
+  
