@@ -9,7 +9,8 @@ import About from "./components/About";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Contacts from "./components/Contacts";
-import Logout from "./components/Logout";
+import Wishlist from "./components/WishList";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [globalvariable, setGlobalvariable] = useState("");
@@ -26,12 +27,14 @@ function App() {
         <Route path="About" element={<About />} />
         <Route path="about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="login" element={<Login />} />
         <Route path="logout" element={<Logout />} />
         <Route path="signup" element={<Signup />} />
       </Routes>
 
       <Footer />
+      <ToastContainer />
     </div>
   );
 }

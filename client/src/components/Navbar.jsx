@@ -29,12 +29,14 @@ function Navbar({ globalvariable }) {
           <NavLink to={"/contacts"}>Contacs</NavLink>
 
           <ul className="flex gap-8">
-            <li className="nav-blocks relative">
-              {wishlistCount.length > 0 && (
-                <span className="navbar-badge">{wishlistCount.length}</span>
-              )}
-              <BsFillBookmarkHeartFill className="nav-icons" />
-            </li>
+            <NavLink to="/wishlist">
+              <li className="nav-blocks relative">
+                {wishlistCount.length > 0 && (
+                  <span className="navbar-badge">{wishlistCount.length}</span>
+                )}
+                <BsFillBookmarkHeartFill className="nav-icons" />
+              </li>
+            </NavLink>
             <li className="nav-blocks">
               <BsPerson className="nav-icons" />
             </li>
