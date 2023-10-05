@@ -1,7 +1,7 @@
 from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,Category,app,db,request
 from api.serialization import api,vendor_schema,vendors_schema, customer_schema,users_schema,order_model_input
 from api.serialization import order_schema,orders_schema, customers_schema, product_schema,category_schema
-from api.serialization import user_schema,ns,Resource,user_model_input,login_input_model
+from api.serialization import user_schema,ns,Resource,user_model_input,login_input_model,vendor_model_update
 import uuid
 import jwt
 import datetime
@@ -32,8 +32,8 @@ def token_required(f):
 
 @ns.route('/vendors')
 class Vendors(Resource):
-    @token_required
-    def get(self,current_user):
+    # @token_required
+    def get(self):
         all_vendors = Vendor.query.all()
 
         if not all_vendors:
@@ -50,6 +50,7 @@ class Vendors(Resource):
 
 @ns.route('/vendors/<id>')
 class Vendoer_by_id(Resource):
+    @ns.expect(vendor_model_update)
     def put(self,id):
         # get the vendor
         vendor = Vendor.query.filter_by(id=id).first()

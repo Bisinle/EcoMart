@@ -37,6 +37,14 @@ vendors_schema = VendorSchema(many=True)
   
 
 # })
+vendor_model_update =api.model('update-vendor',{
+    
+ 
+    'company':fields.String,
+    'phone_number':fields.String
+  
+
+})
 
 vendor_model_update =api.model('update-vendor',{
     
@@ -162,6 +170,7 @@ login_input_model =api.model('login',{
   
 
 })
+
 
 
 
