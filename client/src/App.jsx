@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Contacts from "./components/Contacts";
 import Wishlist from "./components/WishList";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         /> */}
       </Routes>
       <Footer />
+      <ToastContainer />
     </div>
   );
 }

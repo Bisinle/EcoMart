@@ -3,6 +3,8 @@ import "./Cart.css";
 import { BsTrash } from "react-icons/bs";
 import { useAppContext } from "../MyContext";
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Cart({ showCart, setShowCart }) {
   const { cartCount, setCartCount, products, setProducts, setQuantity, quantity } = useAppContext();
@@ -54,10 +56,12 @@ function Cart({ showCart, setShowCart }) {
       setQuantity([]);
 
       setShowCart(false);
-      alert('Order placed successfully!');
+      toast.success('Order placed successfully!');
 
     } catch (error) {
       console.error(error);
+
+      toast.error('Order failed. Please try again.');
     }
   };
 
