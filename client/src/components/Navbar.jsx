@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useAppContext } from "../MyContext";
 import { NavLink, Outlet } from "react-router-dom";
@@ -62,43 +63,8 @@ function Navbar() {
       </nav>
       <main>{<Outlet />}</main>
     </div>
+
   );
 }
 
 export default Navbar;
-
-//
-
-//       <ul className="flex gap-8">
-//         <li className="nav-blocks">
-//           <p>
-//             <NavLink to="/login">Login</NavLink>
-//           </p>
-//         </li>
-//         <li className="nav-blocks relative">
-//           {wishlistCount.length > 0 && (
-//             <span className="navbar-badge">{wishlistCount.length}</span>
-//           )}
-//           <BsFillBookmarkHeartFill className="nav-icons" />
-//           <p>Wishlist</p>
-//         </li>
-
-//         <li className="nav-blocks relative">
-//           {cartCount.length > 0 && (
-//             <span className="navbar-badge">{cartCount.length}</span>
-//           )}
-//         </li>
-
-//         <li className="nav-blocks">
-//           <button onClick={() => setShowCart(true)}>
-//             <BsCart3 className="nav-icons" />{" "}
-//           </button>
-
-//           <p>Cart</p>
-//           <Cart showCart={showCart} setShowCart={setShowCart} />
-//         </li>
-//       </ul>
-
-//
-
-// export default Navbar;

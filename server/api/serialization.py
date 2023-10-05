@@ -27,16 +27,23 @@ class VendorSchema(ma.SQLAlchemyAutoSchema):
 vendor_schema = VendorSchema()
 vendors_schema = VendorSchema(many=True)
 
-# vendor_model_input =api.model('add-vendor',{
+vendor_model_input =api.model('add-vendor',{
     
-#     'fist_name':fields.String,
-#     'last_name':fields.String,
-#     'company':fields.String,
-#     'email':fields.String,
-#     'phone_number':fields.String
+    'first_name':fields.String,
+    'last_name':fields.String,
+    'company':fields.String,
+    'phone_number':fields.String
   
 
-# })
+})
+vendor_model_update =api.model('update-vendor',{
+    
+ 
+    'company':fields.String,
+    'phone_number':fields.String
+  
+
+})
 
 vendor_model_update =api.model('update-vendor',{
     
@@ -162,6 +169,7 @@ login_input_model =api.model('login',{
   
 
 })
+
 
 
 

@@ -1,3 +1,4 @@
+
 import { Route, Router, Routes } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -8,10 +9,12 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Contacts from "./components/Contacts";
 
+
 function App() {
   return (
     <div className="App">
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="About" element={<About />} />
@@ -30,6 +33,7 @@ function App() {
       </Routes>
       <Footer />
     </div>
+
   );
 }
 
