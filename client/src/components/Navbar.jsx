@@ -2,13 +2,13 @@ import React, {useState} from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { BsPerson, BsCart3, BsFillBookmarkHeartFill } from "react-icons/bs";
 import App from "../App";
+import Cart from "./Cart";
 
 import { useAppContext } from "../MyContext";
 
 function Navbar() {
   const { cartCount, wishlistCount } = useAppContext();
 
-import Cart from "./Cart";
 
 function Navbar() {
 
