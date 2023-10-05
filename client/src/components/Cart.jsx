@@ -1,9 +1,13 @@
 import React from "react";
 import "./Cart.css";
 import { BsTrash } from "react-icons/bs";
+import { useAppContext } from "../MyContext";
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Cart({ showCart, setShowCart }) {
-  const [quantity, setQuantity] = React.useState([1, 1, 1]);
+  const { cartCount, setCartCount, products, setProducts, setQuantity, quantity } = useAppContext();
 
   const handleIncrease = (index) => {
     const newQuantity = [...quantity];
@@ -23,28 +27,43 @@ function Cart({ showCart, setShowCart }) {
     const newQuantity = [...quantity];
     newQuantity.splice(index, 1);
     setQuantity(newQuantity);
+
+    const newCartCount = [...cartCount];
+    newCartCount.splice(index, 1);
+    setCartCount(newCartCount);
+
+    const newProducts = [...products];
+    newProducts.splice(index, 1);
+    setProducts(newProducts);
   };
 
-  const products = [
-    {
-      name: "Nike Superstar",
-      size: "8.5",
-      price: "$239.55",
-      img: "https://images.journeys.com/images/products/1_595960_MD_THERO.JPG",
-    },
-    {
-      name: "H&M T-Shirt",
-      size: "S",
-      price: "$14.99",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhbqcpGv1PxClKLk2qhWip26Ynz2D1xMkYNChZp00&s",
-    },
-    {
-      name: "Gucci CG Marmont",
-      size: "N/A",
-      price: "$1850.00",
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLUOP1fFZOblQ1mU8RLmioZQm8HBVZg3zmyDLmr1kuAg&s",
-    },
-  ];
+  const checkOutUrl = 'https://ecomart-x0ur.onrender.com/orders'
+
+  const handleCheckout = async () => {
+    try {
+      const orders = products.map((product, index) => ({
+        item_price: parseFloat(product.price),
+        item_quantity: quantity[index],
+        amount: product.amount,
+        address: "Ngong lane, Ngong Road, Nairobi"
+      }));
+
+      const response = await axios.post(checkOutUrl, orders);
+      console.log(response.data);
+
+      setProducts([]);
+      setCartCount([]);
+      setQuantity([]);
+
+      setShowCart(false);
+      toast.success('Order placed successfully!');
+
+    } catch (error) {
+      console.error(error);
+
+      toast.error('Order failed. Please try again.');
+    }
+  };
 
   if (!showCart) return null;
 
@@ -57,17 +76,16 @@ function Cart({ showCart, setShowCart }) {
       <div className="group">
         {products.map((product, index) => (
           <div key={index} className="group-2">
-            <img className="img" alt={product.name} src={product.img} />
+            <img className="img" alt={product.name} src={product.image} />
             <div className="group-3">
               <h2>{product.name}</h2>
-              <p>Size: {product.size}</p>
             </div>
             <div className="group-4">
               <button onClick={() => handleDecrease(index)}>-</button>
               <p>{quantity[index]}</p>
               <button onClick={() => handleIncrease(index)}>+</button>
             </div>
-            <p className="price">{product.price}</p>
+            <p className="price">$ {parseFloat(product.price) * quantity[index]}</p>
             <button
               className="remove-button clickable-element"
               onClick={() => handleRemove(index)}
@@ -81,14 +99,17 @@ function Cart({ showCart, setShowCart }) {
         <p>Total items: {quantity.reduce((a, b) => a + b, 0)}</p>
         <p>
           Subtotal: $
-          {["239.55", "14.99", "1850.00"]
-            .map((price, index) => parseFloat(price) * quantity[index])
+          {products
+            .map(
+              (product, index) => parseFloat(product.price) * quantity[index]
+            )
             .reduce((a, b) => a + b, 0)
             .toFixed(2)}
         </p>
-        <button>Checkout</button>
+        <button onClick={handleCheckout}>Checkout</button>
       </div>
     </div>
   );
 }
+
 export default Cart;

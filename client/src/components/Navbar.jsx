@@ -22,22 +22,24 @@ function Navbar() {
             Home
           </NavLink>
           <NavLink to={"/about"}>About</NavLink>
-          <NavLink to={"/contacts"}>Contacs</NavLink>
+          <NavLink to={"/contacts"}>Contacts</NavLink>
 
           <NavLink to={"/account"}>
             {" "}
             <BsPerson className="nav-icons" />{" "}
           </NavLink>
 
-          <NavLink to={"/contacts"}> Contacs</NavLink>
+          <NavLink to={"/contacts"}> Contacts</NavLink>
 
           <ul className="flex gap-8">
-            <li className="nav-blocks relative">
-              {wishlistCount.length > 0 && (
-                <span className="navbar-badge">{wishlistCount.length}</span>
-              )}
-              <BsFillBookmarkHeartFill className="nav-icons" />
-            </li>
+            <NavLink to="/wishlist">
+              <li className="nav-blocks relative">
+                {wishlistCount.length > 0 && (
+                  <span className="navbar-badge">{wishlistCount.length}</span>
+                )}
+                <BsFillBookmarkHeartFill className="nav-icons" />
+              </li>
+            </NavLink>
             <li className="nav-blocks">
               <BsPerson className="nav-icons" />
             </li>
