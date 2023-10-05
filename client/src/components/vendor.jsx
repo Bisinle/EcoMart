@@ -47,10 +47,39 @@ const VendorDashboard = () => {
     setVendors(updatedVendors);
     setEditingVendor(null); // Close the edit mode
   };
+  // const updateVendor = async (updatedVendor) => {
+  //   try {
+  //     const response = await axios.put(`/api/vendors/${updatedVendor.id}`, updatedVendor);
+  //     if (response.data) {
+  //       const updatedVendors = vendors.map((v) =>
+  //         v.id === updatedVendor.id ? response.data : v
+  //       );
+  //       setVendors(updatedVendors);
+  //       setEditingVendor(null);
+  //     }
+  //   } catch (error) {
+  //     console.error('Failed to update vendor:', error);
+  //   }
+  // };
+  
 
   const editVendor = (vendor) => {
     setEditingVendor(vendor);
   };
+//   const editVendor = async (vendor) => {
+//   try {
+//     const response = await axios.put(`/api/vendors/${vendor.id}`, vendor);
+//     if (response.data) {
+//       const updatedVendors = vendors.map((v) =>
+//         v.id === vendor.id ? response.data : v
+//       );
+//       setVendors(updatedVendors);
+//       setEditingVendor(null);  // Close the edit modal or UI
+//     }
+//   } catch (error) {
+//     console.error('Failed to edit vendor:', error);
+//   }
+// };
 
   const addNewVendor = () => {
     // Implement your API call to add a new vendor here
@@ -69,6 +98,25 @@ const VendorDashboard = () => {
     });
   };
 
+  // const addNewVendor = async () => {
+  //   try {
+  //     const response = await axios.post('/api/vendors', newVendor);
+  //     if (response.data) {
+  //       setVendors([...vendors, response.data]);
+  //       setNewVendor({
+  //         first_name: '',
+  //         last_name: '',
+  //         company: '',
+  //         email: '',
+  //         phone_number: '',
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error('Failed to add new vendor:', error);
+  //   }
+  // };
+  
+
   const deleteVendor = (vendorId) => {
     // Implement your API call to delete the vendor here
     // axios.delete(`/delete-vendor-endpoint/${vendorId}`)
@@ -77,6 +125,17 @@ const VendorDashboard = () => {
     const updatedVendors = vendors.filter((v) => v.id !== vendorId);
     setVendors(updatedVendors);
   };
+
+  // const deleteVendor = async (vendorId) => {
+  //   try {
+  //     await axios.delete(`/api/vendors/${vendorId}`);
+  //     const updatedVendors = vendors.filter((v) => v.id !== vendorId);
+  //     setVendors(updatedVendors);
+  //   } catch (error) {
+  //     console.error('Failed to delete vendor:', error);
+  //   }
+  // };
+  
 
   return (
     <div className="p-8 bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen">
