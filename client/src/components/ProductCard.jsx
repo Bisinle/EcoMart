@@ -3,26 +3,37 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { useAppContext } from "../MyContext";
 
 function ProductCard({ id, image, price, name }) {
-  const { setCartCount, setWishlistCount, cartCount, wishlistCount } =
-    useAppContext();
+  const {
+    setCartCount,
+    setWishlistCount,
+    cartCount,
+    wishlistCount,
+    setProducts,
+    setQuantity,
+  } = useAppContext();
 
   const addToCart = (prodid) => {
     const updatedCart = [...cartCount, prodid];
     setCartCount(updatedCart);
+    const product = { id, image, price, name };
+    setProducts((prevProducts) => [...prevProducts, product]);
+
+    setQuantity((prevQuantity) => [...prevQuantity, 1]);
+
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
-  const addToWishlist = (prodid) => {
-    const found = wishlistCount.find((element) => element === prodid);
+  const addToWishlist = (prod) => {
+    const found = wishlistCount.find((element) => element === prod.id);
 
     if (found) {
       const updatedWishlist = wishlistCount.filter(
-        (element) => element !== prodid
+        (element) => element !== prod.id
       );
       setWishlistCount(updatedWishlist);
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
     } else {
-      const updatedWishlist = [prodid, ...wishlistCount];
+      const updatedWishlist = [prod, ...wishlistCount];
       setWishlistCount(updatedWishlist);
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
     }
@@ -37,7 +48,7 @@ function ProductCard({ id, image, price, name }) {
   }, []);
 
   return (
-    <article prodid={id} className="product-card">
+    <article product={id} className="product-card">
       <div className="product-image">
         <img
           src={image}
@@ -58,7 +69,7 @@ function ProductCard({ id, image, price, name }) {
           Add to cart
         </button>
         <AiOutlineHeart
-          onClick={() => addToWishlist(id)}
+          onClick={() => addToWishlist({ id, image, price, name })}
           className="nav-icons"
         />
       </div>
