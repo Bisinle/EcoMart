@@ -7,6 +7,24 @@ export const AppProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [quantity, setQuantity] = useState([]);
 
+  const removeFromWishlist = (prod) => {
+    const updatedWishlist = wishlistCount.filter(
+      (element) => element.id !== prod.id
+    );
+    setWishlistCount(updatedWishlist);
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+  };
+
+  const addToCartFromWishlist = (prod) => {
+    const updatedCart = [...cartCount, prod];
+    setCartCount(updatedCart);
+
+    setProducts((prevProducts) => [...prevProducts, prod]);
+    setQuantity((prevQuantity) => [...prevQuantity, 1]);
+
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -18,6 +36,8 @@ export const AppProvider = ({ children }) => {
         setProducts,
         quantity,
         setQuantity,
+        removeFromWishlist,
+        addToCartFromWishlist,
       }}
     >
       {children}

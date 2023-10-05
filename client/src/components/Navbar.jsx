@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BsPerson, BsCart3, BsFillBookmarkHeartFill } from "react-icons/bs";
-import App from "../App";
 import Cart from "./Cart";
 import { useAppContext } from "../MyContext";
 
@@ -18,9 +17,12 @@ function Navbar() {
           {wishlistCount.length > 0 && (
             <span className="navbar-badge">{wishlistCount.length}</span>
           )}
-          <BsFillBookmarkHeartFill className="nav-icons" />
-          <p>Wishlist</p>
+          <Link to="/wishlist">
+            <BsFillBookmarkHeartFill className="nav-icons" />
+            <p>Wishlist</p>
+          </Link>
         </li>
+
         <li className="nav-blocks">
           <BsPerson className="nav-icons" />
           <p>Account</p>
@@ -43,9 +45,7 @@ function Navbar() {
         <li className="cursor-pointer">Contact us</li>
       </ul>
       {/* <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/account" />
-        <Route path="/cart" />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Routes> */}
     </nav>
   );
