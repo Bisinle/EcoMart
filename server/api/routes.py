@@ -72,7 +72,7 @@ class Vendors(Resource):
          )
         db.session.add(vendor)
         db.session.commit()
-        return jsonify(vendor_schema.dump(vendor))
+        return jsonify({"message":" vendor created successfully "},vendor_schema.dump(vendor))
 
 ''' ___________________T O K E N _____________D E C O R A T O R         '''
 
