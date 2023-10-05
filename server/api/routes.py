@@ -2,6 +2,7 @@ from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,Catego
 from api.serialization import api,vendor_schema,vendors_schema, customer_schema,users_schema,order_model_input
 from api.serialization import order_schema,orders_schema, customers_schema, product_schema,category_schema
 from api.serialization import user_schema,ns,Resource,user_model_input,login_input_model,vendor_model_update
+from api.serialization import vendor_model_input
 import uuid
 import jwt
 import datetime
@@ -16,14 +17,23 @@ def token_required(f):
         token =None
         if 'x-access-token' in request.headers:
             token = request.headers['x-access-token']
+            # print(token)
 
         if not token:
             return jsonify({"message" : "Token is missing"})
 
         try:
-            data= jwt.decode(token,app.config['SECRET_KEY'])
+            print('------------------------------------------------')
+            data= jwt.decode(token,app.config['SECRET_KEY'],algorithms=['HS256'])
+            # print(data)
 
             current_user = User.query.filter_by(public_id= data['public_id']).first()
+            print(current_user)
+
+            if not current_user:
+                return jsonify({"message" : "something went wrong"})
+
+
         except:
                 return jsonify({"message" : "Token is invalid"},401)
         return f(current_user,*args, **kwargs)
@@ -32,19 +42,37 @@ def token_required(f):
 
 @ns.route('/vendors')
 class Vendors(Resource):
-    # @token_required
-    def get(self):
+    @token_required
+    def get(current_user,self):
+        if  current_user.roles !='Admin':
+            return jsonify({"message":"only Admins are allowed to access  this "})
         all_vendors = Vendor.query.all()
 
         if not all_vendors:
             return make_response(jsonify({"message":"no vendors found"}))
         
         return make_response(vendors_schema.dump(all_vendors),200)
-    # # @ns.expect(vendor_model_input)
-    # def post(self):
-    #     data = request.get_json()
-    #     print(data)
-        # return jsonify(data)
+    
+    @ns.expect(vendor_model_input)
+    @token_required
+    def post(current_user,self):
+        data = request.get_json()
+        print(data)
+        # if current_user.roles !='Admin':
+        #     return jsonify({"message":"only admins can perform this task "})
+        email=data['first_name']+'@' + data['company'][:4]+'.com'
+        vendor =Vendor(
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            company=data['company'],
+            email=email,
+            phone_number=data['phone_number'],
+            user_id=current_user.id
+             
+         )
+        db.session.add(vendor)
+        db.session.commit()
+        return jsonify(vendor_schema.dump(vendor))
 
 ''' ___________________T O K E N _____________D E C O R A T O R         '''
 
@@ -293,7 +321,8 @@ class Login(Resource):
             token = jwt.encode(
                 {'public_id': user.public_id, 
                  'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=59)},
-                 app.config['SECRET_KEY'])
+                 app.config['SECRET_KEY'],
+                  algorithm="HS256")
             
             return make_response(jsonify({"token": token}), 200)
         
