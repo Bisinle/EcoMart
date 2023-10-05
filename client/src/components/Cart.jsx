@@ -48,6 +48,14 @@ function Cart({ showCart, setShowCart }) {
 
       const response = await axios.post(checkOutUrl, orders);
       console.log(response.data);
+
+      setProducts([]);
+      setCartCount([]);
+      setQuantity([]);
+
+      setShowCart(false);
+      alert('Order placed successfully!');
+
     } catch (error) {
       console.error(error);
     }
