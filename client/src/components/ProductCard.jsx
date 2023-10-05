@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useAppContext } from "../MyContext";
+import { toast } from "react-toastify";
 
 function ProductCard({ id, image, price, name }) {
   const {
@@ -13,25 +14,28 @@ function ProductCard({ id, image, price, name }) {
   } = useAppContext();
 
   const addToCart = (prodid) => {
-    const updatedCart = [...cartCount, prodid];
-    setCartCount(updatedCart);
-    const product = { id, image, price, name };
-    setProducts((prevProducts) => [...prevProducts, product]);
+    const found = cartCount.find((element) => element === prodid);
 
-    setQuantity((prevQuantity) => [...prevQuantity, 1]);
+    if (found) {
+      toast.info("This item is already in your cart.");
+    } else {
+      const updatedCart = [...cartCount, prodid];
+      setCartCount(updatedCart);
+      const product = { id, image, price, name };
+      setProducts((prevProducts) => [...prevProducts, product]);
 
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+      setQuantity((prevQuantity) => [...prevQuantity, 1]);
+
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
   };
 
   const addToWishlist = (prod) => {
-    const found = wishlistCount.find((element) => element === prod.id);
+    const found = wishlistCount.find((element) => element.id === prod.id);
 
     if (found) {
-      const updatedWishlist = wishlistCount.filter(
-        (element) => element !== prod.id
-      );
-      setWishlistCount(updatedWishlist);
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+      toast.info('This item is already on your wishlist.');
+
     } else {
       const updatedWishlist = [prod, ...wishlistCount];
       setWishlistCount(updatedWishlist);
