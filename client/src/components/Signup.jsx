@@ -1,0 +1,113 @@
+import React, { useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
+const SignUp = () => {
+  const [error, setError] = useState(null);
+  const [FormObject, setFormObject] = useState({
+    user_name: "",
+    profile_picture: "",
+    password: "",
+    roles: "",
+  });
+
+  function formObjectCreator(e) {
+    const { name, value } = e.target;
+    setFormObject((prev) => {
+      return { ...prev, [name]: value };
+    });
+  }
+  console.log(FormObject);
+
+  function handleSignUp(e) {
+    // e.preventDefault();
+    console.log("Albert");
+    //   fetch(`http://127.0.0.1:5555/signup`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       FormObject,
+    //     }),
+    //   })
+    //     .then((res) => {
+    //       res.json();
+    //     })
+    //     .then((data) => {
+    //       console.log(data);
+    //     });
+    //
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
+      <div className="bg-white p-8 rounded shadow-md w-96">
+        <h2 className="text-2xl mb-4">Sign Up</h2>
+        <form onSubmit={handleSignUp}>
+          <div className="mb-4">
+            <label className="block mb-2">username:</label>
+            <input
+              type="text"
+              value={FormObject.user_name}
+              onChange={formObjectCreator}
+              className="w-full p-2 border rounded"
+              placeholder="user_name"
+              name="user_name"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-2">profile_picture:</label>
+            <input
+              type="text"
+              value={FormObject.profile_picture}
+              onChange={formObjectCreator}
+              name="profile_picture"
+              className="w-full p-2 border rounded"
+              placeholder="image"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-2">password:</label>
+            <input
+              type="password"
+              value={FormObject.password}
+              onChange={formObjectCreator}
+              name="password"
+              className="w-full p-2 border rounded"
+              placeholder="password"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-2">roles:</label>
+            <input
+              type="roles"
+              value={FormObject.roles}
+              placeholder="roles"
+              onChange={formObjectCreator}
+              className="w-full p-2 border rounded"
+              required
+              name="roles"
+            />
+          </div>
+          <button className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+            Sign Up
+          </button>
+        </form>
+      </div>
+      <div className="mt-4">
+        <p>
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-600 hover:underline">
+            Login
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default SignUp;
