@@ -5,6 +5,8 @@ import { useAppContext } from "../MyContext";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Lottie from "react-lottie";
+import animationData from "../assets/animation_lndl5pze.json";
 
 function Cart({ showCart, setShowCart }) {
   const { cartCount, setCartCount, products, setProducts, setQuantity, quantity } = useAppContext();
@@ -65,6 +67,15 @@ function Cart({ showCart, setShowCart }) {
     }
   };
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
   if (!showCart) return null;
 
   return (
@@ -74,27 +85,35 @@ function Cart({ showCart, setShowCart }) {
       </button>
       <h1 className="text-wrapper">Shopping cart</h1>
       <div className="group">
-        {products.map((product, index) => (
-          <div key={index} className="group-2">
-            <img className="img" alt={product.name} src={product.image} />
-            <div className="group-3">
-              <h2>{product.name}</h2>
+        {products.length > 0 ? (
+          products.map((product, index) => (
+            <div key={index} className="group-2">
+              <img className="img" alt={product.name} src={product.image} />
+              <div className="group-3">
+                <h2>{product.name}</h2>
+              </div>
+              <div className="group-4">
+                <button onClick={() => handleDecrease(index)}>-</button>
+                <p>{quantity[index]}</p>
+                <button onClick={() => handleIncrease(index)}>+</button>
+              </div>
+              <p className="price">$ {parseFloat(product.price) * quantity[index]}</p>
+              <button
+                className="remove-button clickable-element"
+                onClick={() => handleRemove(index)}
+              >
+                <BsTrash />
+              </button>
             </div>
-            <div className="group-4">
-              <button onClick={() => handleDecrease(index)}>-</button>
-              <p>{quantity[index]}</p>
-              <button onClick={() => handleIncrease(index)}>+</button>
-            </div>
-            <p className="price">$ {parseFloat(product.price) * quantity[index]}</p>
-            <button
-              className="remove-button clickable-element"
-              onClick={() => handleRemove(index)}
-            >
-              <BsTrash />
-            </button>
+          ))
+        ) : (
+          <div>
+            <Lottie options={defaultOptions} height={400} width={400} />
+            <h2>Your shopping cart is empty. Start adding products!</h2>
           </div>
-        ))}
+        )}
       </div>
+  
       <div className="summary">
         <p>Total items: {quantity.reduce((a, b) => a + b, 0)}</p>
         <p>
@@ -108,6 +127,8 @@ function Cart({ showCart, setShowCart }) {
         </p>
         <button onClick={handleCheckout}>Checkout</button>
       </div>
+  
+      
     </div>
   );
 }
