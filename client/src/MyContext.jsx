@@ -1,5 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
+export const about = ["Home", "About Us", "Sign In", "Contact Us"];
+
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
