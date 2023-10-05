@@ -3,30 +3,41 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [FormObject, setFormObject] = useState({
+    user_name: "",
+    profile_picture: "",
+    password: "",
+    roles: "",
+  });
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
+  function formObjectCreator(e) {
+    const { name, value } = e.target;
+    setFormObject((prev) => {
+      return { ...prev, [name]: value };
+    });
+  }
+  console.log(FormObject);
 
-    try {
-      // Adjusted payload to send correct data
-      const response = await axios.post("/signup", {
-        user_name: `${firstName} ${lastName}`,
-        password,
-        profile_picture: "", // You may add profile picture logic here
-        roles: "", // You may add roles logic here
-      });
-
-      console.log("User registered:", response.data);
-    } catch (error) {
-      console.error("Signup failed:", error);
-      setError("Signup failed. Please try again.");
-    }
-  };
+  function handleSignUp(e) {
+    // e.preventDefault();
+    console.log("Albert");
+    //   fetch(`http://127.0.0.1:5555/signup`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       FormObject,
+    //     }),
+    //   })
+    //     .then((res) => {
+    //       res.json();
+    //     })
+    //     .then((data) => {
+    //       console.log(data);
+    //     });
+  }
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
@@ -34,49 +45,54 @@ const SignUp = () => {
         <h2 className="text-2xl mb-4">Sign Up</h2>
         <form onSubmit={handleSignUp}>
           <div className="mb-4">
-            <label className="block mb-2">First Name:</label>
+            <label className="block mb-2">username:</label>
             <input
               type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              value={FormObject.user_name}
+              onChange={formObjectCreator}
               className="w-full p-2 border rounded"
+              placeholder="user_name"
+              name="user_name"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2">Last Name:</label>
+            <label className="block mb-2">profile_picture:</label>
             <input
               type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              value={FormObject.profile_picture}
+              onChange={formObjectCreator}
+              name="profile_picture"
               className="w-full p-2 border rounded"
+              placeholder="image"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2">Email:</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block mb-2">Password:</label>
+            <label className="block mb-2">password:</label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={FormObject.password}
+              onChange={formObjectCreator}
+              name="password"
               className="w-full p-2 border rounded"
+              placeholder="password"
               required
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-          >
+          <div className="mb-4">
+            <label className="block mb-2">roles:</label>
+            <input
+              type="roles"
+              value={FormObject.roles}
+              placeholder="roles"
+              onChange={formObjectCreator}
+              className="w-full p-2 border rounded"
+              required
+              name="roles"
+            />
+          </div>
+          <button className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
             Sign Up
           </button>
         </form>
