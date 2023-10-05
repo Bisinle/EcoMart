@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useAppContext } from "../MyContext";
 import { NavLink, Outlet } from "react-router-dom";
@@ -6,12 +5,17 @@ import { useState } from "react";
 import { BsPerson, BsCart3, BsFillBookmarkHeartFill } from "react-icons/bs";
 import Cart from "./Cart";
 
-function Navbar() {
+function Navbar({ globalvariable }) {
   const [loginLogoutBtn, setLoginLogoutBtn] = useState(false);
   const linkText = loginLogoutBtn ? "logout" : "login";
 
   const { cartCount, wishlistCount } = useAppContext();
   const [showCart, setShowCart] = useState(false);
+
+  function logout(e) {
+    setLoginLogoutBtn(!loginLogoutBtn);
+    localStorage.clear("token");
+  }
 
   return (
     <div>
@@ -23,13 +27,6 @@ function Navbar() {
           </NavLink>
           <NavLink to={"/about"}>About</NavLink>
           <NavLink to={"/contacts"}>Contacs</NavLink>
-
-          <NavLink to={"/account"}>
-            {" "}
-            <BsPerson className="nav-icons" />{" "}
-          </NavLink>
-
-          <NavLink to={"/contacts"}> Contacs</NavLink>
 
           <ul className="flex gap-8">
             <li className="nav-blocks relative">
@@ -53,17 +50,14 @@ function Navbar() {
               <Cart showCart={showCart} setShowCart={setShowCart} />
             </li>
           </ul>
-          <NavLink
-            to={"/login"}
-            onClick={() => setLoginLogoutBtn(!loginLogoutBtn)}
-          >
-            {linkText}
+
+          <NavLink to={"/logout"} onClick={logout}>
+            Logout
           </NavLink>
         </div>
       </nav>
       <main>{<Outlet />}</main>
     </div>
-
   );
 }
 

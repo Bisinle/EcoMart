@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
+  const [vendor, setVendor] = useState({});
   const [error, setError] = useState(null);
   const [FormObject, setFormObject] = useState({
     user_name: "",
@@ -17,28 +18,39 @@ const SignUp = () => {
       return { ...prev, [name]: value };
     });
   }
-  console.log(FormObject);
 
   function handleSignUp(e) {
-    // e.preventDefault();
-    console.log("Albert");
-    //   fetch(`http://127.0.0.1:5555/signup`, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       FormObject,
-    //     }),
-    //   })
-    //     .then((res) => {
-    //       res.json();
-    //     })
-    //     .then((data) => {
-    //       console.log(data);
-    //     });
-    //
+    e.preventDefault();
+
+    const data = {
+      user_name: FormObject.user_name,
+      profile_picture: FormObject.profile_picture,
+      password: FormObject.password,
+      roles: FormObject.roles,
+    };
+
+    fetch(`http://127.0.0.1:5555/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((response) => {
+        console.log(response); // Handle the successful response here
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
   }
+
+  // console.log(vendor);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
