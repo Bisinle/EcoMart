@@ -127,7 +127,7 @@ class User(db.Model):
 
     @hybrid_property
     def password_hash(self):
-        return Exception('password cannot be viewed')
+        return self._password
     
     @password_hash.setter
     def password_hash(self, password):

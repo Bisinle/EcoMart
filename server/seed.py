@@ -245,7 +245,7 @@ with app.app_context():
 
     # ''' S E E D I N G__________________O R D E R S________________T A B L E '''
 
-    # Order.query.delete()
+    Order.query.delete()
     # order_list = []
     # for i in range(10):
     #     product_obj = rc(product_list)
@@ -258,7 +258,7 @@ with app.app_context():
     #     )
     #     order_list.append(order)
     # db.session.add_all(order_list)
-    # db.session.commit()
+    db.session.commit()
 
 
 
@@ -282,7 +282,7 @@ with app.app_context():
 
 
 
-    category1 = Category.query.all()[0]
-    print(category1.products)
+    # category1 = Category.query.all()[0]
+    # print(category1.products)
 
 

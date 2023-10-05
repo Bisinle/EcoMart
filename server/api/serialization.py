@@ -160,6 +160,15 @@ user_model_input =api.model('signup',{
   
 
 })
+post_user =api.model('signup',{
+    'id':fields.String,
+    'user_name':fields.String,
+    'profile_picture':fields.String,
+    'password':fields.String,
+    'roles':fields.String
+  
+
+})
 
 
 login_input_model =api.model('login',{

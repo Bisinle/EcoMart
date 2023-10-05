@@ -2,7 +2,7 @@ from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,Catego
 from api.serialization import api,vendor_schema,vendors_schema, customer_schema,users_schema,order_model_input
 from api.serialization import order_schema,orders_schema, customers_schema, product_schema,category_schema
 from api.serialization import user_schema,ns,Resource,user_model_input,login_input_model,vendor_model_update
-from api.serialization import vendor_model_input
+from api.serialization import vendor_model_input,post_user
 import uuid
 import jwt
 import datetime
@@ -268,10 +268,15 @@ class Users(Resource):
 class Signup (Resource):
 
     @ns.expect(user_model_input)
+    @ns.marshal_with(post_user)
     def post(self):
-        
+      
         data =request.get_json()
+        print(data)
+    
         
+        data = request.get_json()
+      
         new_user = User(
             user_name=data['user_name'],
             profile_picture=data['profile_picture'],    
@@ -285,8 +290,11 @@ class Signup (Resource):
 
         db.session.add(new_user)
         db.session.commit()
+        print('-----------------------------------------------')
 
-        return jsonify({"mesage":"successfully added user"})
+        print(new_user)
+
+        return new_user,200
 
         
 '''-----------------L O G I N -----------------------------'''
@@ -301,6 +309,7 @@ class Login(Resource):
             password=auth.password
         elif ns.payload:
             data = ns.payload  # Access JSON data from the request body
+            
 
             username = data.get('username')
             password = data.get('password')
@@ -313,19 +322,13 @@ class Login(Resource):
              return jsonify({"message": "User not found"}), 404
         
         if user.authenticate(password):
-            # Import these modules at the top of your script:
-            # import jwt
-            # import datetime
-            
-            # Generate a JWT token
+           
             token = jwt.encode(
                 {'public_id': user.public_id, 
                  'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=59)},
                  app.config['SECRET_KEY'],
                   algorithm="HS256")
             
-            return make_response(jsonify({"token": token}), 200)
+            return make_response({"token": token}, 200)
         
-        return jsonify({"message": "Authentication failed"}), 401
-
-
+        return make_response({"message": "Authentication failed"}, 401)
