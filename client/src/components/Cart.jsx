@@ -22,6 +22,9 @@ function Cart({ showCart, setShowCart }) {
     const newQuantity = [...quantity];
     newQuantity[index]++;
     setQuantity(newQuantity);
+
+    localStorage.setItem("quantity",
+     JSON.stringify(newQuantity.map(Number)));
   };
 
   const handleDecrease = (index) => {
@@ -29,27 +32,27 @@ function Cart({ showCart, setShowCart }) {
       const newQuantity = [...quantity];
       newQuantity[index]--;
       setQuantity(newQuantity);
+
+      localStorage.setItem("quantity",
+       JSON.stringify(newQuantity.map(Number)));
     }
   };
 
   const handleRemove = (index) => {
     const newQuantity = [...quantity];
     newQuantity.splice(index, 1);
-    setQuantity(newQuantity);
 
     const newCartCount = [...cartCount];
     newCartCount.splice(index, 1);
-    setCartCount(newCartCount);
 
     const newProducts = [...products];
     newProducts.splice(index, 1);
-    setProducts(newProducts);
 
     setQuantity(newQuantity);
     setCartCount(newCartCount);
     setProducts(newProducts);
 
-    localStorage.setItem("quantity", JSON.stringify(quantity.map(Number)));
+    localStorage.setItem("quantity", JSON.stringify(newQuantity.map(Number)));
   };
 
   const checkOutUrl = "https://ecomart-x0ur.onrender.com/orders";
@@ -72,7 +75,7 @@ function Cart({ showCart, setShowCart }) {
 
       localStorage.removeItem("cart");
       localStorage.removeItem("products");
-      localStorage.setItem("quantity");
+      localStorage.removeItem("quantity");
 
       setShowCart(false);
       toast.success("Order placed successfully!");
