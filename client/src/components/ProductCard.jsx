@@ -19,6 +19,8 @@ function ProductCard({ id, image, price, name, description }) {
   
     if (found) {
       toast.info("This item is already in your cart.");
+      return;
+    } else {
       const index = cartCount.indexOf(prodid);
   
       setQuantity((prevQuantity) => {
@@ -28,7 +30,7 @@ function ProductCard({ id, image, price, name, description }) {
           JSON.stringify(updatedQuantity.map(Number)));
         return updatedQuantity;
       });
-    } else {
+     
       const updatedCart = [...cartCount, prodid];
       setCartCount(updatedCart);
       const product = { id, image, price: parseFloat(price), name, description };
