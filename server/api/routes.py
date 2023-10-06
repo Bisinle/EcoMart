@@ -83,9 +83,20 @@ class Vendors(Resource):
 
 ''' ___________________T O K E N _____________D E C O R A T O R         '''
 
-@ns.route('/vendors/<id>')
+@ns.route('/vendor')
 class Vendoer_by_id(Resource):
+
+    @jwt_required()
+    def get(self):
+        current_user= get_jwt_identity()
+        vendor= Vendor.query.all()
+    
+        return jsonify(vendors_schema.dump(vendor))
+
+
+
     @ns.expect(vendor_model_update)
+    @jwt_required()
     def put(self,id):
         # get the vendor
         vendor = Vendor.query.filter_by(id=id).first()
@@ -102,16 +113,16 @@ class Vendoer_by_id(Resource):
         return jsonify({"message":" vendor updated successfully "},200)
 
 
-    def delete(selft,id):
-        vendor = Vendor.query.filter_by(id=id).first()
+    # def delete(selft,id):
+    #     vendor = Vendor.query.filter_by(id=id).first()
 
-        if not vendor:
-            return jsonify({"message":"vendor not found"})
+    #     if not vendor:
+    #         return jsonify({"message":"vendor not found"})
         
-        db.session.delete(vendor)
-        db.session.commit()
-        return jsonify({"Deleted":True,
-                        "message":"vendor deleted successfully"})
+    #     db.session.delete(vendor)
+    #     db.session.commit()
+    #     return jsonify({"Deleted":True,
+    #                     "message":"vendor deleted successfully"})
 
 
 
@@ -292,6 +303,7 @@ class Signup (Resource):
             roles=data['roles']
 
         )
+        
 
        
 
@@ -305,35 +317,33 @@ class Signup (Resource):
 
         
 '''-----------------L O G I N -----------------------------'''
-# @ns.route('/login')
-# class Login(Resource):
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
-@app.route('/login',methods=['GET','POST'])
-def login():
-    print(request.get_json())
-    username = request.get_json().get("username",None)
-    password = request.get_json().get("password",None)
 
-    if not username and not password:
-         return jsonify({"msg": "Bad username or password"}), 401
+@ns.route('/login')
+class Login(Resource):
+    def post(self):
+        print(request.get_json())
+        username = request.get_json().get("username",None)
+        password = request.get_json().get("password",None)
+
+        if not username and not password:
+            return jsonify({"msg": "Bad username or password"}), 401
+        
+        user = User.query.filter_by(user_name=username).first()
+        print(user)
     
-    user = User.query.filter_by(user_name=username).first()
-    print(user)
- 
-    print('----------------------------------------')    
-    if not user:
-        return jsonify({"message": "User not found"}), 404
-    
+        print('----------------------------------------')    
+        if not user:
+            return jsonify({"message": "User not found"}), 404
 
-
-    additional_data={
-        "user_id":user.id,
-        "user_name":user.user_name,
-        "user_roles":user.roles
-    }
-    access_token = create_access_token(identity=user.public_id,additional_headers=additional_data)
-    return jsonify(access_token=access_token)
+        additional_data={
+            "user_id":user.id,
+            "user_name":user.user_name,
+            "user_roles":user.roles
+        }
+        access_token = create_access_token(identity=user.id,additional_headers=additional_data)
+        return jsonify(access_token=access_token)
 
 
 
