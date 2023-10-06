@@ -57,6 +57,8 @@ function Cart({ showCart, setShowCart }) {
       setCartCount([]);
       setQuantity([]);
 
+      localStorage.removeItem('cart');
+
       setShowCart(false);
       toast.success('Order placed successfully!');
 
