@@ -3,7 +3,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { useAppContext } from "../MyContext";
 import { toast } from "react-toastify";
 
-function ProductCard({ id, image, price, name }) {
+function ProductCard({ id, image, price, name, description }) {
   const {
     setCartCount,
     setWishlistCount,
@@ -21,7 +21,7 @@ function ProductCard({ id, image, price, name }) {
     } else {
       const updatedCart = [...cartCount, prodid];
       setCartCount(updatedCart);
-      const product = { id, image, price, name };
+      const product = { id, image, price, name, description };
       setProducts((prevProducts) => [...prevProducts, product]);
 
       setQuantity((prevQuantity) => [...prevQuantity, 1]);
@@ -32,10 +32,10 @@ function ProductCard({ id, image, price, name }) {
 
   const addToWishlist = (prod) => {
     const found = wishlistCount.find((element) => element.id === prod.id);
+    // console.log(prod);
 
     if (found) {
-      toast.info('This item is already on your wishlist.');
-
+      toast.info("This item is already on your wishlist.");
     } else {
       const updatedWishlist = [prod, ...wishlistCount];
       setWishlistCount(updatedWishlist);
@@ -73,7 +73,7 @@ function ProductCard({ id, image, price, name }) {
           Add to cart
         </button>
         <AiOutlineHeart
-          onClick={() => addToWishlist({ id, image, price, name })}
+          onClick={() => addToWishlist({ id, image, price, name, description })}
           className="nav-icons"
         />
       </div>
