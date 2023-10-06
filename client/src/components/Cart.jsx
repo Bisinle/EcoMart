@@ -2,14 +2,21 @@ import React from "react";
 import "./Cart.css";
 import { BsTrash } from "react-icons/bs";
 import { useAppContext } from "../MyContext";
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Lottie from "react-lottie";
 import animationData from "../assets/animation_lndl5pze.json";
 
 function Cart({ showCart, setShowCart }) {
-  const { cartCount, setCartCount, products, setProducts, setQuantity, quantity } = useAppContext();
+  const {
+    cartCount,
+    setCartCount,
+    products,
+    setProducts,
+    setQuantity,
+    quantity,
+  } = useAppContext();
 
   const handleIncrease = (index) => {
     const newQuantity = [...quantity];
@@ -37,9 +44,15 @@ function Cart({ showCart, setShowCart }) {
     const newProducts = [...products];
     newProducts.splice(index, 1);
     setProducts(newProducts);
+
+    setQuantity(newQuantity);
+    setCartCount(newCartCount);
+    setProducts(newProducts);
+
+    localStorage.setItem("quantity", JSON.stringify(quantity.map(Number)));
   };
 
-  const checkOutUrl = 'https://ecomart-x0ur.onrender.com/orders'
+  const checkOutUrl = "https://ecomart-x0ur.onrender.com/orders";
 
   const handleCheckout = async () => {
     try {
@@ -47,7 +60,7 @@ function Cart({ showCart, setShowCart }) {
         item_price: parseFloat(product.price),
         item_quantity: quantity[index],
         amount: product.amount,
-        address: "Ngong lane, Ngong Road, Nairobi"
+        address: "Ngong lane, Ngong Road, Nairobi",
       }));
 
       const response = await axios.post(checkOutUrl, orders);
@@ -57,16 +70,16 @@ function Cart({ showCart, setShowCart }) {
       setCartCount([]);
       setQuantity([]);
 
-      localStorage.removeItem('cart');
-      localStorage.removeItem('products');
+      localStorage.removeItem("cart");
+      localStorage.removeItem("products");
+      localStorage.setItem("quantity");
 
       setShowCart(false);
-      toast.success('Order placed successfully!');
-
+      toast.success("Order placed successfully!");
     } catch (error) {
       console.error(error);
 
-      toast.error('Order failed. Please try again.');
+      toast.error("Order failed. Please try again.");
     }
   };
 
@@ -75,8 +88,8 @@ function Cart({ showCart, setShowCart }) {
     autoplay: true,
     animationData: animationData,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
+      preserveAspectRatio: "xMidYMid slice",
+    },
   };
 
   if (!showCart) return null;
@@ -100,7 +113,9 @@ function Cart({ showCart, setShowCart }) {
                 <p>{quantity[index]}</p>
                 <button onClick={() => handleIncrease(index)}>+</button>
               </div>
-              <p className="price">$ {parseFloat(product.price) * quantity[index]}</p>
+              <p className="price">
+                $ {parseFloat(product.price) * parseInt(quantity[index])}
+              </p>
               <button
                 className="remove-button clickable-element"
                 onClick={() => handleRemove(index)}
@@ -116,7 +131,7 @@ function Cart({ showCart, setShowCart }) {
           </div>
         )}
       </div>
-  
+
       <div className="summary">
         <p>Total items: {quantity.reduce((a, b) => a + b, 0)}</p>
         <p>
@@ -130,8 +145,6 @@ function Cart({ showCart, setShowCart }) {
         </p>
         <button onClick={handleCheckout}>Checkout</button>
       </div>
-  
-      
     </div>
   );
 }

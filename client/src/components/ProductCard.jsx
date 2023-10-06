@@ -11,6 +11,7 @@ function ProductCard({ id, image, price, name, description }) {
     wishlistCount,
     setProducts,
     setQuantity,
+    quantity,
   } = useAppContext();
 
   const addToCart = (prodid) => {
@@ -21,15 +22,27 @@ function ProductCard({ id, image, price, name, description }) {
     } else {
       const updatedCart = [...cartCount, prodid];
       setCartCount(updatedCart);
-      const product = { id, image, price, name, description };
-      setProducts((prevProducts) => { 
+      const product = {
+        id,
+        image,
+        price: parseFloat(price),
+        name,
+        description,
+      };
+      setProducts((prevProducts) => {
         const updatedProducts = [...prevProducts, product];
-        localStorage.setItem("products",
-        JSON.stringify(updatedProducts));
+        localStorage.setItem("products", JSON.stringify(updatedProducts));
         return updatedProducts;
       });
 
-      setQuantity((prevQuantity) => [...prevQuantity, 1]);
+      setQuantity((prevQuantity) => {
+        const updatedQuantity = [...prevQuantity, 1];
+        localStorage.setItem(
+          "quantity",
+          JSON.stringify(updatedQuantity.map(Number))
+        );
+        return updatedQuantity;
+      });
 
       localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
@@ -52,10 +65,12 @@ function ProductCard({ id, image, price, name, description }) {
     const savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
     const savedProducts = JSON.parse(localStorage.getItem("products")) || [];
+    const savedQuantity = JSON.parse(localStorage.getItem("quantity")) || [];
 
     setWishlistCount(savedWishlist);
     setCartCount(savedCart);
     setProducts(savedProducts);
+    setQuantity(savedQuantity.map(Number));
   }, []);
 
   return (
