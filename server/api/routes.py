@@ -5,56 +5,62 @@ from api.serialization import user_schema,ns,Resource,user_model_input,login_inp
 from api.serialization import vendor_model_input,post_user
 import uuid
 import jwt
-import datetime
+# import datetime
 from functools import wraps
+from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required,JWTManager
+
+jwt = JWTManager(app)
 
 
 
+# def token_required(f):
+#     @wraps(f)
+#     def decorated(*args, **kwargs):
+#         token =None
+#         if 'x-access-token' in request.headers:
+#             token = request.headers['x-access-token']
+#             # print(token)
 
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token =None
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
-            # print(token)
+#         if not token:
+#             return jsonify({"message" : "Token is missing"})
 
-        if not token:
-            return jsonify({"message" : "Token is missing"})
+#         try:
+#             print('------------------------------------------------')
+#             data= jwt.decode(token,app.config['SECRET_KEY'],algorithms=['HS256'])
+#             # print(data)
 
-        try:
-            print('------------------------------------------------')
-            data= jwt.decode(token,app.config['SECRET_KEY'],algorithms=['HS256'])
-            # print(data)
+#             current_user = User.query.filter_by(public_id= data['public_id']).first()
+#             print(current_user)
 
-            current_user = User.query.filter_by(public_id= data['public_id']).first()
-            print(current_user)
-
-            if not current_user:
-                return jsonify({"message" : "something went wrong"})
+#             if not current_user:
+#                 return jsonify({"message" : "something went wrong"})
 
 
-        except:
-                return jsonify({"message" : "Token is invalid"},401)
-        return f(current_user,*args, **kwargs)
-    return decorated
+#         except:
+#                 return jsonify({"message" : "Token is invalid"},401)
+#         return f(current_user,*args, **kwargs)
+#     return decorated
 
 
 @ns.route('/vendors')
 class Vendors(Resource):
-    @token_required
-    def get(current_user,self):
-        if  current_user.roles !='Admin':
-            return jsonify({"message":"only Admins are allowed to access  this "})
-        all_vendors = Vendor.query.all()
+    # @token_required
+    @jwt_required
+    def get(self):
+        current_user = get_jwt_identity()
+        return jsonify(logged_in_as=current_user), 200
 
-        if not all_vendors:
-            return make_response(jsonify({"message":"no vendors found"}))
+        # if  current_user.roles !='Admin':
+        #     return jsonify({"message":"only Admins are allowed to access  this "})
+        # all_vendors = Vendor.query.all()
+
+        # if not all_vendors:
+        #     return make_response(jsonify({"message":"no vendors found"}))
         
-        return make_response(vendors_schema.dump(all_vendors),200)
+        # return make_response(vendors_schema.dump(all_vendors),200)
     
     @ns.expect(vendor_model_input)
-    @token_required
+    # @token_required
     def post(current_user,self):
         data = request.get_json()
         print(data)
@@ -298,37 +304,87 @@ class Signup (Resource):
 
         
 '''-----------------L O G I N -----------------------------'''
-@ns.route('/login')
-class Login(Resource):
+# @ns.route('/login')
+# class Login(Resource):
+# Create a route to authenticate your users and return JWTs. The
+# create_access_token() function is used to actually generate the JWT.
+@app.route('/login',methods=['GET','POST'])
+def login():
+    print(request.get_json())
+    username = request.get_json().get("username",None)
+    password = request.get_json().get("password",None)
+
+    if not username and not password:
+         return jsonify({"msg": "Bad username or password"}), 401
     
-    @ns.expect(login_input_model)
-    def post(self):
-        if request.authorization:
-            auth = request.authorization
-            username=auth.username
-            password=auth.password
-        elif ns.payload:
-            data = ns.payload  # Access JSON data from the request body
+    user = User.query.filter_by(user_name=username).first()
+    print(user)
+ 
+    print('----------------------------------------')    
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+    
+
+
+    additional_data={
+        "user_id":user.id,
+        "user_name":user.user_name,
+        "user_roles":user.roles
+    }
+    access_token = create_access_token(identity=user.public_id,additional_headers=additional_data)
+    return jsonify(access_token=access_token)
+
+
+
+
+
+
+
+
+
+
+        # if request.authorization:
+        #     auth = request.authorization
+        #     username=auth.username
+        #     password=auth.password
+        # elif ns.payload:
+        #     data = ns.payload  # Access JSON data from the request body
             
 
-            username = data.get('username')
-            password = data.get('password')
+        #     username = data.get('username')
+        #     password = data.get('password')
 
-        if not username or not password:
-            return jsonify({"message": "Please provide both username and password"}), 400
+        # if not username or not password:
+        #     return jsonify({"message": "Please provide both username and password"}), 400
 
-        user = User.query.filter_by(user_name=username).first()
-        if not user:
-             return jsonify({"message": "User not found"}), 404
+        # user = User.query.filter_by(user_name=username).first()
+        # if not user:
+        #      return jsonify({"message": "User not found"}), 404
         
-        if user.authenticate(password):
-           
-            token = jwt.encode(
-                {'public_id': user.public_id, 
-                 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=59)},
-                 app.config['SECRET_KEY'],
-                  algorithm="HS256")
-            
-            return make_response({"token": token}, 200)
+        # if user.authenticate(password):
+        #     # Include additional user information in the payload
+        #     token_payload = {
+        #         'public_id': user.public_id,
+        #         'user_name': user.user_name,
+        #         'role': user.roles,
+        #         'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=59)
+        #     }
+
+        #     # Encode the token with the extended payload
+        #     token = jwt.encode(
+        #         token_payload,
+        #         app.config['SECRET_KEY'],
+        #         algorithm="HS256"
+        #     )
+
+        #     # Return the token along with additional user information
+        #     response_data = {
+        #         "token": token,
+        #         "user_id": user.id,
+        #         "user_name": user.user_name,
+        #         "user_role": user.roles
+        #     }
+
+        #     return make_response(jsonify(response_data), 200)
         
-        return make_response({"message": "Authentication failed"}, 401)
+        # return make_response({"message": "Authentication failed"}, 401)
