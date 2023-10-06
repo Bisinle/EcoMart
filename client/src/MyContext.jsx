@@ -13,13 +13,6 @@ export const AppProvider = ({ children }) => {
   const [isLogedin, setIsLogedin] = useState(false);
   const [jwToken, setJwtToken] = useState("");
 
-  // get token from the localstorage
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-
-  // }, []);
-
-  // remove item from the wishlist
   const removeFromWishlist = (prod) => {
     const updatedWishlist = wishlistCount.filter(
       (element) => element.id !== prod.id

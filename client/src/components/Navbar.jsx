@@ -30,6 +30,7 @@ function Navbar() {
           <NavLink to={"/contacts"}>Contacts</NavLink>
           <NavLink to={"/v-dash"}>V-dash</NavLink>
           <ul className="flex gap-8">
+            
             <NavLink to="/wishlist">
               <li className="nav-blocks relative">
                 {wishlistCount.length > 0 && (

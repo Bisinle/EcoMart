@@ -22,7 +22,12 @@ function ProductCard({ id, image, price, name, description }) {
       const updatedCart = [...cartCount, prodid];
       setCartCount(updatedCart);
       const product = { id, image, price, name, description };
-      setProducts((prevProducts) => [...prevProducts, product]);
+      setProducts((prevProducts) => { 
+        const updatedProducts = [...prevProducts, product];
+        localStorage.setItem("products",
+        JSON.stringify(updatedProducts));
+        return updatedProducts;
+      });
 
       setQuantity((prevQuantity) => [...prevQuantity, 1]);
 
@@ -46,9 +51,11 @@ function ProductCard({ id, image, price, name, description }) {
   useEffect(() => {
     const savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const savedProducts = JSON.parse(localStorage.getItem("products")) || [];
 
     setWishlistCount(savedWishlist);
     setCartCount(savedCart);
+    setProducts(savedProducts);
   }, []);
 
   return (
