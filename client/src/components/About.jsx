@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import cart from "../assets/cart.jpg";
 
 function About() {
   return (
@@ -8,7 +9,8 @@ function About() {
       <section className="flex justify-around gap-5 bg-gray-100 py-11 rounded-lg">
         <div className="about-cart">
           <img
-            src="https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg"
+            src={cart}
+            // src="https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg"
             className="cart-img rounded-md"
             alt="cart-image"
           />
