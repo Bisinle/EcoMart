@@ -1,12 +1,15 @@
 import React, { useContext, useState } from "react";
-import { Link, json } from "react-router-dom";
+import { Link, Navigate, useNavigate, json } from "react-router-dom";
 import axios from "axios";
+import { useAppContext } from "../MyContext";
 // import { useAppContext } from "../MyContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const { isLogedin, setIsLogedin, jwtToken, setJwtToken } = useAppContext();
+  const navigate = useNavigate();
   // const { setGlobalvariable } = useContext(useAppContext);
   // console.log(globalvariable);
 
@@ -26,20 +29,26 @@ const Login = () => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error("-------- response was not ok");
         }
         return res.json();
       })
       .then((response) => {
         // console.log(response); // Handle the successful response here
-        const token = response.token;
-        // console.log(token);
+        const token = response.access_token;
+        console.log(response);
+
+        //   console.log(response);
         localStorage.setItem("token", token);
+        token ? setIsLogedin(true) : setIsLogedin(false);
+        setJwtToken(response);
+        jwtToken === "" ? navigate("/login") : navigate("/");
       })
       .catch((error) => {
         console.error("There was a problem with the fetch operation:", error);
       });
   }
+  console.log(jwtToken);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">

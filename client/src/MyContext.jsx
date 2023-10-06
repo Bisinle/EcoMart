@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 export const about = ["Home", "About Us", "Sign In", "Contact Us"];
@@ -10,7 +10,16 @@ export const AppProvider = ({ children }) => {
   const [wishlistCount, setWishlistCount] = useState([]);
   const [products, setProducts] = useState([]);
   const [quantity, setQuantity] = useState([]);
+  const [isLogedin, setIsLogedin] = useState(false);
+  const [jwToken, setJwtToken] = useState("");
 
+  // get token from the localstorage
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+
+  // }, []);
+
+  // remove item from the wishlist
   const removeFromWishlist = (prod) => {
     const updatedWishlist = wishlistCount.filter(
       (element) => element.id !== prod.id
@@ -19,6 +28,7 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
   };
 
+  // add item to cart
   const addToCartFromWishlist = (prod) => {
     const found = cartCount.find((element) => element === prod.id);
 
@@ -40,9 +50,9 @@ export const AppProvider = ({ children }) => {
       value={{
         cartCount,
         setCartCount,
-
+        isLogedin,
+        setIsLogedin,
         wishlistCount,
-
         setWishlistCount,
         products,
         setProducts,
@@ -50,6 +60,8 @@ export const AppProvider = ({ children }) => {
         setQuantity,
         removeFromWishlist,
         addToCartFromWishlist,
+        jwToken,
+        setJwtToken,
       }}
     >
       {children}

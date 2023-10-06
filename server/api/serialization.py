@@ -67,13 +67,25 @@ class CustomerSchema(ma.SQLAlchemyAutoSchema):
     phone_number = ma.auto_field(data_key="phone_number")    
     email=ma.auto_field()
     joined=ma.auto_field()
-    # orders = ma.List(ma.Nested('OrderCustomerSchema'))
+    orders = ma.List(ma.Nested('OrderCustomerSchema'))
     
 
 customer_schema = CustomerSchema()
 customers_schema = CustomerSchema(many=True)
 
 
+
+class OrderCustomerSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Order
+        ordered = True
+
+ 
+    customer = ma.auto_field()
+    
+
+ordercustomer_schema = OrderCustomerSchema()
+orderscustomers_schema = OrderCustomerSchema(many=True)
 
 
 
