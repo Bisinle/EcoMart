@@ -45,22 +45,23 @@ jwt = JWTManager(app)
 @ns.route('/vendors')
 class Vendors(Resource):
     # @token_required
-    @jwt_required
+    # @jwt_required()
     def get(self):
-        current_user = get_jwt_identity()
-        return jsonify(logged_in_as=current_user), 200
+        # current_user = get_jwt_identity()
+        # return jsonify(logged_in_as=current_user), 200
 
         # if  current_user.roles !='Admin':
         #     return jsonify({"message":"only Admins are allowed to access  this "})
-        # all_vendors = Vendor.query.all()
+        all_vendors = Vendor.query.all()
 
-        # if not all_vendors:
-        #     return make_response(jsonify({"message":"no vendors found"}))
+        if not all_vendors:
+            return make_response(jsonify({"message":"no vendors found"}))
         
-        # return make_response(vendors_schema.dump(all_vendors),200)
+        return make_response(vendors_schema.dump(all_vendors),200)
     
     @ns.expect(vendor_model_input)
     # @token_required
+    @jwt_required()
     def post(current_user,self):
         data = request.get_json()
         print(data)

@@ -246,18 +246,18 @@ with app.app_context():
     # ''' S E E D I N G__________________O R D E R S________________T A B L E '''
 
     Order.query.delete()
-    # order_list = []
-    # for i in range(10):
-    #     product_obj = rc(product_list)
-    #     order = Order(
-    #         item_price = product_obj.price,
-    #         item_quantity = random.randint(1,5),
-    #         address= fake.address(),
-    #         product_id= rc([prod.id for prod in product_list]),
-    #         customer_id=rc([cust.id for cust in customer_list])
-    #     )
-    #     order_list.append(order)
-    # db.session.add_all(order_list)
+    order_list = []
+    for i in range(10):
+        product_obj = rc(product_list)
+        order = Order(
+            item_price = product_obj.price,
+            item_quantity = random.randint(1,5),
+            address= fake.address(),
+            product_id= rc([prod.id for prod in product_list]),
+            customer_id=rc([cust.id for cust in customer_list])
+        )
+        order_list.append(order)
+    db.session.add_all(order_list)
     db.session.commit()
 
 

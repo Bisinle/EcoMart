@@ -1,5 +1,5 @@
 import { Route, Router, Routes } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppContext } from "./MyContext";
 
 import Navbar from "./components/Navbar";
@@ -11,26 +11,49 @@ import Signup from "./components/Signup";
 import Contacts from "./components/Contacts";
 import Wishlist from "./components/WishList";
 import { ToastContainer } from "react-toastify";
+import Logout from "./components/Logout";
+import Protexted from "./components/Protexted";
+import Profile from "./components/Profile";
+import VendorDashboard from "./components/vendor";
 
 function App() {
-  const [globalvariable, setGlobalvariable] = useState("");
-  useEffect(() => {
-    setGlobalvariable(localStorage.getItem("token"));
-  }, []);
+  const { isLogedin, setIsLogedin } = useAppContext();
 
   return (
     <div className="App">
-      <Navbar token={globalvariable} />
-
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} />
-        <Route path="/wishlist" element={<Wishlist />} />
+        <Route
+          path="/v-dash"
+          element={
+            <Protexted isLogedin={isLogedin}>
+              <VendorDashboard />
+            </Protexted>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Protexted isLogedin={isLogedin}>
+              <Profile />
+            </Protexted>
+          }
+        />
+        <Route
+          path="/wishlist"
+          element={
+            <Protexted isLogedin={isLogedin}>
+              <Wishlist />
+            </Protexted>
+          }
+        />
         <Route path="login" element={<Login />} />
+        <Route path="logout" element={<Logout />} />
         <Route path="signup" element={<Signup />} />
       </Routes>
-
       <Footer />
       <ToastContainer />
     </div>
