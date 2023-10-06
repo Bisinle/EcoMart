@@ -37,10 +37,12 @@ function Navbar({ globalvariable }) {
                 <BsFillBookmarkHeartFill className="nav-icons" />
               </li>
             </NavLink>
-            <li className="nav-blocks">
-              <BsPerson className="nav-icons" />
-            </li>
 
+            <NavLink to="/profile">
+              <li className="nav-blocks">
+                <BsPerson className="nav-icons" />
+              </li>
+            </NavLink>
             <li className="nav-blocks relative">
               {cartCount.length > 0 && (
                 <span className="navbar-badge">{cartCount.length}</span>

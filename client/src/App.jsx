@@ -11,6 +11,7 @@ import Signup from "./components/Signup";
 import Contacts from "./components/Contacts";
 import Wishlist from "./components/WishList";
 import { ToastContainer } from "react-toastify";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   const [globalvariable, setGlobalvariable] = useState("");
@@ -27,6 +28,7 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/profile" element={<UserProfile />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
       </Routes>
