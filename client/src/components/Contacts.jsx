@@ -39,6 +39,7 @@ function Contact() {
 
   return (
     <section className="flex flex-col">
+
       <section className="contact flex justify-between items-center gap-4 rounded-lg">
         <article className="text-white w-[36rem]">
           <h1 className="text-5xl font-bold">Have Any Questions ??,</h1>
@@ -97,6 +98,8 @@ function Contact() {
           </div>
         </form>
       </section>
+
+
     </section>
   );
 }

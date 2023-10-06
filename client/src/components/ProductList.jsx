@@ -57,6 +57,7 @@ function ProductList() {
               image={product.image}
               price={product.price}
               name={product.prod_name}
+              description={product.prod_description}
             />
           );
         })}

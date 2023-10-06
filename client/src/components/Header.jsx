@@ -1,5 +1,6 @@
 import React from "react";
 import SearchFilter from "./SearchFilter";
+import banner from "../assets/vr.jpg";
 
 function Header() {
   return (
@@ -7,7 +8,8 @@ function Header() {
       <article className="pb-[3rem]">
         <div className="relative">
           <img
-            src="https://cdn.thewirecutter.com/wp-content/media/2020/11/vr-headset-2048px-8993-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024&dpr=1.5"
+            src={banner}
+            // src="https://cdn.thewirecutter.com/wp-content/media/2020/11/vr-headset-2048px-8993-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024&dpr=1.5"
             alt="banner"
             className="rounded-lg h-[30rem] w-full object-cover"
           />
