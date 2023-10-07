@@ -16,40 +16,50 @@ function ProductCard({ id, image, price, name, description }) {
 
   const addToCart = (prodid) => {
     const found = cartCount.find((element) => element === prodid);
-  
+
     if (found) {
       toast.info("This item is already in your cart.");
       return;
     } else {
       const index = cartCount.indexOf(prodid);
-  
+
       setQuantity((prevQuantity) => {
         const updatedQuantity = [...prevQuantity];
         updatedQuantity[index]++;
-        localStorage.setItem("quantity", 
-          JSON.stringify(updatedQuantity.map(Number)));
+        localStorage.setItem(
+          "quantity",
+          JSON.stringify(updatedQuantity.map(Number))
+        );
         return updatedQuantity;
       });
-     
+
       const updatedCart = [...cartCount, prodid];
       setCartCount(updatedCart);
-      const product = { id, image, price: parseFloat(price), name, description };
+      const product = {
+        id,
+        image,
+        price: parseFloat(price),
+        name,
+        description,
+      };
       setProducts((prevProducts) => {
         const updatedProducts = [...prevProducts, product];
         localStorage.setItem("products", JSON.stringify(updatedProducts));
         return updatedProducts;
       });
-  
+
       setQuantity((prevQuantity) => {
         const updatedQuantity = [...prevQuantity, 1];
-        localStorage.setItem("quantity", JSON.stringify(updatedQuantity.map(Number)));
+        localStorage.setItem(
+          "quantity",
+          JSON.stringify(updatedQuantity.map(Number))
+        );
         return updatedQuantity;
       });
-  
+
       localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
   };
-  
 
   const addToWishlist = (prod) => {
     const found = wishlistCount.find((element) => element.id === prod.id);
