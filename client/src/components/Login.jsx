@@ -8,7 +8,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const { isLogedin, setIsLogedin, jwtToken, setJwtToken } = useAppContext();
+  const { setIsLogedin, jwtToken, setJwtToken } = useAppContext();
   const navigate = useNavigate();
   // const { setGlobalvariable } = useContext(useAppContext);
   // console.log(globalvariable);
@@ -19,7 +19,7 @@ const Login = () => {
       username: username,
       password: password,
     };
-    const base_url = "http://127.0.0.1:5555/login";
+    const base_url = "https://ecomart-x0ur.onrender.com/login";
     fetch(base_url, {
       method: "POST",
       headers: {
@@ -29,19 +29,23 @@ const Login = () => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error("-------- response was not ok");
+          throw new Error("-------------response was not ok------------------");
         }
         return res.json();
       })
       .then((response) => {
-        // console.log(response); // Handle the successful response here
+        // console.log(response);
         const token = response.access_token;
-        console.log(response);
 
-        //   console.log(response);
-        localStorage.setItem("token", token);
+        console.log(response);
+        localStorage.setItem("access_token", response.access_token);
+        localStorage.setItem("refresh_token", response.refresh_token);
+        localStorage.setItem("user_id", response.user_id);
+        localStorage.setItem("user_name", response.user_name);
+        localStorage.setItem("user_role", response.user_roles);
+
         token ? setIsLogedin(true) : setIsLogedin(false);
-        setJwtToken(response);
+        setJwtToken(localStorage.getItem("access_token"));
         jwtToken === "" ? navigate("/login") : navigate("/");
       })
       .catch((error) => {

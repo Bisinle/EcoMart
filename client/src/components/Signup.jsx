@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppContext } from "../MyContext";
 
 const SignUp = () => {
+  const { isLogedin, setIsLogedin, jwtToken, setJwtToken } = useAppContext();
+  const navigate = useNavigate();
   const [vendor, setVendor] = useState({});
   const [error, setError] = useState(null);
   const [FormObject, setFormObject] = useState({
@@ -44,6 +47,7 @@ const SignUp = () => {
       })
       .then((response) => {
         console.log(response); // Handle the successful response here
+        navigate("/login");
       })
       .catch((error) => {
         console.error("There was a problem with the fetch operation:", error);

@@ -19,6 +19,36 @@ import VendorDashboard from "./components/vendor";
 function App() {
   const { isLogedin, setIsLogedin } = useAppContext();
 
+  useEffect(() => {
+    console.log("refresh_Token: ", localStorage.refresh_token);
+    setInterval(() => {
+      if (localStorage.refresh_token) {
+        fetch("http://127.0.0.1:5555/refresh", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            refresh_token: localStorage.getItem("refresh_token")
+              ? JSON.parse(localStorage.getItem("refresh_token"))
+              : null,
+          }),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error(
+                "-------------response was not ok------------------"
+              );
+            }
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+          });
+      }
+    }, 1000);
+  }, []);
+
   return (
     <div className="App">
       <Navbar />
