@@ -8,6 +8,9 @@ import jwt
 # import datetime
 from functools import wraps
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required,JWTManager
+from flask_jwt_extended import create_refresh_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required,JWTManager
 
 jwt = JWTManager(app)
 
@@ -323,79 +326,67 @@ class Signup (Resource):
 @ns.route('/login')
 class Login(Resource):
     def post(self):
+
         print(request.get_json())
         username = request.get_json().get("username",None)
         password = request.get_json().get("password",None)
 
+
         if not username and not password:
-            return jsonify({"msg": "Bad username or password"}), 401
+            return jsonify({"msg": "Bad username or password"})
         
         user = User.query.filter_by(user_name=username).first()
         print(user)
     
         print('----------------------------------------')    
         if not user:
-            return jsonify({"message": "User not found"}), 404
-
-        additional_data={
+            return jsonify({"message": "User not found"})
+        print(user)
+     
+        access_token = create_access_token(identity=user.id)
+        refresh_token = create_refresh_token(identity=user.id)
+        return jsonify({
+            "access_token": access_token,
+            "refresh_token": refresh_token,
             "user_id":user.id,
             "user_name":user.user_name,
             "user_roles":user.roles
-        }
-        access_token = create_access_token(identity=user.id,additional_headers=additional_data)
-        return jsonify(access_token=access_token)
+
+        })
 
 
+@ns.route('/refresh')
+class refresh(Resource):
+    @jwt_required(refresh=True)
+    def post(self):
+        print(request.get_json())
+        # identity = get_jwt_identity()
+        # access = create_access_token(identity = identity)
+
+    
+        return jsonify({"access":"access"})
 
 
+# from datetime import timedelta
+
+# from flask import Flask
+# from flask import jsonify
+
+# from flask_jwt_extended import create_access_token
+# from flask_jwt_extended import create_refresh_token
+# from flask_jwt_extended import get_jwt_identity
+# from flask_jwt_extended import jwt_required
+# from flask_jwt_extended import JWTManager
 
 
+# app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+# app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+# app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
+# jwt = JWTManager(app)
 
 
-
-
-        # if request.authorization:
-        #     auth = request.authorization
-        #     username=auth.username
-        #     password=auth.password
-        # elif ns.payload:
-        #     data = ns.payload  # Access JSON data from the request body
-            
-
-        #     username = data.get('username')
-        #     password = data.get('password')
-
-        # if not username or not password:
-        #     return jsonify({"message": "Please provide both username and password"}), 400
-
-        # user = User.query.filter_by(user_name=username).first()
-        # if not user:
-        #      return jsonify({"message": "User not found"}), 404
-        
-        # if user.authenticate(password):
-        #     # Include additional user information in the payload
-        #     token_payload = {
-        #         'public_id': user.public_id,
-        #         'user_name': user.user_name,
-        #         'role': user.roles,
-        #         'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=59)
-        #     }
-
-        #     # Encode the token with the extended payload
-        #     token = jwt.encode(
-        #         token_payload,
-        #         app.config['SECRET_KEY'],
-        #         algorithm="HS256"
-        #     )
-
-        #     # Return the token along with additional user information
-        #     response_data = {
-        #         "token": token,
-        #         "user_id": user.id,
-        #         "user_name": user.user_name,
-        #         "user_role": user.roles
-        #     }
-
-        #     return make_response(jsonify(response_data), 200)
-        
-        # return make_response({"message": "Authentication failed"}, 401)
+# @app.route("/login", methods=["POST"])
+# def login():
+#     access_token = create_access_token(identity="example_user")
+#     refresh_token = create_refresh_token(identity="example_user")
+#     return jsonify(access_token=access_token, refresh_token=refresh_token)
