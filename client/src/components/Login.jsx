@@ -19,7 +19,7 @@ const Login = () => {
       username: username,
       password: password,
     };
-    const base_url = "http://127.0.0.1:5555/login";
+    const base_url = "https://ecomart-x0ur.onrender.com/login";
     fetch(base_url, {
       method: "POST",
       headers: {
