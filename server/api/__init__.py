@@ -41,13 +41,16 @@ ma = Marshmallow()
 DB_NAME = "database.db"
 
 from .models import User, Customer, Vendor
-from .auth import Signup
+# from .auth import Signup
+from flask_restx import Api
+
+api = Api()
 
 def create_app():
     app = Flask(__name__)
-    api = Api(app)
-    # api = Api()
-    # api.init_app(app)
+    # api = Api(app)
+    api = Api()
+    api.init_app(app)
     ma.init_app(app)
     CORS(app)
     app.config["SECRET_KEY"] = "a16e4b678a12af3ac6df0b0d9b40db31"
@@ -55,6 +58,7 @@ def create_app():
     db.init_app(app)
 
     from .views import views, Vendors 
+    from .auth import Signup
 
     # api.add_resource(Vendors, "/vendors")
 

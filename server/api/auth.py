@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import User, db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
-from . import jsonify
+from . import jsonify, api
 from flask_restx import Resource, Namespace
 from flask import make_response
 from .serialization import user_model_input, post_user
@@ -31,5 +31,5 @@ class Signup(Resource):  # Use Resource instead of auth
         db.session.add(new_user) 
         db.session.commit()  
 
-        return make_response(jsonify(new_user), 201)
+        return make_response(jsonify(new_user.to_dict()), 201)
     

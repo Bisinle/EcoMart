@@ -145,7 +145,14 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f'(id: {self.id}, user_name: {self.user_name}, roles: {self.roles},  joined: {self.joined} )'
 
-
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_name': self.user_name,
+            'profile_picture': self.profile_picture,
+            'password': self.password_hash,
+            'roles': self.roles
+        }
 
 
 class Order(db.Model):
