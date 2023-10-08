@@ -28,6 +28,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///online_market.db"
 
 from api.models import db,Vendor,Customer,Product,User,Order,Category
 
+
 migrate = Migrate(app, db)
 db.init_app(app)
 # from  api import routes

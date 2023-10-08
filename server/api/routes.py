@@ -4,13 +4,18 @@ from api.serialization import order_schema,orders_schema, customers_schema, prod
 from api.serialization import user_schema,ns,Resource,user_model_input,login_input_model,vendor_model_update
 from api.serialization import vendor_model_input,post_user
 import uuid
-# import datetime
+
+from faker import Faker
+import random 
+from random import randint, choice as rc
+fake = Faker()
+
 import jwt
 from functools import wraps
-from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required,JWTManager
-from flask_jwt_extended import create_refresh_token
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required,JWTManager
+
+from flask_jwt_extended import JWTManager,jwt_required
+from flask_jwt_extended import create_refresh_token,create_access_token, get_jwt_identity
+# from flask_jwt_extended import get_jwt_claims
 
 jwt = JWTManager(app)
 
@@ -100,9 +105,13 @@ class Vendoer_by_id(Resource):
 
     @ns.expect(vendor_model_update)
     @jwt_required()
-    def put(self,id):
-        # get the vendor
-        vendor = Vendor.query.filter_by(id=id).first()
+    def put(self):
+        current_user= get_jwt_identity()
+        print(current_user)
+        # get the vendor from the vendors table using the user_id in the request
+        vendor = Vendor.query.filter_by(user_id=current_user).first()
+        print('----------------------')
+        print(vendor)
         if not vendor:
             return jsonify({"message":"vendor not found"})
 
@@ -112,20 +121,31 @@ class Vendoer_by_id(Resource):
             setattr(vendor, attr, data[attr])
         db.session.commit()
 
-        # return jsonify(vendor_schema.dump(vendor),200)
-        return jsonify({"message":" vendor updated successfully "},200)
+        return jsonify(vendor_schema.dump(vendor),200)
+        # # return jsonify({"message":" vendor updated successfully "},200)
+        # return jsonify({"message":" vendor updated successfully "})
 
+    @jwt_required()
+    def delete(selft):
+        current_user= get_jwt_identity()
+        print(current_user)
 
-    # def delete(selft,id):
-    #     vendor = Vendor.query.filter_by(id=id).first()
+        vendor = Vendor.query.filter_by(user_id=current_user).first()
+        print(vendor)
 
-    #     if not vendor:
-    #         return jsonify({"message":"vendor not found"})
+        if not vendor:
+            return jsonify({"message":"vendor not found"})
         
-    #     db.session.delete(vendor)
-    #     db.session.commit()
-    #     return jsonify({"Deleted":True,
-    #                     "message":"vendor deleted successfully"})
+        db.session.delete(vendor)
+        db.session.commit()
+
+
+        '''------------delete from the user table as well ----------------'''
+        user = User.query.filter_by(id=current_user).first()
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({"Deleted":True,
+                        "message":"vendor deleted successfully"})
 
 
 
@@ -285,6 +305,7 @@ class Users(Resource):
 
 '''-------- S I G N -------- U P ----------------------------'''
 
+
 @ns.route('/signup')
 class Signup (Resource):
 
@@ -312,6 +333,37 @@ class Signup (Resource):
 
         db.session.add(new_user)
         db.session.commit()
+        
+        code =['+254','+256','+252','+251']
+        if new_user.roles =='Vendor':
+            company = fake.company()
+    
+            vendor = Vendor(            
+            first_name=new_user.user_name,
+            last_name = fake.last_name(),
+            company=company,
+            phone_number=str(rc(code)) +'7'+ str(random.randint(111111111,9999999999)),
+            email=new_user.user_name+'@' + company[:4]+'.com',
+            user_id = new_user.id
+
+            )
+            db.session.add(vendor)
+            db.session.commit()
+
+        if new_user.roles =='Customer':
+                       
+       
+            customer = Customer(
+                
+            first_name=new_user.user_name,
+            last_name=fake.last_name(),
+            phone_number=str(rc(code)) +'7'+ str(random.randint(111111111,9999999999)),
+            email=new_user.user_name+'@gmail.com',
+            user_id = new_user.id
+            )
+            
+            db.session.add(customer)
+            db.session.commit()
         print('-----------------------------------------------')
 
         print(new_user)
@@ -320,9 +372,36 @@ class Signup (Resource):
 
         
 '''-----------------L O G I N -----------------------------'''
+
+'''___userObject for the login toke____
+class UserObject:
+    def __init__(self,user_id, user_name,user_role):
+        self.user_id = user_id
+        self.user_name = user_name
+        self.user_role = user_role
+      
+
+    
+    def __repr__(self):
+        return f'(id: {self.user_id}, user_name: {self.user_name}, roles: {self.user_role}'
+
+
+# ---------------we define what custom claims we are adding to the token------------------------
+@jwt.user_lookup_loader
+def add_claims_to_access_token(user):
+    return {"user_id": user.user_id,
+            "user_name":user.user_name,
+            "user_role":user.user_role,}
+
+
+# -------------we defin which one of the custom claims will be the token identity------------------
+@jwt.user_identity_loader
+def user_identity_lookup(user):
+    return user
+
+    '''
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
-
 @ns.route('/login')
 class Login(Resource):
     def post(self):
@@ -342,15 +421,21 @@ class Login(Resource):
         if not user:
             return jsonify({"message": "User not found"})
         print(user)
+        # user_claims= UserObject( user_id=user.id ,user_name=user.user_name,user_role=user.roles)
+        # print(user_claims)
+     
      
         access_token = create_access_token(identity=user.id)
         refresh_token = create_refresh_token(identity=user.id)
+
         return jsonify({
             "access_token": access_token,
-            "refresh_token": refresh_token,
+            "refresh_token":refresh_token,
             "user_id":user.id,
             "user_name":user.user_name,
-            "user_roles":user.roles
+            "user_role":user.roles,
+
+            
 
         })
 
@@ -367,26 +452,3 @@ class refresh(Resource):
         return jsonify({"access":"access"})
 
 
-# from datetime import timedelta
-
-# from flask import Flask
-# from flask import jsonify
-
-# from flask_jwt_extended import create_access_token
-# from flask_jwt_extended import create_refresh_token
-# from flask_jwt_extended import get_jwt_identity
-# from flask_jwt_extended import jwt_required
-# from flask_jwt_extended import JWTManager
-
-
-# app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
-# app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
-# app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
-# jwt = JWTManager(app)
-
-
-# @app.route("/login", methods=["POST"])
-# def login():
-#     access_token = create_access_token(identity="example_user")
-#     refresh_token = create_refresh_token(identity="example_user")
-#     return jsonify(access_token=access_token, refresh_token=refresh_token)
