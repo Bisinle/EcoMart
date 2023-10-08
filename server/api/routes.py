@@ -4,8 +4,8 @@ from api.serialization import order_schema,orders_schema, customers_schema, prod
 from api.serialization import user_schema,ns,Resource,user_model_input,login_input_model,vendor_model_update
 from api.serialization import vendor_model_input,post_user
 import uuid
-import PyJWT
 # import datetime
+import jwt
 from functools import wraps
 from flask_jwt_extended import create_access_token,get_jwt_identity,jwt_required,JWTManager
 from flask_jwt_extended import create_refresh_token
