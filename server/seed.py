@@ -1,11 +1,15 @@
-from api import app,db,Vendor,Product,Customer,User,Order,Category
+#from api import app,db,Vendor,Product,Customer,User,Order,Category
 from faker import Faker
 import random 
 from random import randint, choice as rc
 import uuid
 
-
 fake = Faker()
+
+from api import create_app, db
+from api.models import Vendor,Product,Customer,User,Order,Category
+
+app = create_app()
 
 with app.app_context():
     '''-------------- USER AUTHENTICATION TABLE-----------------------'''

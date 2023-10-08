@@ -1,13 +1,12 @@
-from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,Category,app,ma
+# from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,Category,app,ma
 from flask_restx import Api,Resource,Namespace,fields
-
 api = Api()
-api.init_app(app)
-ns=Namespace('/')
-api.add_namespace(ns)
+# api.init_app(app)
+# ns=Namespace('/')
+# api.add_namespace(ns)
 
-
-
+from . import ma
+from api.models import Vendor,Customer,User,Order,Category, Product
 
 
 class VendorSchema(ma.SQLAlchemyAutoSchema):

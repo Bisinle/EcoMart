@@ -6,17 +6,21 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash,check_password_hash
 
 
-
-
-metadata = MetaData(naming_convention={
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-})
-
-db = SQLAlchemy(metadata=metadata)
+from flask_login import UserMixin
+from . import db
 
 
 
-class Vendor(db.Model):
+
+# metadata = MetaData(naming_convention={
+#     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+# })
+
+# db = SQLAlchemy(metadata=metadata)
+
+
+
+class Vendor(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
@@ -38,7 +42,7 @@ class Vendor(db.Model):
     def __repr__(self):
         return f'(id: {self.id}, first_name: {self.first_name},last_name: {self.last_name}, company: {self.company}, phone_number: {self.phone_number}, email: {self.email} )'
 
-class Customer(db.Model):
+class Customer(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
@@ -109,7 +113,7 @@ class Product(db.Model):
         return f'(id: {self.id}, prod_name: {self.prod_name}, price: {self.price}, category: {self.category}, quantity: {self.quantity} ,vendor_id: {self.vendor_id})'
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ ='users'
 
     id = db.Column(db.Integer, primary_key=True)
