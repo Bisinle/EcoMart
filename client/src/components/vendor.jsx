@@ -56,7 +56,7 @@ const VendorDashboard = () => {
       };
 
       const response = await axios.put(
-        `http://127.0.0.1:5555/vendor`,
+        `https://ecomart-x0ur.onrender.com/vendor`,
         editingVendor,
         { headers: headers }
       );
