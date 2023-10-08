@@ -8,20 +8,11 @@ const VendorDashboard = () => {
   const [filteredVendors, setFilteredVendors] = useState([]);
   const [editingVendor, setEditingVendor] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
-  const { isLogedin, setIsLogedin, jwtToken, setJwtToken } = useAppContext();
   const token = localStorage.getItem("access_token");
-  console.log(token);
 
-  const [newVendor, setNewVendor] = useState({
-    // Initialize with default values for a new vendor
-    first_name: "",
-    last_name: "",
-    company: "",
-    email: "",
-    phone_number: "",
-  });
   useEffect(() => {
-    fetch(`http://127.0.0.1:5555/vendor`, {
+    // Fetch vendors when the component mounts or when isUpdated changes
+    fetch(`https://ecomart-x0ur.onrender.com/vendor`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -31,20 +22,20 @@ const VendorDashboard = () => {
       .then((res) => {
         if (!res.ok) {
           console.log(res);
-          throw new Error(" response was not ok");
+          throw new Error("Response was not ok");
         }
         return res.json();
       })
       .then((response) => {
-        console.log(response); // Handle the successful response here
+        // console.log(response); // Handle the successful response here
         setVendors(response);
-        // navigate("/login");
       })
       .catch((error) => {
         console.error("There was a problem with the fetch operation:", error);
       });
   }, [isUpdated]);
 
+  // Filter vendors based on the search term
   useEffect(() => {
     const results = vendors.filter((vendor) =>
       `${vendor.first_name} ${vendor.last_name}`
@@ -54,115 +45,62 @@ const VendorDashboard = () => {
     setFilteredVendors(results);
   }, [searchTerm, vendors]);
 
-  // const updateVendor = (updatedVendor) => {
-  //   const updatedVendors = vendors.map((v) =>
-  //     v.id === updatedVendor.id ? updatedVendor : v
-  //   );
-  //   setVendors(updatedVendors);
-  //   setEditingVendor(null); // Close the edit mode
-  // };
-  const updateVendor = async (updatedVendor) => {
+  //update  vendor detail
+  const updateVendor = async () => {
     try {
+      if (!editingVendor) return;
+
       const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       };
+
       const response = await axios.put(
         `http://127.0.0.1:5555/vendor`,
-        { headers: headers },
-        updatedVendor
+        editingVendor,
+        { headers: headers }
       );
 
       if (response.data) {
-        // const updatedVendors = vendors.map((v) =>
-        //   v.id === updatedVendor.id ? response.data : v
-        // );
-        // setVendors(updatedVendors);
         console.log(response.data);
+        const updatedVendors = vendors.map((v) =>
+          v.id === editingVendor.id ? response.data : v
+        );
+        setVendors(updatedVendors);
         setEditingVendor(null);
+        setIsUpdated(!isUpdated); // Trigger a re-fetch of vendors
       }
     } catch (error) {
       console.error("Failed to update vendor:", error);
     }
   };
 
-  // const editVendor = (vendor) => {
-  //   setEditingVendor(vendor);
-  // };
-  //   const editVendor = async (vendor) => {
-  //   try {
-  //     const response = await axios.put(`/api/vendors/${vendor.id}`, vendor);
-  //     if (response.data) {
-  //       const updatedVendors = vendors.map((v) =>
-  //         v.id === vendor.id ? response.data : v
-  //       );
-  //       setVendors(updatedVendors);
-  //       setEditingVendor(null);  // Close the edit modal or UI
-  //     }
-  //   } catch (error) {
-  //     console.error('Failed to edit vendor:', error);
-  //   }
-  // };
-
-  const addNewVendor = () => {
-    // Implement your API call to add a new vendor here
-    // axios.post('/add-vendor-endpoint', newVendor)
-
-    // Add the new vendor to the state
-    setVendors([...vendors, newVendor]);
-
-    // Clear the new vendor form
-    setNewVendor({
-      first_name: "",
-      last_name: "",
-      company: "",
-      email: "",
-      phone_number: "",
-    });
+  const editVendor = (vendor) => {
+    setEditingVendor(vendor);
   };
 
-  // const addNewVendor = async () => {
-  //   try {
-  //     const response = await axios.post('/api/vendors', newVendor);
-  //     if (response.data) {
-  //       setVendors([...vendors, response.data]);
-  //       setNewVendor({
-  //         first_name: '',
-  //         last_name: '',
-  //         company: '',
-  //         email: '',
-  //         phone_number: '',
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.error('Failed to add new vendor:', error);
-  //   }
-  // };
-
-  const deleteVendor = (vendorId) => {
-    // Implement your API call to delete the vendor here
-    // axios.delete(`/delete-vendor-endpoint/${vendorId}`)
-
-    // Remove the deleted vendor from the state
-    const updatedVendors = vendors.filter((v) => v.id !== vendorId);
-    setVendors(updatedVendors);
+  const deleteVendor = async (vendor_id) => {
+    try {
+      fetch(`https://ecomart-x0ur.onrender.com/vendor`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // setIsUpdated(!isUpdated); // Trigger a re-fetch of vendors
+      const updatedVendors = vendors.filter((v) => v.id !== vendor_id);
+      setVendors(updatedVendors);
+    } catch (error) {
+      console.error("Failed to delete vendor:", error);
+    }
   };
-
-  // const deleteVendor = async (vendorId) => {
-  //   try {
-  //     await axios.delete(`/api/vendors/${vendorId}`);
-  //     const updatedVendors = vendors.filter((v) => v.id !== vendorId);
-  //     setVendors(updatedVendors);
-  //   } catch (error) {
-  //     console.error('Failed to delete vendor:', error);
-  //   }
-  // };
 
   return (
     <div className="p-8 bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl mb-6 text-center font-bold text-blue-900">
-          Vendor Dashboard
+          Admin Dashboard
         </h2>
 
         <div className="mb-6">
@@ -173,63 +111,6 @@ const VendorDashboard = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-        </div>
-
-        <div className="mb-4">
-          <h3 className="text-xl font-semibold mb-2">Add New Vendor</h3>
-          <div className="flex space-x-2">
-            <input
-              type="text"
-              placeholder="First Name"
-              className="w-1/5 p-2 mr-2 bg-white rounded-md border-2 border-blue-300 focus:border-blue-500 focus:outline-none"
-              value={newVendor.first_name}
-              onChange={(e) =>
-                setNewVendor({ ...newVendor, first_name: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              className="w-1/5 p-2 mr-2 bg-white rounded-md border-2 border-blue-300 focus:border-blue-500 focus:outline-none"
-              value={newVendor.last_name}
-              onChange={(e) =>
-                setNewVendor({ ...newVendor, last_name: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Company"
-              className="w-1/5 p-2 mr-2 bg-white rounded-md border-2 border-blue-300 focus:border-blue-500 focus:outline-none"
-              value={newVendor.company}
-              onChange={(e) =>
-                setNewVendor({ ...newVendor, company: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Email"
-              className="w-1/5 p-2 mr-2 bg-white rounded-md border-2 border-blue-300 focus:border-blue-500 focus:outline-none"
-              value={newVendor.email}
-              onChange={(e) =>
-                setNewVendor({ ...newVendor, email: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Phone Number"
-              className="w-1/5 p-2 bg-white rounded-md border-2 border-blue-300 focus:border-blue-500 focus:outline-none"
-              value={newVendor.phone_number}
-              onChange={(e) =>
-                setNewVendor({ ...newVendor, phone_number: e.target.value })
-              }
-            />
-          </div>
-          <button
-            onClick={addNewVendor}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-2 transition-colors duration-200"
-          >
-            Add Vendor
-          </button>
         </div>
 
         <table className="min-w-full table-auto bg-white rounded-md shadow-md">

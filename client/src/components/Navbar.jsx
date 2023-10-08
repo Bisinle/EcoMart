@@ -28,7 +28,7 @@ function Navbar() {
           </NavLink>
           <NavLink to={"/about"}>About</NavLink>
           <NavLink to={"/contacts"}>Contacts</NavLink>
-          <NavLink to={"/v-dash"}>V-dash</NavLink>
+          <NavLink to={"/v-dash"}>Admin</NavLink>
           <ul className="flex gap-8">
             <NavLink to="/wishlist">
               <li className="nav-blocks relative">

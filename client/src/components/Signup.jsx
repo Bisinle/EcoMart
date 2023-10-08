@@ -32,7 +32,7 @@ const SignUp = () => {
       roles: FormObject.roles,
     };
 
-    fetch(`http://127.0.0.1:5555/signup`, {
+    fetch(`https://ecomart-x0ur.onrender.com/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

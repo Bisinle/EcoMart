@@ -36,13 +36,14 @@ const Login = () => {
       .then((response) => {
         // console.log(response);
         const token = response.access_token;
-
-        console.log(response);
-        localStorage.setItem("access_token", response.access_token);
-        localStorage.setItem("refresh_token", response.refresh_token);
-        localStorage.setItem("user_id", response.user_id);
-        localStorage.setItem("user_name", response.user_name);
-        localStorage.setItem("user_role", response.user_roles);
+        if (token) {
+          console.log(response);
+          localStorage.setItem("access_token", response.access_token);
+          localStorage.setItem("refresh_token", response.refresh_token);
+          localStorage.setItem("user_id", response.user_id);
+          localStorage.setItem("user_name", response.user_name);
+          localStorage.setItem("user_role", response.user_role);
+        }
 
         token ? setIsLogedin(true) : setIsLogedin(false);
         setJwtToken(localStorage.getItem("access_token"));
