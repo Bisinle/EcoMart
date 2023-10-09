@@ -13,6 +13,8 @@ function Navbar() {
 
   const linkText = isLogedin ? "Logout" : "Login";
 
+  const userRole = localStorage.getItem("user_role");
+
   const handleLogout = () => {
     setIsLogedin(false);
     localStorage.clear("token");
@@ -28,7 +30,9 @@ function Navbar() {
           </NavLink>
           <NavLink to={"/about"}>About</NavLink>
           <NavLink to={"/contacts"}>Contacts</NavLink>
+          {userRole === "admin" && (
           <NavLink to={"/v-dash"}>Admin</NavLink>
+          )}
           <ul className="flex gap-8">
             <NavLink to="/wishlist">
               <li className="nav-blocks relative">
