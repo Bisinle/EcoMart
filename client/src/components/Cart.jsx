@@ -9,7 +9,7 @@ import Lottie from "react-lottie";
 import animationData from "../assets/animation_lndl5pze.json";
 
 function Cart({ showCart, setShowCart }) {
-  const { cartCount, setCartCount, products, setProducts, setQuantity, quantity } = useAppContext();
+  const { cartCount, setCartCount, products, setProducts, setQuantity, quantity, userId } = useAppContext();
 
   const handleIncrease = (index) => {
     const newQuantity = [...quantity];
@@ -40,9 +40,11 @@ function Cart({ showCart, setShowCart }) {
   };
 
   const checkOutUrl = 'https://ecomart-x0ur.onrender.com/orders'
-  const userId = localStorage.getItem("user_role");
+  // const userId = localStorage.getItem("user_role");
+  // console.log(userId)
 
   const handleCheckout = async () => {
+    console.log('Checking out for user ID:', userId);
     try {
       const orders = products.map((product, index) =>
        ({
@@ -52,7 +54,7 @@ function Cart({ showCart, setShowCart }) {
         amount: product.amount,
         address: "Ngong lane, Ngong Road, Nairobi"
       }));
-
+      console.log(userId)
       const response = await axios.post(checkOutUrl, orders);
       console.log(response.data);
 

@@ -8,7 +8,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const { setIsLogedin, jwtToken, setJwtToken } = useAppContext();
+  const { setIsLogedin, jwtToken, setJwtToken, setUserId } = useAppContext();
   const navigate = useNavigate();
   // const { setGlobalvariable } = useContext(useAppContext);
   // console.log(globalvariable);
@@ -48,6 +48,7 @@ const Login = () => {
 
         token ? setIsLogedin(true) : setIsLogedin(false);
         setJwtToken(localStorage.getItem("access_token"));
+        setUserId(response.user_id);
         jwtToken === "" ? navigate("/login") : navigate("/");
       })
       .catch((error) => {
@@ -55,6 +56,7 @@ const Login = () => {
       });
   }
   console.log(jwtToken);
+
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
