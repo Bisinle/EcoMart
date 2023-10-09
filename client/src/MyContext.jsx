@@ -13,6 +13,7 @@ export const AppProvider = ({ children }) => {
   const [isLogedin, setIsLogedin] = useState(false);
   const [jwToken, setJwtToken] = useState("");
   const [userRole, setUserRole] = useState("");
+  const [userId, setUserId] = useState(null);
 
   // get token from the localstorage
   // useEffect(() => {
@@ -70,6 +71,8 @@ export const AppProvider = ({ children }) => {
         setJwtToken,
         userRole,
         setUserRole,
+        userId,
+        setUserId,
       }}
     >
       {children}
