@@ -1,3 +1,7 @@
+# Trade
+
+Welcome to Trade! This platform provides a seamless shopping experience with a range of features designed to enhance your shopping journey. Below, you'll find an overview of the key functionalities available.
+
 ![python version](https://img.shields.io/badge/python-3.10.12-blue.svg)
 ![Flask version](https://img.shields.io/badge/flask-2.3.3-red.svg)
 ![Flask-RESTX version](https://img.shields.io/badge/Flask_RESTX-1.1.0-cyan.svg)
@@ -5,35 +9,60 @@
 [![license](https://img.shields.io/badge/license-%20MIT%20-green.svg)](./LICENSE)
 ![Gunicorn version](https://img.shields.io/badge/gunicorn-21.2.0-orange.svg)
 
-# Trade
+<img src='./images/Trade.png'>
 
-Welcome to Trade! This platform provides a seamless shopping experience with a range of features designed to enhance your shopping journey. Below, you'll find an overview of the key functionalities available. You can run the React front end from the URL: https://chic-twilight-bc4eea.netlify.app/
+<img src='./images/singup.png'>
 
-## Features
+> ---
+>
+> **NB: Use the following account to test the application:**
+>
+> - user_name : Ali
+> - password: 22
 
-### Search
+## Setup
 
-Our platform provides a robust search functionality that allows users to easily find products of interest. Simply type in keywords or product names in the search bar, and relevant results will be displayed.
+### 1. Clone the repository
 
-### Wishlist
+```txt
+git clone https://github.com/Bisinle/Trade
+```
 
-The Wishlist feature enables users to save products for later. From the wishlist, you can choose to either add a product to your cart or remove it if you've changed your mind.
+### 2. Navigate to the project's directory
 
-### Cart and Checkout
+```txt
+cd Trade
+```
 
-Add items to your cart and proceed to the checkout page when you're ready to make a purchase. You can review your selected items, increase or decrease the quantity of products you want then proceed to checckout, placing an order.
+### 3. Install required dependencies
 
-### Admin Dashboard
+```python
+pip install -r requirements.txt
 
-For vendors and administrators, there is an admin dashboard available. This allows for the management of vendors information. Admin can add, edit, or remove vendor information.
+npm install --prefix client
+```
 
-## Getting Started
+### 4. Activate the virtual environment for the Flask app
 
-To get started with our E-Commerce Site, follow these steps:
+```python
+source myenv/bin/activate
+```
 
-1. Clone the repository to your local machine.
-2. Install the necessary dependencies using `npm install`.
-3. Start the development server using `npm run dev`.
+### 5. Run the Flask server
+
+You can run the Flask API on [`localhost:5555`](http://localhost:5555) by running:
+
+```sh
+python server/main.py
+```
+
+### 6. In another terminal, navigate to client folder and run the React
+
+You can run your React app on [`localhost:3000`](http://localhost:3000) by running:
+
+```sh
+npm run dev
+```
 
 ## Usage
 
@@ -84,8 +113,10 @@ Once the application is running, you can:
 To download the dependencies for the frontend and backend, run:
 
 ```
+
 pipenv install
 npm install
+
 ```
 
 You can run your React app on `localhost:5173` by running:
@@ -112,3 +143,7 @@ Authors:
 - [Miriam Rehema](https://github.com/MiriamRehema)
 
 Licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.
+
+```
+
+```
