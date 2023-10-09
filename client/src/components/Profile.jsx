@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import moment from 'moment';
 
 const UserProfile = () => {
   const [users, setUsers] = useState([]);
@@ -7,8 +8,11 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5555/orders");
+        const response = await axios.get(
+          "https://ecomart-x0ur.onrender.com/orders"
+        );
         setUsers(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -35,14 +39,12 @@ const UserProfile = () => {
               <p className="text-gray-500">{user.email}</p>
               <p className="mt-1 text-gray-500">{user.phone_number}</p>
               <p className="mt-1 text-gray-500">
-                Joined: {new Date(user.joined).toLocaleDateString()}
+                Joined: {moment(user.joined).format('MMMM Do YYYY')}
               </p>
             </div>
             <div>
               <h4 className="font-semibold mb-4 text-black">Orders:</h4>
-              {user.orders.length === 0 ? (
-                <p className="text-gray-600 italic">No orders yet.</p>
-              ) : (
+              {user.orders && user.orders.length === 0 ? (
                 <ul>
                   {user.orders.map((order) => (
                     <li key={order.id} className="mt-2 text-gray-600">
@@ -68,6 +70,8 @@ const UserProfile = () => {
                     </li>
                   ))}
                 </ul>
+              ) : (
+                <p className="text-gray-600 italic">No orders yet.</p>
               )}
             </div>
           </div>

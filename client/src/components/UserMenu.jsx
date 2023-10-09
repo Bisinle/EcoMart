@@ -25,7 +25,10 @@ const UserMenu = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg z-10">
+        <div
+          className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg z-10"
+          style={{ backdropFilter: "blur(10px)" }}
+        >
           <div className="py-1">
             <Link
               to="/profile"
