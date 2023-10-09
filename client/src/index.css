@@ -1,8 +1,112 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Share+Tech+Mono&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-
+@layer components {
+  .nav-blocks {
+    @apply flex items-center gap-2 cursor-pointer;
+  }
+  .nav-icons {
+    @apply w-6 h-6;
+  }
+  .card-details {
+    @apply flex justify-between py-2 px-3;
+  }
+  .product-card {
+    @apply w-[17rem] rounded-md bg-gray-200 cursor-pointer transition ease-in-out delay-150 hover:scale-105;
+  }
+  .footer-li {
+    @apply cursor-pointer flex flex-col justify-items-start;
+  }
+  .map-ul {
+    @apply pt-4;
+  }
+  .navbar-badge {
+    @apply absolute bottom-5 left-4 inline-flex items-center rounded-lg bg-purple-500 px-2 py-1 text-xs font-medium text-white ring-1 ring-inset ring-gray-500/10;
+  }
+  .formControl {
+    @apply flex flex-col gap-3 pb-5;
+  }
+  .foot-icons {
+    @apply hover:text-indigo-500;
+  }
+  .foot-head {
+    @apply font-bold underline underline-offset-8;
+  }
+  .wishlist-th {
+    @apply px-3 py-2;
+  }
+  .wishlist-td {
+    @apply px-3 py-2 text-sm;
+  }
+  .wishlist-action {
+    @apply text-sm text-white font-semibold flex flex-col items-center py-2 w-full rounded-sm mb-2 hover:scale-110 transition-all ease-in-out duration-300;
+  }
 }
 
+svg,
+img {
+  display: block;
+  max-width: 100%;
+}
+
+:root {
+  --contact: linear-gradient(
+    90deg,
+    rgba(163, 157, 209, 1) 0%,
+    rgba(163, 154, 207, 1) 44%,
+    rgba(152, 145, 202, 1) 100%
+  );
+}
+
+body {
+  max-width: 1650px;
+  padding: 1rem 3rem;
+  margin: auto;
+  min-height: 100vh;
+  font-family: poppins;
+}
+
+.product-image {
+  height: 18rem;
+}
+.prod-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact {
+  background-image: var(--contact);
+  padding: 3rem 6rem;
+}
+
+.contactForm label {
+  color: white;
+}
+
+.formControl input,
+textarea {
+  font-family: inherit;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.8rem;
+  outline: transparent;
+  border: none;
+}
+
+.form-btn {
+  padding: 0.6rem 2rem;
+  background: #fff;
+  border: 3px solid black;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.about-cart {
+  max-width: 30rem;
+}
+
+.about-img {
+  width: 100%;
+}
