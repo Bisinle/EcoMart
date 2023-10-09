@@ -1,3 +1,10 @@
+![python version](https://img.shields.io/badge/python-3.10.12-blue.svg)
+![Flask version](https://img.shields.io/badge/flask-2.3.3-red.svg)
+![Flask-RESTX version](https://img.shields.io/badge/Flask_RESTX-1.1.0-cyan.svg)
+![Pytest version](https://img.shields.io/badge/pytest-7.4.2-white.svg)
+[![license](https://img.shields.io/badge/license-%20MIT%20-green.svg)](./LICENSE)
+![Gunicorn version](https://img.shields.io/badge/gunicorn-21.2.0-orange.svg)
+
 # Trade
 
 Welcome to Trade! This platform provides a seamless shopping experience with a range of features designed to enhance your shopping journey. Below, you'll find an overview of the key functionalities available. You can run the React front end from the URL: https://chic-twilight-bc4eea.netlify.app/
