@@ -40,7 +40,7 @@ function Cart({ showCart, setShowCart }) {
   };
 
   const checkOutUrl = 'https://ecomart-x0ur.onrender.com/orders'
-  const userId = localStorage.setItem("user_id", response.user_id);
+  const userId = localStorage.getItem("user_role");
 
   const handleCheckout = async () => {
     try {
