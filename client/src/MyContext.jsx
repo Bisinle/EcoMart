@@ -12,6 +12,7 @@ export const AppProvider = ({ children }) => {
   const [quantity, setQuantity] = useState([]);
   const [isLogedin, setIsLogedin] = useState(false);
   const [jwToken, setJwtToken] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   // get token from the localstorage
   // useEffect(() => {
@@ -45,6 +46,11 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    const role = localStorage.getItem("user_role");
+    setUserRole(role);
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
@@ -62,6 +68,8 @@ export const AppProvider = ({ children }) => {
         addToCartFromWishlist,
         jwToken,
         setJwtToken,
+        userRole,
+        setUserRole,
       }}
     >
       {children}

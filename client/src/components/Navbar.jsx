@@ -6,6 +6,8 @@ import { BsPerson, BsCart3, BsFillBookmarkHeartFill } from "react-icons/bs";
 import Cart from "./Cart";
 import Login from "./Login";
 import Protexted from "./Protexted";
+import UserMenu from "./UserMenu";
+
 function Navbar() {
   const { isLogedin, setIsLogedin, cartCount, wishlistCount } = useAppContext();
 
@@ -15,10 +17,10 @@ function Navbar() {
 
   const userRole = localStorage.getItem("user_role");
 
-  const handleLogout = () => {
-    setIsLogedin(false);
-    localStorage.clear("token");
-  };
+  // const handleLogout = () => {
+  //   setIsLogedin(false);
+  //   localStorage.clear("token");
+  // };
 
   return (
     <div>
@@ -56,9 +58,13 @@ function Navbar() {
               <Cart showCart={showCart} setShowCart={setShowCart} />
             </li>
           </ul>
-          <NavLink to="/login" onClick={isLogedin ? handleLogout : null}>
-            {linkText}
-          </NavLink>
+          {isLogedin ? (
+            <UserMenu />
+          ) : (
+            <NavLink to="/login">
+              Login
+            </NavLink>
+          )}
         </div>
       </nav>
       <main>

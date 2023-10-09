@@ -43,6 +43,7 @@ const Login = () => {
           localStorage.setItem("user_id", response.user_id);
           localStorage.setItem("user_name", response.user_name);
           localStorage.setItem("user_role", response.user_role);
+          localStorage.setItem("user_profile_piture", response.user_profile_picture);
         }
 
         token ? setIsLogedin(true) : setIsLogedin(false);
