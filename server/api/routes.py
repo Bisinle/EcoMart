@@ -225,6 +225,7 @@ class Orders(Resource):
         if type(data) is list:
             for order in data:
                 order = Order(
+                customer_id = order['customer_id'],
                 item_price=order['item_price'],
                 item_quantity=order['item_quantity'],
                 address=order['address'],
@@ -235,6 +236,7 @@ class Orders(Resource):
         db.session.commit()
         if type(data) is dict:
                  order = Order(
+                customer_id = order['customer_id'],
                 item_price=data['item_price'],
                 item_quantity=data['item_quantity'],
                 address=data['address'],
