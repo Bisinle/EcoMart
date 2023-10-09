@@ -21,6 +21,7 @@ class VendorSchema(ma.SQLAlchemyAutoSchema):
     company=ma.auto_field()
     phone_number = ma.auto_field(data_key="phone_number")    
     email=ma.auto_field()
+    user_id=ma.auto_field()
     products = ma.List(ma.Nested('ProductSchema',
                                  only=('prod_name','prod_description','image','price','quantity','category',)))
 

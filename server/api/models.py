@@ -36,7 +36,7 @@ class Vendor(db.Model):
 
 
     def __repr__(self):
-        return f'(id: {self.id}, first_name: {self.first_name},last_name: {self.last_name}, company: {self.company}, phone_number: {self.phone_number}, email: {self.email} )'
+        return f'(id: {self.id}, first_name: {self.first_name},last_name: {self.last_name}, company: {self.company}, phone_number: {self.phone_number}, email: {self.email}, user_id: {self.user_id})'
 
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)

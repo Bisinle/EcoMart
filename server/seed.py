@@ -30,14 +30,16 @@ with app.app_context():
     #     )
     #     user_list.append(user)
     # db.session.add_all(user_list)
-    db.session.commit()
-
+    # db.session.commit()
 
 
 
 
 
     Vendor.query.delete()
+
+    # d = Vendor.query.filter_by(email='Bisinle@Chase.com').first()
+    # db.session.delete(d)
 
     # profile_image =[]
     # code =['+254','+256','+252','+251']
@@ -96,7 +98,7 @@ with app.app_context():
     #     if cutomer_form_user_table.id not  in [customer.user_id for customer  in customer_list ]:
     #         customer_list.append(customer)
     # db.session.add_all(customer_list)
-    db.session.commit()
+    # db.session.commit()
 
 
 

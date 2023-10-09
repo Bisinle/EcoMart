@@ -63,9 +63,9 @@ const VendorDashboard = () => {
 
       if (response.data) {
         console.log(response.data);
-        const updatedVendors = vendors.map((v) =>
-          v.id === editingVendor.id ? response.data : v
-        );
+        const updatedVendors = vendors.map((v) => {
+          v.id === editingVendor.id ? response.data : v;
+        });
         setVendors(updatedVendors);
         setEditingVendor(null);
         setIsUpdated(!isUpdated); // Trigger a re-fetch of vendors
@@ -166,34 +166,13 @@ const VendorDashboard = () => {
           <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-10 transition-all ease-in-out duration-300">
             <div className="bg-white p-6 rounded-lg shadow-xl w-3/4 md:w-1/2 lg:w-1/3">
               {/* Input fields for editing vendor information */}
-              <input
-                type="text"
-                placeholder="First Name"
-                className="block w-full p-2 mb-2 border rounded-md"
-                value={editingVendor.first_name}
-                onChange={(e) =>
-                  setEditingVendor({
-                    ...editingVendor,
-                    first_name: e.target.value,
-                  })
-                }
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                className="block w-full p-2 mb-2 border rounded-md"
-                value={editingVendor.last_name}
-                onChange={(e) =>
-                  setEditingVendor({
-                    ...editingVendor,
-                    last_name: e.target.value,
-                  })
-                }
-              />
+              <label htmlFor="" className="block p-0">
+                Company
+              </label>
               <input
                 type="text"
                 placeholder="Company"
-                className="block w-full p-2 mb-2 border rounded-md"
+                className="block w-full p-5 mb-9 border border-blue-900 rounded-md"
                 value={editingVendor.company}
                 onChange={(e) =>
                   setEditingVendor({
@@ -202,19 +181,13 @@ const VendorDashboard = () => {
                   })
                 }
               />
-              <input
-                type="text"
-                placeholder="Email"
-                className="block w-full p-2 mb-2 border rounded-md"
-                value={editingVendor.email}
-                onChange={(e) =>
-                  setEditingVendor({ ...editingVendor, email: e.target.value })
-                }
-              />
+              <label htmlFor="" className="block p-0">
+                Phone-number
+              </label>
               <input
                 type="text"
                 placeholder="Phone Number"
-                className="block w-full p-2 mb-2 border rounded-md"
+                className="block w-full p-5 mb-2 border border-blue-900 rounded-md"
                 value={editingVendor.phone_number}
                 onChange={(e) =>
                   setEditingVendor({

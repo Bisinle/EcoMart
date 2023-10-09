@@ -108,30 +108,44 @@ class Vendoer_by_id(Resource):
     def put(self):
         current_user= get_jwt_identity()
         print(current_user)
-        # get the vendor from the vendors table using the user_id in the request
-        vendor = Vendor.query.filter_by(user_id=current_user).first()
-        print('----------------------')
-        print(vendor)
-        if not vendor:
-            return jsonify({"message":"vendor not found"})
+        # get the user from and check the role
+        user = User.query.filter_by(id=current_user).first()
+        # if not user or user.roles !='Admin':
+        #     return jsonify({"Access":" DENIED !!"        ,
+        #                     "message":"only Admins can perform this action"})
+        
+        # print(user)
 
         data = request.get_json()
+        # find the vendor using the id in the request
+        vendor = Vendor.query.filter_by(id=data['id']).first()
+        
+        
+        print('----------------------------------------------------------------')
         data['email'] = vendor.first_name+'@'+data['company'][:5]+'.com'
-        for  attr in data:
-            setattr(vendor, attr, data[attr])
-        db.session.commit()
+          
+  
+        vendor.company=data['company']
+        vendor.email=data['email']
+        vendor.phone_number=data['phone_number']
+      
+        # for attr in data:
+        #     setattr(vendor, attr,data[attr])
 
+        # db.session.add(vendor_update)
+        db.session.commit()
+        print(vendor)
         return jsonify(vendor_schema.dump(vendor),200)
-        # # return jsonify({"message":" vendor updated successfully "},200)
-        # return jsonify({"message":" vendor updated successfully "})
+        # # # return jsonify({"message":" vendor updated successfully "},200)
+        # # return jsonify({"message":" vendor updated successfully "})
 
     @jwt_required()
     def delete(selft):
         current_user= get_jwt_identity()
-        print(current_user)
+        # print(current_user)
 
         vendor = Vendor.query.filter_by(user_id=current_user).first()
-        print(vendor)
+        # print(vendor)
 
         if not vendor:
             return jsonify({"message":"vendor not found"})
