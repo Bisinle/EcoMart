@@ -1,6 +1,6 @@
 # Trade
 
-Welcome to Trade! This platform provides a seamless shopping experience with a range of features designed to enhance your shopping journey. Below, you'll find an overview of the key functionalities available.
+Welcome to Trade! This platform provides a seamless shopping experience with a range of features designed to enhance your shopping journey. Below, you'll find an overview of the key functionalities available. You can run the React front end from the URL: https://chic-twilight-bc4eea.netlify.app/
 
 ## Features
 
