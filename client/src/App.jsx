@@ -16,38 +16,20 @@ import Protexted from "./components/Protexted";
 import Profile from "./components/Profile";
 import VendorDashboard from "./components/vendor";
 
-function App() {
-  const { isLogedin, setIsLogedin } = useAppContext();
+import { login, useAuth } from "./auth";
 
-  // useEffect(() => {
-  //   console.log("refresh_Token: ", localStorage.refresh_token);
-  //   setInterval(() => {
-  //     if (localStorage.refresh_token) {
-  //       fetch("http://127.0.0.1:5555/refresh", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           refresh_token: localStorage.getItem("refresh_token")
-  //             ? JSON.parse(localStorage.getItem("refresh_token"))
-  //             : null,
-  //         }),
-  //       })
-  //         .then((res) => {
-  //           if (!res.ok) {
-  //             throw new Error(
-  //               "-------------response was not ok------------------"
-  //             );
-  //           }
-  //           return res.json();
-  //         })
-  //         .then((data) => {
-  //           console.log(data);
-  //         });
-  //     }
-  //   }, 1000);
-  // }, []);
+function App() {
+  const { isLogedin } = useAppContext();
+  const { authState, onUpdateToken, login } = useAuth();
+
+  useEffect(() => {
+    if (authState) {
+      onUpdateToken().then((newAcessToken) => {
+        authState.access_token = newAcessToken;
+        login(newAcessToken);
+      });
+    }
+  }, [authState, onUpdateToken]);
 
   return (
     <div className="App">
@@ -64,24 +46,10 @@ function App() {
             </Protexted>
           }
         />
-        <Route
-          path="/profile"
-          element={
-            <Protexted isLogedin={isLogedin}>
-              <Profile />
-            </Protexted>
-          }
-        />
-        <Route
-          path="/wishlist"
-          element={
-            <Protexted isLogedin={isLogedin}>
-              <Wishlist />
-            </Protexted>
-          }
-        />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="login" element={<Login />} />
-        <Route path="logout" element={<Logout />} />
+        {/* <Route path="logout" element={<Logout />} /> */}
         <Route path="signup" element={<Signup />} />
       </Routes>
       <Footer />

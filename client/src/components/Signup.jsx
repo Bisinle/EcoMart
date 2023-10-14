@@ -32,7 +32,8 @@ const SignUp = () => {
       roles: FormObject.roles,
     };
 
-    fetch(`https://ecomart-x0ur.onrender.com/signup`, {
+    // fetch(`https://ecomart-x0ur.onrender.com/signup`, {
+    fetch(`http://127.0.0.1:5555/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -99,6 +100,11 @@ const SignUp = () => {
           </div>
           <div className="mb-4">
             <label className="block mb-2">roles:</label>
+            <select name="" id="">
+              <option value="Admin">Admin</option>
+              <option value="Customer">Customer</option>
+              <option value="Vendor">Vendor</option>
+            </select>
             <input
               type="roles"
               value={FormObject.roles}

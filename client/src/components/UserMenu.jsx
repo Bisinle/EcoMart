@@ -1,17 +1,22 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../MyContext";
 import { FiMenu } from "react-icons/fi";
+import Logout from "./Logout";
+import { logout } from "../auth";
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { userRole, setUserRole, isLogedin, setIsLogedin } = useAppContext();
+  const { setUserRole, setIsLogedin } = useAppContext();
+  const navigate = useNavigate();
   const userName = localStorage.getItem("user_name");
 
   const handleLogout = () => {
     setUserRole(null);
     setIsLogedin(false);
-    localStorage.clear();
+    // localStorage.clear();
+    logout();
+    navigate("/");
   };
 
   return (

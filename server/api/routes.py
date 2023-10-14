@@ -1,7 +1,7 @@
 from api import  make_response,jsonify,Product,Vendor,Customer,User,Order,Category,app,db,request
 from api.serialization import api,vendor_schema,vendors_schema, customer_schema,users_schema,order_model_input
 from api.serialization import order_schema,orders_schema, customers_schema, product_schema,category_schema
-from api.serialization import user_schema,ns,Resource,user_model_input,login_input_model,vendor_model_update
+from api.serialization import user_schema,ns,auth,Resource,user_model_input,login_input_model,vendor_model_update
 from api.serialization import vendor_model_input,post_user
 import uuid
 
@@ -322,7 +322,7 @@ class Users(Resource):
 '''-------- S I G N -------- U P ----------------------------'''
 
 
-@ns.route('/signup')
+@auth.route('/signup')
 class Signup (Resource):
 
     @ns.expect(user_model_input)
@@ -418,7 +418,7 @@ def user_identity_lookup(user):
     '''
 # Create a route to authenticate your users and return JWTs. The
 # create_access_token() function is used to actually generate the JWT.
-@ns.route('/login')
+@auth.route('/login')
 class Login(Resource):
     def post(self):
 
@@ -456,7 +456,7 @@ class Login(Resource):
         })
 
 
-@ns.route('/refresh')
+@auth.route('/refresh')
 class refresh(Resource):
     @jwt_required(refresh=True)
     def post(self):
