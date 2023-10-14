@@ -461,10 +461,10 @@ class refresh(Resource):
     @jwt_required(refresh=True)
     def post(self):
         print(request.get_json())
-        # identity = get_jwt_identity()
-        # access = create_access_token(identity = identity)
+        identity = get_jwt_identity()
+        access = create_access_token(identity = identity)
 
     
-        return jsonify({"access":"access"})
+        return jsonify({"access_token":access})
 
 

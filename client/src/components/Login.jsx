@@ -41,52 +41,7 @@ const Login = () => {
         data.access_token && navigate("/");
         data.access_token ? setIsLogedin(true) : setIsLogedin(false);
       });
-    // reset();
-    // e.preventDefault();
-    // const data = {
-    //   username: username,
-    //   password: password,
-    // };
-    // const base_url = "http://127.0.0.1:5555/auth/login";
-    // fetch(base_url, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-    //   .then((res) => {
-    //     if (!res.ok) {
-    //       throw new Error("-------------response was not ok------------------");
-    //     }
-    //     return res.json();
-    //   })
-    //   .then((response) => {
-    //     // console.log(response);
-    //     const token = response.access_token;
-    //     if (token) {
-    //       console.log(response);
-    //       localStorage.setItem("access_token", response.access_token);
-    //       localStorage.setItem("refresh_token", response.refresh_token);
-    //       localStorage.setItem("user_id", response.user_id);
-    //       localStorage.setItem("user_name", response.user_name);
-    //       localStorage.setItem("user_role", response.user_role);
-    //       localStorage.setItem(
-    //         "user_profile_piture",
-    //         response.user_profile_picture
-    //       );
-    //     }
-
-    //     token ? setIsLogedin(true) : setIsLogedin(false);
-    //     setJwtToken(localStorage.getItem("access_token"));
-    //     setUserId(response.user_id);
-    //     jwtToken === "" ? navigate("/login") : navigate("/");
-    //   })
-    //   .catch((error) => {
-    //     console.error("There was a problem with the fetch operation:", error);
-    //   });
   }
-  // console.log(jwtToken);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
@@ -97,8 +52,6 @@ const Login = () => {
             <label className="block mb-2">username:</label>
             <input
               type="text"
-              // value={username}
-              // onChange={(e) => setUsername(e.target.value)}
               {...register("username", { required: true, maxLength: 25 })}
               className="w-full p-2 border rounded"
             />
@@ -119,8 +72,6 @@ const Login = () => {
             <label className="block mb-2">Password:</label>
             <input
               type="password"
-              // value={password}
-              // onChange={(e) => setPassword(e.target.value)}
               {...register("password", { required: true, minLength: 2 })}
               className="w-full p-2 border rounded"
             />
