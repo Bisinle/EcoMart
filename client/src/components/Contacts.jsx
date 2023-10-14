@@ -39,7 +39,6 @@ function Contact() {
 
   return (
     <section className="flex flex-col">
-
       <section className="contact flex justify-between items-center gap-4 rounded-lg">
         <article className="text-white w-[36rem]">
           <h1 className="text-5xl font-bold">Have Any Questions ??,</h1>
@@ -93,13 +92,11 @@ function Contact() {
           </div>
           <div className="formControl">
             <button className="submit" type="submit">
-              <BsFillSendFill className="form-btn w-32 h-20 hover:border-white  hover:text-white hover:bg-transparent transition-colors ease-in-out duration-300" />
+              <BsFillSendFill className="form-btn w-24 h-16 hover:border-white  hover:text-white hover:bg-transparent transition-colors ease-in-out duration-300" />
             </button>
           </div>
         </form>
       </section>
-
-
     </section>
   );
 }

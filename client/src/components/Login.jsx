@@ -40,6 +40,7 @@ const Login = () => {
         login(data.access_token);
         data.access_token && navigate("/");
         data.access_token ? setIsLogedin(true) : setIsLogedin(false);
+        localStorage.setItem("refresh_token", data.refresh_token);
       });
   }
 

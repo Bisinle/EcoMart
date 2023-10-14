@@ -14,7 +14,7 @@ const UserMenu = () => {
   const handleLogout = () => {
     setUserRole(null);
     setIsLogedin(false);
-    // localStorage.clear();
+    localStorage.clear();
     logout();
     navigate("/");
   };

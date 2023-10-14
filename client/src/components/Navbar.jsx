@@ -56,33 +56,9 @@ const LoggedInLinks = () => {
   );
 };
 
-// const LoggedOutLinks = () => {
-//   <>
-//     <NavLink to={"/"}>Home</NavLink>
-//     <NavLink to={"/about"}>About</NavLink>
-//     <NavLink to={"/contacts"}>Contacts</NavLink>
-//     <NavLink to={"/login"}>Login</NavLink>
-
-//     {/* {userRole === "admin" && <NavLink to={"/v-dash"}>Admin</NavLink>} */}
-//   </>;
-// };
-
 function Navbar() {
-  // const linkText = isLogedin ? "Logout" : "Login";
-
-  // const userRole = localStorage.getItem("user_role");
-
-  //---------------------------------------------------------
-
   const [logged] = useAuth();
-  console.log(logged);
-
-  //---------------------------------------------------------
-
-  // const handleLogout = () => {
-  //   setIsLogedin(false);
-  //   localStorage.clear("token");
-  // };
+  // console.log(logged);
 
   return (
     <div>
