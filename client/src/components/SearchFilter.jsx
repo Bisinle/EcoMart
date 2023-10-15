@@ -1,4 +1,6 @@
 import React from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { useState } from "react";
 import { useAppContext } from "../MyContext";
 
@@ -18,8 +20,34 @@ function SearchFilter({ onSearch, onCategoryChange, query, category }) {
     "Kitchenware",
   ];
 
+  // const [error, setError] = useState(null);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [categories, setCategories] = useState([]);
+
+  // useEffect(() => {
+  //   fetch("http://127.0.0.1:5555/categories")
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setCategories(data);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       setError(err);
+  //       setIsLoading(false);
+  //     });
+  // }, []);
+  // console.log(category);
   return (
-    <div className="flex items-center justify-center py-7">
+    <div
+      className="flex items-center justify-center py-7"
+      data-aos="fade-up"
+      data-aos-duration="1000"
+    >
       <input
         type="text"
         placeholder="Search"

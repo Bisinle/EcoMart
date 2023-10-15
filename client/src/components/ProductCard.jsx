@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 import { AiOutlineHeart } from "react-icons/ai";
 import { useAppContext } from "../MyContext";
 import { toast } from "react-toastify";
@@ -30,6 +33,9 @@ function ProductCard({ id, image, price, name, description }) {
     }
   };
 
+  useEffect(() => {
+    AOS.init();
+  }, []);
   const addToWishlist = (prod) => {
     const found = wishlistCount.find((element) => element.id === prod.id);
     // console.log(prod);
@@ -52,12 +58,19 @@ function ProductCard({ id, image, price, name, description }) {
   }, []);
 
   return (
-    <article product={id} className="product-card">
+    <article
+      product={id}
+      className="product-card"
+      data-aos="fade-up"
+      data-aos-duration="500"
+      data-aos-easing="ease-in-out"
+      data-aos-once="false"
+    >
       <div className="product-image">
         <img
           src={image}
           alt="product-image"
-          className="rounded-sm prod-image"
+          className="rounded-sm  prod-image"
         />
       </div>
       <div className="product_details card-details">

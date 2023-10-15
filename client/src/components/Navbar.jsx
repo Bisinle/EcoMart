@@ -11,7 +11,9 @@ import { useAuth } from "../auth";
 const LoggedOutLinks = () => {
   return (
     <>
-      <NavLink to={"/"}>Home</NavLink>
+      <NavLink to={"/"} className="hover:bg-indigo-500">
+        Home
+      </NavLink>
       <NavLink to={"/about"}>About</NavLink>
       <NavLink to={"/contacts"}>Contacts</NavLink>
       <NavLink to={"/login"}>Login</NavLink>

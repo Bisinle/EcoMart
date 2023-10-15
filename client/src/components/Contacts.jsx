@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Navbar from "./Navbar";
 import { BsFillSendFill } from "react-icons/bs";
 import Footer from "./Footer";
 
