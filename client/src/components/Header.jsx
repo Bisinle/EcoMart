@@ -31,8 +31,8 @@ function Header() {
 
   return (
     <section className="py-10 " data-aos="fade-up" data-aos-duration="1000">
-      <div className="container flex flex-wrap items-center justify-center mx-autot mt-10 md:px-12 md:flex-row">
-        <div className="mb-14 lg:mb-0 md:w-1/2  ">
+      <div className="container flex flex-wrap  justify-center  mt-10 md:px-2 md:flex-row">
+        <div className="mb-14 lg:mb-0 lg:w-1/2  ">
           <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold text-gray-800 mb-4">
             WELCOME TO TRADE where all your desires come to life
           </h1>
