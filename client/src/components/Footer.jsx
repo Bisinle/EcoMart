@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { about } from "../MyContext";
+import { NavLink } from "react-router-dom";
 import {
   FaInstagram,
   FaSquareXTwitter,
@@ -16,10 +17,12 @@ function Footer() {
   };
 
   return (
-    <footer className="mt-[2rem] text-[.95rem] mx-2 py-10 rounded-md">
-      <ul className="flex items-start justify-around  pb-5">
-        <li className="footer-li">
-          <span className="foot-head">Ecomm</span>
+    <footer className="mt-[2rem] text-[.95rem] mx-2 py-10 rounded-md flex flex-wrap flex-col">
+      <ul className="flex items-start justify-around flex flex-wrap flex-col-1  pb-5">
+        <li className="footer-li items-center">
+          <span className="foot-head">
+            <span className="text-indigo-500">TRADE</span>
+          </span>
           <div className="w-[22rem] pt-4">
             <p>
               At Ecomm, our mission is to revolutionize the way you shop online.
@@ -32,37 +35,53 @@ function Footer() {
 
         <li className="footer-li">
           <span className="foot-head">Quick Links</span>
-          <ul className="map-ul">
-            {about.map((item) => (
-              <li
-                key={item}
-                className="hover:text-indigo-500 hover:font-semibold pb-2"
-              >
-                {item}
-              </li>
-            ))}
+          <ul className="map-ul flex flex-wrap flex-col items-center basis-full">
+            <NavLink
+              to={"/"}
+              className="hover:bg-indigo-500 hover:text-white text-black mx-3 p-2  rounded-lg"
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to={"/about"}
+              className="hover:bg-indigo-500 hover:text-white text-black mx-3 p-2  rounded-lg"
+            >
+              About
+            </NavLink>
+            <NavLink
+              to={"/contacts"}
+              className="hover:bg-indigo-500 hover:text-white text-black mx-3 p-2  rounded-lg"
+            >
+              Contacts
+            </NavLink>
+            <NavLink
+              to={"/login"}
+              className="hover:bg-indigo-500 hover:text-white text-black mx-3 p-2  rounded-lg"
+            >
+              Login
+            </NavLink>
           </ul>
         </li>
         <li className="footer-li flex flex-col gap-y-[1rem]">
           <div className="w-[22rem]">
-            <p className="mb-4 foot-head">SIGNUP & SAVE</p>
-            <p>
-              Subscribe to get special offers, free giveaways, and
-              once-in-a-lifetime deals.
-            </p>
-            <form onSubmit={handleSubmit} className="flex gap-2 py-3">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-wrap  items-center gap-2 py-3"
+            >
               <input
-                className="border-b-2 border-black py-1 outline-none "
+                className="border-b-2 border-black py-1 outline-none basis-full "
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                placeholder="Enter Email"
                 // required
               />
               <button
                 type="submit"
                 className="border-2 border-black p-2
-                 hover:bg-black hover:text-white 
-                 transition-all ease-in-out duration-300
+                bg-black text-white font-medium
+                 hover:bg-white hover:text-black 
+                 transition-all ease-in-out duration-300 basis-full mt-3
                  "
               >
                 Subscribe

@@ -64,7 +64,7 @@ function ProductCard({ id, image, price, name, description }) {
       data-aos="fade-up"
       data-aos-duration="500"
       data-aos-easing="ease-in-out"
-      data-aos-once="false"
+      data-aos-once="true"
     >
       <div className="product-image">
         <img

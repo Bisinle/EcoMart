@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import ProductCard from "./ProductCard";
 import { useAppContext } from "../MyContext";
-import SearchFilter from "./SearchFilter";
 
-function ProductList() {
-  const { cartCount, wishlistCount } = useAppContext();
+function ProductList({ searchTerm, selectedCategory }) {
   const [products, setProducts] = useState([]);
 
-  const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-
-  const [options, setOptions] = useState([]);
 
   // const baseURL = "https://ecomart-x0ur.onrender.com/products";
 
@@ -35,29 +28,39 @@ function ProductList() {
       });
   }, []);
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-  console.log(selectedCategory);
-  const filteredProducts = products.filter((product) => {
-    const matchesSearchTerm = product.prod_name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "all" || product.category === selectedCategory;
-    return matchesSearchTerm && matchesCategory;
-  });
+  // const handleSearch = (e) => {
+  //   setSearchTerm(e.target.value);
+  // };
+  // console.log(selectedCategory);
+  // const filteredProducts = products.filter((product) => {
+  //   const matchesSearchTerm = product.prod_name
+  //     .toLowerCase()
+  //     .includes(searchTerm.toLowerCase());
+  //   const matchesCategory =
+  //     selectedCategory === "all" || product.category === selectedCategory;
+  //   return matchesSearchTerm && matchesCategory;
+  // });
   // console.log(products);
   // products.length > 0 ? [...new Set(products.map((item) => item.category))];
 
+  const filteredProducts = products.filter((prod) => {
+    if (searchTerm == "") {
+      return prod;
+    } else if (
+      prod.prod_name.toLowerCase().includes(searchTerm.toLowerCase())
+    ) {
+      return prod;
+    }
+  });
+  // console.log(filteredProducts);
   return (
     <section>
-      <SearchFilter
+      {/* <SearchFilter
         onSearch={handleSearch}
         onCategoryChange={(e) => setSelectedCategory(e.target.value)}
         query={searchTerm}
         category={selectedCategory}
-      />
+      /> */}
       <div className="flex flex-wrap flex-1 gap-[2rem] justify-center list-card">
         {filteredProducts.map((product) => {
           return (
