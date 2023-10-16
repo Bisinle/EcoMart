@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Cart.css";
 import { BsTrash } from "react-icons/bs";
 import { useAppContext } from "../MyContext";
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+import { toast } from "react-toastify";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import "react-toastify/dist/ReactToastify.css";
 import Lottie from "react-lottie";
 import animationData from "../assets/animation_lndl5pze.json";
+import { useFetcher } from "react-router-dom";
 
 function Cart({ showCart, setShowCart }) {
-  const { cartCount, setCartCount, products, setProducts, setQuantity, quantity, userId } = useAppContext();
+  //inisitalize the Aos
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
+  const {
+    cartCount,
+    setCartCount,
+    products,
+    setProducts,
+    setQuantity,
+    quantity,
+    userId,
+  } = useAppContext();
 
   const handleIncrease = (index) => {
     const newQuantity = [...quantity];
@@ -39,22 +55,21 @@ function Cart({ showCart, setShowCart }) {
     setProducts(newProducts);
   };
 
-  const checkOutUrl = 'https://ecomart-x0ur.onrender.com/orders'
+  const checkOutUrl = "https://ecomart-x0ur.onrender.com/orders";
   // const userId = localStorage.getItem("user_role");
   // console.log(userId)
 
   const handleCheckout = async () => {
-    console.log('Checking out for user ID:', userId);
+    console.log("Checking out for user ID:", userId);
     try {
-      const orders = products.map((product, index) =>
-       ({
+      const orders = products.map((product, index) => ({
         customer_id: userId,
         item_price: parseFloat(product.price),
         item_quantity: quantity[index],
         amount: product.amount,
-        address: "Ngong lane, Ngong Road, Nairobi"
+        address: "Ngong lane, Ngong Road, Nairobi",
       }));
-      console.log(userId)
+      console.log(userId);
       const response = await axios.post(checkOutUrl, orders);
       console.log(response.data);
 
@@ -62,15 +77,14 @@ function Cart({ showCart, setShowCart }) {
       setCartCount([]);
       setQuantity([]);
 
-      localStorage.removeItem('cart');
+      localStorage.removeItem("cart");
 
       setShowCart(false);
-      toast.success('Order placed successfully!');
-
+      toast.success("Order placed successfully!");
     } catch (error) {
       console.error(error);
 
-      toast.error('Order failed. Please try again.');
+      toast.error("Order failed. Please try again.");
     }
   };
 
@@ -79,15 +93,20 @@ function Cart({ showCart, setShowCart }) {
     autoplay: true,
     animationData: animationData,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
+      preserveAspectRatio: "xMidYMid slice",
+    },
   };
 
   if (!showCart) return null;
 
   return (
-    <div className="frame">
-      <button className="close-button" onClick={() => setShowCart(false)}>
+    <div className="frame" data-aos="fade-right" data-aos-duration="400">
+      <button
+        className="close-button"
+        onClick={() => setShowCart(false)}
+        data-aos="fade-right"
+        data-aos-duration="400"
+      >
         X
       </button>
       <h1 className="text-wrapper">Shopping cart</h1>
@@ -104,7 +123,9 @@ function Cart({ showCart, setShowCart }) {
                 <p>{quantity[index]}</p>
                 <button onClick={() => handleIncrease(index)}>+</button>
               </div>
-              <p className="price">$ {parseFloat(product.price) * quantity[index]}</p>
+              <p className="price">
+                $ {parseFloat(product.price) * quantity[index]}
+              </p>
               <button
                 className="remove-button clickable-element"
                 onClick={() => handleRemove(index)}
@@ -120,7 +141,7 @@ function Cart({ showCart, setShowCart }) {
           </div>
         )}
       </div>
-  
+
       <div className="summary">
         <p>Total items: {quantity.reduce((a, b) => a + b, 0)}</p>
         <p>
@@ -134,8 +155,6 @@ function Cart({ showCart, setShowCart }) {
         </p>
         <button onClick={handleCheckout}>Checkout</button>
       </div>
-  
-      
     </div>
   );
 }

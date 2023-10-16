@@ -73,9 +73,9 @@ const LoggedInLinks = () => {
           <BsFillBookmarkHeartFill className="nav-icons  hover:bg-indigo-500 hover:text-white  rounded-lg" />
         </li>
       </NavLink>
-      <NavLink to="/profile">
+      {/* <NavLink to="/profile">
         <BsPerson className=" nav-icons hover:bg-indigo-500 hover:text-white  mx-3   items-center  rounded-lg" />
-      </NavLink>
+      </NavLink> */}
       <li className="nav-blocks relative">
         {cartCount.length > 0 && (
           <span className="navbar-badge">{cartCount.length}</span>

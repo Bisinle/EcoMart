@@ -87,7 +87,7 @@ function ProductList({ searchTerm, selectedCategory, allCategories }) {
         );
       });
     });
-  console.log(selectedCategory);
+  // console.log(selectedCategory);
   // console.log(allCategories);
 
   return (

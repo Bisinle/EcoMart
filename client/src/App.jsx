@@ -46,7 +46,7 @@ function App() {
             </Protexted>
           }
         />
-        <Route path="/profile" element={<Profile />} />
+        {/* <Route path="/profile" element={<Profile />} /> */}
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="login" element={<Login />} />
         {/* <Route path="logout" element={<Logout />} /> */}

@@ -30,7 +30,7 @@ function Header() {
   }, []);
 
   return (
-    <section className="py-10 " data-aos="fade-up" data-aos-duration="1000">
+    <section className="py-10 " data-aos="fade-up" data-aos-duration="500">
       <div className="container bold flex flex-wrap  justify-center  mt-10 md:px-2 md:flex-row">
         <div className="mb-14 lg:mb-0 lg:w-1/2  ">
           <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold text-gray-800 mb-4">

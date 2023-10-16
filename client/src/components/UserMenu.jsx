@@ -4,6 +4,7 @@ import { useAppContext } from "../MyContext";
 import { FiMenu } from "react-icons/fi";
 import Logout from "./Logout";
 import { logout } from "../auth";
+import { BsPerson } from "react-icons/bs";
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +27,12 @@ const UserMenu = () => {
         style={{ display: "flex", alignItems: "center" }}
       >
         <span>{userName}</span>
-        <FiMenu /> {/* Add the hamburger icon */}
+
+        <img
+          src={localStorage.getItem("user_profile_pic")}
+          className=" nav-icons h-10 w-10 hover:bg-indigo-500 hover:text-white mx-3 items-center rounded-2xl "
+        />
+        {/* Add the hamburger icon */}
       </button>
 
       {isOpen && (
