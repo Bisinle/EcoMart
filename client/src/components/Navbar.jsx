@@ -63,6 +63,12 @@ const LoggedInLinks = () => {
         Contacts
       </NavLink>
       <NavLink
+        to={"/dash_board"}
+        className="hover:bg-indigo-500 hover:text-white mx-3 p-2  rounded-lg"
+      >
+        DashBboard
+      </NavLink>
+      <NavLink
         to="/wishlist"
         className="hover:bg-indigo-500 hover:text-white mx-3 p-2  rounded-lg"
       >
@@ -73,9 +79,9 @@ const LoggedInLinks = () => {
           <BsFillBookmarkHeartFill className="nav-icons  hover:bg-indigo-500 hover:text-white  rounded-lg" />
         </li>
       </NavLink>
-      {/* <NavLink to="/profile">
+      <NavLink to="/profile">
         <BsPerson className=" nav-icons hover:bg-indigo-500 hover:text-white  mx-3   items-center  rounded-lg" />
-      </NavLink> */}
+      </NavLink>
       <li className="nav-blocks relative">
         {cartCount.length > 0 && (
           <span className="navbar-badge">{cartCount.length}</span>
@@ -103,7 +109,7 @@ function Navbar() {
           <span className="text-indigo-500">TRADE</span>
         </h1>
         <div className="flex gap-8">
-          <ul className="flex gap-8 flex items-center flex-wrap">
+          <ul className="flex gap-8  items-center flex-wrap">
             {logged ? <LoggedInLinks /> : <LoggedOutLinks />}
           </ul>
         </div>

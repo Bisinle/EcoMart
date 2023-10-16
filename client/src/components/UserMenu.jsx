@@ -21,7 +21,7 @@ const UserMenu = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <button
         onClick={() => setIsOpen(!isOpen)}
         style={{ display: "flex", alignItems: "center" }}

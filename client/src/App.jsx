@@ -15,6 +15,7 @@ import Logout from "./components/Logout";
 import Protexted from "./components/Protexted";
 import Profile from "./components/Profile";
 import VendorDashboard from "./components/vendor";
+import DashBoard from "./components/DashBoard";
 
 import { login, useAuth } from "./auth";
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="/contacts" element={<Contacts />} />
+        <Route path="/dash_board" element={<DashBoard />} />
         <Route
           path="/v-dash"
           element={
