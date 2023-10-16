@@ -20,43 +20,6 @@ function Wishlist() {
   };
 
   return (
-    // <div className="wishlist flex justify-center flex-wrap gap-5 bg-gray-50 px-5 py-6">
-    //   {wishlistCount.length > 0 ? (
-    //     wishlistCount.map((product, index) => (
-    //       <div
-    //         key={index}
-    //         className="wishlist-item bg-slate-50 rounded-md p-2 border-2 border-black"
-    //       >
-    //         <img
-    //           className="img w-[12rem] h-[12rem] rounded-md object-contain"
-    //           alt={product.name}
-    //           src={product.image}
-    //         />
-    //         <div className="wishlist-item-details">
-    //           <h2 className="text-sm">{product.name}</h2>
-    //           <p className="price text-sm">{product.price}</p>
-    //           <button
-    //             className="wish-cart-button text-sm text-white font-semibold flex flex-col items-center bg-green-400 py-2 w-full rounded-sm mb-2"
-    //             onClick={() => addToCartFromWishlist(product)}
-    //           >
-    //             Add to Cart
-    //           </button>
-    //           <button
-    //             className="remove-button text-sm flex flex-col text-white font-semibold items-center bg-red-300 py-2 w-full rounded-sm mb-2"
-    //             onClick={() => removeFromWishlist(product)}
-    //           >
-    //             Remove from Wishlist
-    //           </button>
-    //         </div>
-    //       </div>
-    //     ))
-    //   ) : (
-    //     <div>
-    //       <Lottie options={defaultOptions} height={400} width={400} />
-    //       <h2>Your wishlist is empty. Start adding products!</h2>
-    //     </div>
-    //   )}
-    // </div>
     <div className="wishlist bg-gray-100 px-5 py-6 rounded-md flex justify-center">
       {wishlistCount.length > 0 ? (
         <table className="table-auto">

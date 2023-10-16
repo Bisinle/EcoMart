@@ -101,12 +101,7 @@ function Cart({ showCart, setShowCart }) {
 
   return (
     <div className="frame" data-aos="fade-right" data-aos-duration="400">
-      <button
-        className="close-button"
-        onClick={() => setShowCart(false)}
-        data-aos="fade-right"
-        data-aos-duration="400"
-      >
+      <button className="close-button" onClick={() => setShowCart(false)}>
         X
       </button>
       <h1 className="text-wrapper">Shopping cart</h1>

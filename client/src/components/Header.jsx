@@ -51,8 +51,7 @@ function Header() {
         </div>
 
         <div
-          className={` mx-0 ${animationLoaded ? "" : "hidden"} 
-          
+          className={` mx-0 ${animationLoaded ? "" : "hidden"}         
         lg:w-1/2
 
         `}
