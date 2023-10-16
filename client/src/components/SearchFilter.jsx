@@ -4,7 +4,7 @@ import "aos/dist/aos.css";
 import { useState, useEffect } from "react";
 import { useAppContext } from "../MyContext";
 
-function SearchFilter({ onSearchTerm, onSelectedCategory }) {
+function SearchFilter({ onSearchTerm, onSelectedCategory, setAllCategories }) {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -19,6 +19,7 @@ function SearchFilter({ onSearchTerm, onSelectedCategory }) {
       })
       .then((data) => {
         setCategories(data);
+        setAllCategories(data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -32,9 +33,11 @@ function SearchFilter({ onSearchTerm, onSelectedCategory }) {
   }
   //function to updatet the handleSelectedCategory in home.jsx
   function handleChosenCategory(e) {
-    onSelectedCategory(e.target.value);
+    onSelectedCategory(categories, e.target.value);
   }
-  console.log(categories);
+
+  // console.log(onSelectedCategory);
+
   return (
     <div
       className="flex items-center justify-center py-7"

@@ -60,7 +60,7 @@ function ProductCard({ id, image, price, name, description }) {
   return (
     <article
       product={id}
-      className="product-card"
+      className="product-card shadow-lg"
       data-aos="fade-up"
       data-aos-duration="500"
       data-aos-easing="ease-in-out"
