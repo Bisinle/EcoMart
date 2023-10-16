@@ -70,7 +70,7 @@ class CustomerSchema(ma.SQLAlchemyAutoSchema):
     phone_number = ma.auto_field(data_key="phone_number")    
     email=ma.auto_field()
     joined=ma.auto_field()
-    orders = ma.List(ma.Nested('OrderCustomerSchema'))
+    # orders = ma.List(ma.Nested('OrderCustomerSchema'))
     
 
 customer_schema = CustomerSchema()
@@ -143,6 +143,8 @@ orders_schema = OrderSchema(many=True)
 
 order_model_input =api.model('post_order',{
     
+    'customer_id':fields.Integer,
+    'product_id':fields.Integer,
     'item_price':fields.Integer,
     'item_quantity':fields.Integer,
     'amount':fields.Integer,

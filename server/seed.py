@@ -30,7 +30,7 @@ with app.app_context():
     #     )
     #     user_list.append(user)
     # db.session.add_all(user_list)
-    # db.session.commit()
+    db.session.commit()
 
 
 
@@ -98,7 +98,7 @@ with app.app_context():
     #     if cutomer_form_user_table.id not  in [customer.user_id for customer  in customer_list ]:
     #         customer_list.append(customer)
     # db.session.add_all(customer_list)
-    # db.session.commit()
+    db.session.commit()
 
 
 
@@ -247,7 +247,7 @@ with app.app_context():
 
     # # ''' S E E D I N G__________________O R D E R S________________T A B L E '''
 
-    # Order.query.delete()
+    Order.query.delete()
     # order_list = []
     # for i in range(10):
     #     product_obj = rc(product_list)
@@ -260,9 +260,16 @@ with app.app_context():
     #     )
     #     order_list.append(order)
     # db.session.add_all(order_list)
-    # db.session.commit()
+    db.session.commit()
 
+    '''if we want to delete an order'''
+    # order = Order.query.all()[1]
+    # cus = Customer.query.all()[0]
+    # print(cus.orders)
+    # print(order.product)
+    # db.session.delete(order)
 
+ 
 
 
 

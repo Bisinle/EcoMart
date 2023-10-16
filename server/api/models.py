@@ -56,9 +56,6 @@ class Customer(db.Model):
 
 
     
-
-
-
     __table_args__ = (UniqueConstraint("phone_number", "email", name="Customer_unique_constraint"),)
 
 
@@ -165,7 +162,7 @@ class Order(db.Model):
 
 
     def __repr__(self):
-        return f'(id: {self.id}, item_price: {self.item_price}, item_quantity: {self.item_quantity},  amount: {self.amount} )'
+        return f'(id: {self.id}, item_price: {self.item_price}, item_quantity: {self.item_quantity},  amount: {self.amount}, customer_id: {self.customer_id}, pro_id: {self.product_id} )'
 
 
 

@@ -207,6 +207,7 @@ class customer_by_id(Resource):
 
 @ns.route('/orders')
 class Orders(Resource):
+    # @jwt_required(refresh=True)
     def get(self):
         orders = Order.query.all()
 
@@ -226,6 +227,7 @@ class Orders(Resource):
             for order in data:
                 order = Order(
                 customer_id = order['customer_id'],
+                product_id = order['product_id'],
                 item_price=order['item_price'],
                 item_quantity=order['item_quantity'],
                 address=order['address'],
@@ -236,7 +238,9 @@ class Orders(Resource):
         db.session.commit()
         if type(data) is dict:
                  order = Order(
-                customer_id = order['customer_id'],
+                customer_id = data['customer_id'],
+                product_id = data['product_id'],
+
                 item_price=data['item_price'],
                 item_quantity=data['item_quantity'],
                 address=data['address'],
@@ -421,7 +425,7 @@ def user_identity_lookup(user):
 @auth.route('/login')
 class Login(Resource):
     def post(self):
-
+        print('---------------------------')
         print(request.get_json())
         username = request.get_json().get("username",None)
         password = request.get_json().get("password",None)
@@ -450,6 +454,7 @@ class Login(Resource):
             "user_id":user.id,
             "user_name":user.user_name,
             "user_role":user.roles,
+            "user_profile_pic":user.profile_picture
 
             
 
@@ -457,14 +462,15 @@ class Login(Resource):
 
 
 @auth.route('/refresh')
-class refresh(Resource):
+class Refresh(Resource):
     @jwt_required(refresh=True)
     def post(self):
-        print(request.get_json())
+        # print(request.get_json())
         identity = get_jwt_identity()
-        access = create_access_token(identity = identity)
+        print(identity)
+        # access = create_access_token(identity = identity)
 
     
-        return jsonify({"access_token":access})
+        return jsonify({"access_token":'access'})
 
 
