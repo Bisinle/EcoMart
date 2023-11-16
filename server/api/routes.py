@@ -207,7 +207,7 @@ class customer_by_id(Resource):
 
 @ns.route('/orders')
 class Orders(Resource):
-    # @jwt_required(refresh=True)
+    @jwt_required(refresh=True)
     def get(self):
         orders = Order.query.all()
 
