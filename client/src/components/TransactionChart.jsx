@@ -109,17 +109,17 @@ function TransactionChart() {
 export default TransactionChart;
 
 {
-  /* <LineChart data={data}>
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="expense"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-          <Line type="monotone" dataKey="income" stroke="#82ca9d" />
-        </LineChart> */
+  //  <LineChart data={data}>
+  //         <XAxis dataKey="month" />
+  //         <YAxis />
+  //         <Tooltip />
+  //         <Legend />
+  //         <Line
+  //           type="monotone"
+  //           dataKey="expense"
+  //           stroke="#8884d8"
+  //           activeDot={{ r: 8 }}
+  //         />
+  //         <Line type="monotone" dataKey="income" stroke="#82ca9d" />
+  //       </LineChart> 
 }

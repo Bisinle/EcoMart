@@ -6,6 +6,7 @@ import { useAppContext } from "../MyContext";
 const SignUp = () => {
   const { isLogedin, setIsLogedin, jwtToken, setJwtToken } = useAppContext();
   const navigate = useNavigate();
+
   const [vendor, setVendor] = useState({});
   const [error, setError] = useState(null);
   const [FormObject, setFormObject] = useState({

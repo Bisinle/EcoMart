@@ -1,5 +1,5 @@
-import { Route, Router, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
 import { useAppContext } from "./MyContext";
 
 import Navbar from "./components/Navbar";
@@ -17,7 +17,7 @@ import Profile from "./components/Profile";
 import VendorDashboard from "./components/vendor";
 import DashBoard from "./components/DashBoard";
 
-import { login, useAuth } from "./auth";
+import { useAuth } from "./auth";
 
 function App() {
   const { isLogedin } = useAppContext();

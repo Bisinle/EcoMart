@@ -55,9 +55,15 @@ function Cart({ showCart, setShowCart }) {
     setProducts(newProducts);
   };
 
-  const checkOutUrl = "https://ecomart-x0ur.onrender.com/orders";
+  useEffect(() => {
+    fetch("http://localhost:5555/orders")
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }, []);
+
+  const checkOutUrl = "http://127.0.0.1:5555//orders";
   // const userId = localStorage.getItem("user_role");
-  // console.log(userId)
+  console.log(userId);
 
   const handleCheckout = async () => {
     console.log("Checking out for user ID:", userId);
